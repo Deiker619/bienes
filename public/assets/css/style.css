@@ -14884,9 +14884,10 @@ dl {
 /* Sidebar */
 .sidebar {
   min-height: calc(100vh - 70px);
-  background: -webkit-gradient(linear, left top, left bottom, from(#e6e5f2), to(#4599cd));
-  background: linear-gradient(to bottom, #e6e5f2, #4599cd);
+  /* background: -webkit-gradient(linear, left top, left bottom, from(#e6e5f2), to(#4599cd));
+  background: linear-gradient(to bottom, #e6e5f2, #4599cd); */
   font-family: "Rubik", sans-serif;
+  background-color: #f2f2f2;
   padding: 0;
   width: 260px;
   z-index: 11;
