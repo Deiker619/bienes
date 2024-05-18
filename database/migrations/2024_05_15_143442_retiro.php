@@ -17,8 +17,7 @@ return new class extends Migration
             $table->string('artificio');
             $table->integer('cantidad_retirada');
             $table->string('lugar_destino');
-            $table->timestamp('created_at')->nullable();
-            $table->string('ip_address', 45)->nullable();
+            $table->timestamps();
             
             
         });

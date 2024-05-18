@@ -18,7 +18,7 @@
     @vite(['resources/js/app.js'])
 
     <!-- Styles -->
-     @livewireStyles 
+    @livewireStyles
 </head>
 
 <body>
@@ -109,7 +109,7 @@
                 <li class="nav-item sidebar-actions">
                     <div class="nav-link">
                         <div class="mt-4">
-                            
+
                             <ul class="mt-4 pl-0">
                                 <li>Sign Out</li>
                             </ul>
@@ -248,7 +248,7 @@
                                     <i class="mdi mdi-cached mr-2 text-success"></i> Activity Log </a>
                                 <form action="{{ route('logout') }}" method="POST" x-data>
                                     @csrf
-                                    <a class="dropdown-item"href="{{ route('logout') }}" @click.prevent="$root.submit()">
+                                    <a class="dropdown-item" href="{{ route('logout') }}" @click.prevent="$root.submit()">
 
                                         <i class="mdi mdi-logout mr-2 text-primary"></i> {{ __('Log Out') }}
                                     </a>
@@ -308,8 +308,34 @@
     <script src="../assets/js/dashboard.js"></script>
     <!-- End custom js for this page -->
     @stack('modals')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Livewire.on('artificioAdded', (message) => {
+            console.log(message);
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                },
+                background: "#66BB6A",
+                customClass: {
+                    title: 'text-white  custom-title'
+                }
 
-    
+            });
+            Toast.fire({
+                icon: "success",
+                title: message
+            });
+        });
+    </script>
+
+
 </body>
 
 </html>
