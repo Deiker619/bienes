@@ -21,7 +21,7 @@ class ArtificiosCreate extends Component
             'name'=> $this->name
         ]);
         if($add_artificio){
-            $this->dispatch('artificioAdded', 'Se registró un/a'.$this->name );
+            $this->dispatch('artificioAdded', 'Se registró un/a '.$this->name );
         }
 
         $this->reset(['name']);

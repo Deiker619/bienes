@@ -52,7 +52,11 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" wire:click="$set('open_modal', false);">Close</button>
-                    <button type="button" class="btn btn-primary" wire:click.prevent="store">Save changes</button>
+                    <button type="button" class="btn btn-primary" wire:click.prevent="store" wire:loading.attr="disabled" wire:loading.class="d-none">Save changes</button>
+                    <button class="btn btn-primary" type="button" disabled wire:loading wire:target="store" >
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
                 </div>
             </div>
         </div>

@@ -11,7 +11,7 @@ use Livewire\Attributes\On;
 class StockLayoutsShow extends Component
 {
     protected $listeners = ['artificioAdded' => 'artificioAdded'];
-    public $cantidad_artificio, $artificio, $open_edit;
+    public $cantidad_artificio, $artificio, $open_edit, $id;
     #[On('artificioAdded')]
     public function render()
     {
@@ -44,6 +44,20 @@ class StockLayoutsShow extends Component
         $registro = stock::findOrfail($id);
         
         $this->cantidad_artificio = $registro->cantidad_artificio;
+        $this->id = $registro->id;
         
+    }
+
+    public function update()
+    {
+        
+        $registro = stock::find($this->id);
+        $registro->fill($this->all());
+        $registro->save();
+
+
+        $this->dispatch('ProductoCreado', 'Producto modificado'); //Emite el evento
+        $this->open_edit = false;
+        $this->dispatch('artificioAdded', 'Se modificó este artificio');
     }
 }

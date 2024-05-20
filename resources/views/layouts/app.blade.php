@@ -49,6 +49,12 @@
                         <span class="menu-title">Dashboard</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('artificios')}}">
+                        <i class="mdi mdi-wheelchair-accessibility menu-icon"></i>
+                        <span class="menu-title">Artificios</span>
+                    </a>
+                </li>
                 <!-- Menu desplegable -->
                 <!-- <li class="nav-item">
                     <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
@@ -72,25 +78,20 @@
                 </li> -->
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('stock_show')}}">
-                        <i class="mdi mdi-contacts menu-icon"></i>
+                        <i class="mdi mdi-cube-outline menu-icon"></i>
                         <span class="menu-title">Stock</span>
                     </a>
                 </li>
+                
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('dashboard')}}">
-                        <i class="mdi mdi-format-list-bulleted menu-icon"></i>
-                        <span class="menu-title">Agregar al stock</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('dashboard')}}">
-                        <i class="mdi mdi-chart-bar menu-icon"></i>
+                    <a class="nav-link" href="{{route('retiro_stock')}}">
+                        <i class="mdi  mdi-cube-send menu-icon"></i>
                         <span class="menu-title">Retiro de stock</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('dashboard')}}">
-                        <i class="mdi mdi-table-large menu-icon"></i>
+                        <i class="mdi mdi-account-multiple-plus menu-icon"></i>
                         <span class="menu-title">Crear usuario</span>
                     </a>
                 </li>
@@ -324,7 +325,8 @@
                 },
                 background: "#66BB6A",
                 customClass: {
-                    title: 'text-white  custom-title'
+                    title: 'text-white  custom-title',
+                    fontWeight: '500'
                 }
 
             });

@@ -19,5 +19,13 @@ Route::middleware([
         return view('livewire.stock.stock-show');
     })->name('stock_show');
 
+    Route::get('/dashboard/retiro-stock', function () {
+        return view('livewire.retiro.retiro-show');
+    })->name('retiro_stock');
+
+    Route::get('/dashboard/Artificios', function () {
+        return view('livewire.artificios.artificios-layout');
+    })->name('artificios');
+
 
 });

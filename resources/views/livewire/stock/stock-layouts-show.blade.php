@@ -18,7 +18,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Stock de artificios </h4>
-                    <div class="card-description">Tipos de artificios: <label class="badge badge-info">{{count($total)}}</label> / Total de artificios: <label class="badge badge-info">{{$suma}}</label> </div>
+                    <div class="card-description"></label class="d-flex justify-content-center align-items-center"> Total de artificios: <label class="badge badge-info">{{$suma}}</label> </div>
                     <div class="table-responsive">
                         <table class="table  table-hover">
                             <thead>
@@ -56,7 +56,7 @@
                                                 <span><i class="mdi mdi-dots-vertical" style="cursor: pointer"></i></span>
                                             </span>
                                             <span class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <a class="dropdown-item" wire:click="edit({{$stock->id}})" style="cursor: pointer" >Editar</a>
+                                                <a class="dropdown-item" wire:click="edit({{$stock->id}})" style="cursor: pointer">Editar</a>
                                                 <a class="dropdown-item" href="#">Eliminar</a>
                                             </span>
                                         </span>
@@ -69,14 +69,14 @@
                         </table>
                     </div>
                 </div>
-                
+
             </div>
-            
+
         </div>
 
-        
+
     </div>
-    <div class="row">
+    <!-- <div class="row">
 
         <div class="col-xl-12 grid-margin stretch-card">
 
@@ -129,7 +129,7 @@
             </div>
         </div>
         
-    </div>
+    </div> -->
 
     @if($open_edit)
     <div class="modal-backdrop fade show"></div>
@@ -147,7 +147,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Editar stock</h4>
-                            
+
                             <form class="forms-sample">
                                 <div class="form-group">
                                     <div class="form-group">
@@ -170,7 +170,11 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" wire:click="$set('open_edit', false);">Close</button>
-                    <button type="button" class="btn btn-primary" wire:click.prevent="update">Save changes</button>
+                    <button type="button" class="btn btn-primary" wire:click.prevent="update" wire:loading.attr="disabled" wire:loading.class="d-none">Guardar cambios</button>
+                    <button class="btn btn-primary" type="button" disabled wire:loading wire:target="update">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
                 </div>
             </div>
         </div>
