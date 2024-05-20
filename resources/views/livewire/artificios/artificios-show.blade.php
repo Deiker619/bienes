@@ -23,6 +23,8 @@
                                     <th>Nombre del artificio</th>
                                     <th>Agregado</th>
                                     <th>Modificado</th>
+                                    <th>Status en stock</th>
+                                    <th></th>
 
                                 </tr>
                             </thead>
@@ -38,6 +40,9 @@
                                         {{$artificio->created_at}}
                                     </td>
                                     <td>{{$artificio->updated_at}}</td>
+                                    <td>
+                                    <div class="badge badge-inverse-success"> Cargado </div>
+                                    </td>
 
                                     <td>
                                         <!-- <div class="badge badge-inverse-success"> Editar </div>
@@ -53,6 +58,7 @@
                                         </span>
 
                                     </td>
+                                    
                                 </tr>
                                 @endforeach
 
