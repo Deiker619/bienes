@@ -56,8 +56,17 @@ class StockLayoutsShow extends Component
         $registro->save();
 
 
-        $this->dispatch('ProductoCreado', 'Producto modificado'); //Emite el evento
         $this->open_edit = false;
-        $this->dispatch('artificioAdded', 'Se modificó este artificio');
+        $this->dispatch('artificioAdded', 'Se modificó este stock');
+    }
+
+    public function delete($id)
+    {
+        
+        $registro = stock::findOrFail($id);
+        $registro->delete();
+
+        $this->dispatch('artificioAdded', 'Artificio eliminado del stock');
+       
     }
 }

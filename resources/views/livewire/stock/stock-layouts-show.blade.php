@@ -57,7 +57,7 @@
                                             </span>
                                             <span class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                 <a class="dropdown-item" wire:click="edit({{$stock->id}})" style="cursor: pointer">Editar</a>
-                                                <a class="dropdown-item" href="#">Eliminar</a>
+                                                <a class="dropdown-item" wire:click="delete({{$stock->id}})" style="cursor: pointer" >Eliminar</a>
                                             </span>
                                         </span>
 

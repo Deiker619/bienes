@@ -63,9 +63,9 @@
                     <form class="forms-sample row g-6">
                         <div class="form-group col-12">
                             <label for="exampleInputUsername1">Coordinación de destino</label>
-
-                            <label for="exampleSelectGender">Selecciona la coordinación</label>
                             <select class="form-control" id="exampleSelectGender" wire:model="id">
+
+
                                 <option value="" selected>Seleccionar</option>
                             </select>
                             <x-input-error for="id" style="color:red"></x-input-error>
@@ -73,23 +73,31 @@
                         </div>
                         <div class="form-group col-12">
                             <label for="exampleInputEmail1">Artificio a retirar</label>
-                            <select class="form-control" id="exampleSelectGender" wire:model="id">
+                            <select class="form-control" wire:change="artificiosDisponibles($event.target.value)" id="exampleSelectGender" wire:model="id">
                                 <option value="" selected>Seleccionar</option>
+                                @foreach($artificios as $artificio)
+                                    <option value="{{$artificio->id}}" >{{$artificio->name}}</option>
+                                @endforeach
+
                             </select>
+                
                             <x-input-error for="id" style="color:red"></x-input-error>
                         </div>
                         <div class="form-group col-12">
-                            <label for="exampleInputPassword1">Cantidad</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Ej: 20">
+                            <label for="exampleInputConfirmPassword1">Cantidad disponible en stock </label>
+                            <input type="text" wire:model.blur="cantidad" readonly class="form-control" id="exampleInputConfirmPassword1">
                         </div>
                         <div class="form-group col-12">
-                            <label for="exampleInputConfirmPassword1">Cantidad en el inventario</label>
-                            <input type="text" class="form-control" id="exampleInputConfirmPassword1">
+                            <label for="exampleInputPassword1">Cantidad a retirar</label>
+                            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Ej: 20">
                         </div>
+                        
+
+                      
 
                         <div class="col-12">
 
-                            <button type="submit" class="btn btn-primary mr-2"> Hacer retiro! </button>
+                            <button type="submit" class="btn btn-primary mr-2"> ¡Hacer retiro! </button>
                             <button class="btn btn-light">Cancel</button>
                         </div>
                     </form>
@@ -104,7 +112,7 @@
                     <div class="card-title font-weight-medium"> Coordinaciones estadales </div>
                     <p class="text-muted"> Lorem ipsum dolor sitadipiscing elit, sed amet do eiusmod tempor we find a new solution </p>
                     <div class="d-flex flex-wrap border-bottom py-2 border-top justify-content-between">
-                        
+
                         <div class="pt-2">
                             <h5 class="mb-0">Coordinacion de Miranda</h5>
                             <p class="mb-0 text-muted">Miranda </p>
@@ -112,7 +120,7 @@
                         </div>
                     </div>
                     <div class="d-flex flex-wrap border-bottom py-2 justify-content-between">
-                        
+
                         <div class="pt-2">
                             <h5 class="mb-0">Coordinacion de Aragua</h5>
                             <p class="mb-0 text-muted">Aragua</p>
@@ -120,9 +128,9 @@
                         </div>
                     </div>
                     <div class="d-flex flex-wrap border-bottom py-2 justify-content-between">
-                        
+
                         <div class="pt-2">
-                        <h5 class="mb-0">Coordinacion de Anzoategui</h5>
+                            <h5 class="mb-0">Coordinacion de Anzoategui</h5>
                             <p class="mb-0 text-muted">Anzoategui</p>
                             <h5 class="mb-0">$900/mo</h5>
                         </div>
