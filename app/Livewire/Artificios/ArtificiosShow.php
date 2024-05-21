@@ -4,10 +4,15 @@ namespace App\Livewire\Artificios;
 
 use Livewire\Component;
 use App\Models\artificio;
+use Livewire\Attributes\On;
+
 
 class ArtificiosShow extends Component
 {
     public $open_edit, $name, $id;
+    protected $listeners = ['artificioAdded' => 'artificioAdded'];
+
+    #[On('artificioAdded')]
     public function render()
     {
         $artificios = artificio::select('id', 'name', 'created_at', 'updated_at')->orderBy('name', 'asc')->get();
