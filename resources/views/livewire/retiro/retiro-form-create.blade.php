@@ -60,13 +60,15 @@
                 <div class="card-body">
                     <h4 class="card-title">Formulario de retiro</h4>
                     <!-- <p class="card-description">Basic form layout</p> -->
-                    <form class="forms-sample row g-6">
+                    <form class="forms-sample row g-6" wire:submit.prevent="submit">
                         <div class="form-group col-12">
                             <label for="exampleInputUsername1">Coordinación de destino</label>
-                            <select class="form-control" id="exampleSelectGender" wire:model="id">
-
-
+                            <select class="form-control" id="exampleSelectGender" wire:model="coordinacion_retiro">
                                 <option value="" selected>Seleccionar</option>
+                                @foreach($coordinaciones as $coordinacion)
+                                <option value="{{$coordinacion->id}}">{{$coordinacion->name_coordinacion}}</option>
+                                @endforeach
+                                
                             </select>
                             <x-input-error for="id" style="color:red"></x-input-error>
 
@@ -89,7 +91,7 @@
                         </div>
                         <div class="form-group col-12">
                             <label for="exampleInputPassword1">Cantidad a retirar</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Ej: 20">
+                            <input type="text" class="form-control" wire:model="retiro_cantidad" id="exampleInputPassword1" placeholder="Ej: 20">
                         </div>
                         
 
@@ -97,9 +99,10 @@
 
                         <div class="col-12">
 
-                            <button type="submit" class="btn btn-primary mr-2"> ¡Hacer retiro! </button>
+                            <button  class="btn btn-primary mr-2" wire:click.prevent="retiro"> ¡Hacer retiro! </button>
                             <button class="btn btn-light">Cancel</button>
                         </div>
+                        
                     </form>
                 </div>
             </div>

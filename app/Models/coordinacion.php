@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class retiro extends Model
+class coordinacion extends Model
 {
     use HasFactory;
-    protected $fillable = ['artificio', 'cantidad_retirada', 'lugar_destino'];
+
+    protected $fillable = ['name_coordinacion'];
 }

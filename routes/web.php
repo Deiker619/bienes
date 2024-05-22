@@ -27,5 +27,9 @@ Route::middleware([
         return view('livewire.artificios.artificios-layout');
     })->name('artificios');
 
+    Route::get('/dashboard/coordinaciones', function () {
+        return view('livewire.coordinaciones.coordinaciones-layouts-show');
+    })->name('coordinacion');
+
 
 });

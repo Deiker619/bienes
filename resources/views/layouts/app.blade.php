@@ -55,6 +55,12 @@
                         <span class="menu-title">Artificios</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('coordinacion')}}">
+                        <i class="mdi mdi-home-city menu-icon"></i>
+                        <span class="menu-title">Coordinaciones</span>
+                    </a>
+                </li>
                 <!-- Menu desplegable -->
                 <!-- <li class="nav-item">
                     <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
@@ -332,6 +338,30 @@
             });
             Toast.fire({
                 icon: "success",
+                title: message
+            });
+        });
+        Livewire.on('error', (message) => {
+            console.log(message);
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                },
+                background: "#ef233c",
+                customClass: {
+                    title: 'text-white  custom-title',
+                    fontWeight: '500'
+                }
+
+            });
+            Toast.fire({
+                icon: "error",
                 title: message
             });
         });
