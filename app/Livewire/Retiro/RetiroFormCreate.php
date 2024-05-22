@@ -35,18 +35,29 @@ class RetiroFormCreate extends Component
         }
     }
 
-    public function retiro(){
+    public function retiro()
+    {
         $this->restante =  (int)$this->cantidad - (int)$this->retiro_cantidad;
-
-        if($this->restante<0){
+        if ($this->restante < 0) {
             $this->dispatch('error', "Stock insuficiente para la cantidad solicitada");
-           
-            
         }
-        if($this->restante>0){
-            $this->dispatch('artificioAdded', 'Retiro exitoso, quedan '.$this->restante.' disponible');
+        if ($this->restante > 0) {
+
+            /* Agregamos el nuevo retiro */
+            $add_retiro = retiro::create([
+                'artificio' => $this->artificio_retiro,
+                'cantidad_retirada' => $this->retiro_cantidad,
+                'lugar_destino' => $this->coordinacion_retiro
+            ]);
+
+            if ($add_retiro) {
+                /* Procedemos a modificar el stock */
+                $stock = stock::find($this->artificio_retiro);
+                $stock->update([
+                    'cantidad_artificio' => $this->restante
+                ]);
+                $this->dispatch('artificioAdded', 'Retiro exitoso, quedan ' . $this->restante . ' disponible');
+            }
         }
     }
-
-
 }

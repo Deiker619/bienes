@@ -68,24 +68,33 @@
                                 @foreach($coordinaciones as $coordinacion)
                                 <option value="{{$coordinacion->id}}">{{$coordinacion->name_coordinacion}}</option>
                                 @endforeach
-                                
+
                             </select>
                             <x-input-error for="id" style="color:red"></x-input-error>
 
                         </div>
                         <div class="form-group col-12">
                             <label for="exampleInputEmail1">Artificio a retirar</label>
-                            <select class="form-control" wire:change="artificiosDisponibles($event.target.value)" id="exampleSelectGender" wire:model="id">
+
+                            <select class="form-control" wire:model="artificio_retiro" wire:change="artificiosDisponibles($event.target.value)" id="exampleSelectGender">
                                 <option value="" selected>Seleccionar</option>
                                 @foreach($artificios as $artificio)
-                                    <option value="{{$artificio->id}}" >{{$artificio->name}}</option>
+                                <option value="{{$artificio->id}}">{{$artificio->name}}</option>
                                 @endforeach
 
                             </select>
-                
+
+
+
+
                             <x-input-error for="id" style="color:red"></x-input-error>
                         </div>
-                        <div class="form-group col-12">
+                        <div class="form-group col-12" wire:loading wire:target="artificiosDisponibles">
+                            <div class="spinner-border  spinner-border-sm text-primary" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-12 " wire:click.prevent="artificiosDisponibles" wire:loading.attr="disabled" wire:loading.class="d-none">
                             <label for="exampleInputConfirmPassword1">Cantidad disponible en stock </label>
                             <input type="text" wire:model.blur="cantidad" readonly class="form-control" id="exampleInputConfirmPassword1">
                         </div>
@@ -93,16 +102,20 @@
                             <label for="exampleInputPassword1">Cantidad a retirar</label>
                             <input type="text" class="form-control" wire:model="retiro_cantidad" id="exampleInputPassword1" placeholder="Ej: 20">
                         </div>
-                        
 
-                      
+
+
 
                         <div class="col-12">
 
-                            <button  class="btn btn-primary mr-2" wire:click.prevent="retiro"> ¡Hacer retiro! </button>
+                            <button class="btn btn-primary mr-2" wire:click.prevent="retiro" wire:loading.attr="disabled" wire:loading.class="d-none"> ¡Hacer retiro! </button>
+                            <button class="btn btn-primary" type="button" disabled wire:loading wire:target="retiro" >
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Loading...
+                            </button>
                             <button class="btn btn-light">Cancel</button>
                         </div>
-                        
+
                     </form>
                 </div>
             </div>
