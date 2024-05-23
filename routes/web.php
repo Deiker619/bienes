@@ -23,6 +23,10 @@ Route::middleware([
         return view('livewire.retiro.retiro-show');
     })->name('retiro_stock');
 
+    Route::get('/dashboard/ver-retiros', function () {
+        return view('livewire.retiro.retiros-table-show');
+    })->name('retiro_ver');
+
     Route::get('/dashboard/Artificios', function () {
         return view('livewire.artificios.artificios-layout');
     })->name('artificios');

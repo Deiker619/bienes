@@ -45,7 +45,7 @@
                                     <td>
                                         <div class="progress">
 
-                                            <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $total[$index] ?>%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $total[$index]??0 ?>%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </td>
                                     <td>

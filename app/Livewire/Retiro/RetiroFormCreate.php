@@ -13,6 +13,16 @@ class RetiroFormCreate extends Component
 {
     public $cantidad = 0, $restante;
     public $retiro_cantidad, $artificio_retiro, $coordinacion_retiro;
+    protected $listeners = ['artificioAdded' => 'artificioAdded'];
+
+    public $rules = [
+        'coordinacion_retiro' => 'required',
+        'artificio_retiro' => 'required',
+        'cantidad' => 'required',
+        'retiro_cantidad' => 'required'
+    ];
+
+
     public function render()
     {
 
@@ -37,11 +47,12 @@ class RetiroFormCreate extends Component
 
     public function retiro()
     {
+        $this->validate();
         $this->restante =  (int)$this->cantidad - (int)$this->retiro_cantidad;
         if ($this->restante < 0) {
             $this->dispatch('error', "Stock insuficiente para la cantidad solicitada");
         }
-        if ($this->restante > 0) {
+        if ($this->restante >= 0) {
 
             /* Agregamos el nuevo retiro */
             $add_retiro = retiro::create([
@@ -50,13 +61,13 @@ class RetiroFormCreate extends Component
                 'lugar_destino' => $this->coordinacion_retiro
             ]);
 
-            if ($add_retiro) {
+            if ($add_retiro) { //Si registro se cumple¿?
                 /* Procedemos a modificar el stock */
-                $stock = stock::find($this->artificio_retiro);
-                $stock->update([
-                    'cantidad_artificio' => $this->restante
-                ]);
+                $stock = stock::where('artificio_id', $this->artificio_retiro)->first();
+                $stock->cantidad_artificio = $this->restante; //Actualizamos la cantidad restante del stock
+                $stock->save(); //Guarda cambios
                 $this->dispatch('artificioAdded', 'Retiro exitoso, quedan ' . $this->restante . ' disponible');
+                $this->reset(['artificio_retiro', 'retiro_cantidad', 'coordinacion_retiro', 'cantidad', 'restante']);
             }
         }
     }

@@ -30,10 +30,18 @@ class StockLayoutsShow extends Component
         $total = stock::sum('cantidad_artificio');
         $porcentajes = array();
 
-        foreach($stocks as $s){
-            $result = ($s->cantidad_artificio / $total) *100;
-            array_push($porcentajes, $result);
+        if($total<=0){
+            $porcentajes = 0;
+        }else{
+            foreach($stocks as $s){
+                $result = (($s->cantidad_artificio / $total) *100);
+                
+                array_push($porcentajes, $result);
+            }
         }
+        
+
+
 
         return $porcentajes;
     }
