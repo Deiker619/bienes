@@ -3,6 +3,7 @@
 namespace App\Livewire\Retiro;
 
 use Livewire\Component;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\artificio;
 use App\Models\coordinacion;
 use App\Models\retiro;
@@ -30,6 +31,10 @@ class RetiroFormCreate extends Component
         $coordinaciones = coordinacion::select('id', 'name_coordinacion')->get();
         $artificios = artificio::select('id', 'name', 'created_at', 'updated_at')->orderBy('name', 'asc')->get();
         return view('livewire.retiro.retiro-form-create', compact('artificios', 'coordinaciones'));
+    }
+
+    public function export(){
+        
     }
 
     public function artificiosDisponibles($id)

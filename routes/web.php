@@ -34,6 +34,12 @@ Route::middleware([
     Route::get('/dashboard/coordinaciones', function () {
         return view('livewire.coordinaciones.coordinaciones-layouts-show');
     })->name('coordinacion');
+    Route::get('/dashboard/register', function () {
+        return view('auth.register');
+    })->name('registrar');
+
+    /* EXPORTAR PDF DE RETIROS */
+    Route::get('/dashboard/generate-pdf', [App\Http\Controllers\PDFController::class, 'generatePDF'])->name('prueba');
 
 
 });
