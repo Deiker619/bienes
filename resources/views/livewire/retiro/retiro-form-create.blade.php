@@ -81,7 +81,7 @@
         </div>
 
         <!-- RETIROS -->
-        <div class="col-xl-4 col-sm-6 grid-margin stretch-card">
+        <div class="col-md-4 col-sm-6 grid-margin stretch-card">
             @livewire('retiro.retiro-historial')
         </div>
     </div>

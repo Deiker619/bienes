@@ -8,7 +8,7 @@
             <div class="d-flex flex-wrap border-bottom py-2 border-top justify-content-between">
                 <div class="pt-2">
                     <h5 class="mb-0">Retiro #{{$retiro->id}}</h5>
-                    <p class="mb-0 text-muted">Entregado a: <b>{{$retiro->coordinacion->name_coordinacion}}</b></p>
+                    <p class="mb-0 text-muted">Entregado a: <span class="text-danger">{{$retiro->coordinacion->name_coordinacion}}</span></p>
                     <h5 class="mb-0 text-success">{{$retiro->cantidad_retirada}} {{$retiro->artificio->name}} <small class="text-warning">{{$retiro->created_at}}</small></h5>
                 </div>
             </div>
@@ -16,7 +16,7 @@
             @else
             <div class="d-flex flex-wrap border-bottom py-2 border-top justify-content-between">
                 <div class="pt-2">
-                <h5 class="mb-0">No se encontraron resultados</h5>
+                    <h5 class="mb-0">No se encontraron resultados</h5>
                 </div>
             </div>
 
