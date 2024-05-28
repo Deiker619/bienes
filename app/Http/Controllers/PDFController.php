@@ -18,7 +18,7 @@ class PDFController extends Controller
             'users' => $users
         ];
 
-        $pdf = PDF::loadView('prueba', $data);
+        $pdf = Pdf::loadView('prueba', $data);
         return $pdf->download('users-lists.pdf');
     }
 }

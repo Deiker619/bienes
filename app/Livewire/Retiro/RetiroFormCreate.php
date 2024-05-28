@@ -33,10 +33,7 @@ class RetiroFormCreate extends Component
         return view('livewire.retiro.retiro-form-create', compact('artificios', 'coordinaciones'));
     }
 
-    public function export(){
-        
-    }
-
+    
     public function artificiosDisponibles($id)
     {
         $consulta = stock::select('cantidad_artificio')
@@ -61,7 +58,7 @@ class RetiroFormCreate extends Component
 
             /* Agregamos el nuevo retiro */
             $add_retiro = retiro::create([
-                'artificio' => $this->artificio_retiro,
+                'artificio_id' => $this->artificio_retiro,
                 'cantidad_retirada' => $this->retiro_cantidad,
                 'lugar_destino' => $this->coordinacion_retiro
             ]);

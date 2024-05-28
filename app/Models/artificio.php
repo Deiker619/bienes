@@ -14,4 +14,11 @@ class artificio extends Model
     {
         return $this->hasMany(stock::class, 'artificio_id');
     }
+
+    public function retiros()
+    {
+        return $this->hasMany(retiro::class, 'artificio_id');
+    }
 }
+   
+

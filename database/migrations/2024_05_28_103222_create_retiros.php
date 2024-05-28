@@ -14,10 +14,13 @@ return new class extends Migration
         //
         Schema::create('retiros', function (Blueprint $table) {
             $table->id();
-            $table->string('artificio');
+            $table->unsignedBigInteger('artificio_id');
             $table->integer('cantidad_retirada');
-            $table->string('lugar_destino');
+            $table->unsignedBigInteger('lugar_destino');
             $table->timestamps();
+
+            $table->foreign('artificio')->references('id')->on('artificios')->onDelete('cascade');
+            $table->foreign('lugar_destino')->references('id')->on('coordinacions')->onDelete('cascade');
             
             
         });

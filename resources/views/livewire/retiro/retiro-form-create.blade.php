@@ -82,37 +82,7 @@
 
         <!-- RETIROS -->
         <div class="col-xl-4 col-sm-6 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title font-weight-medium"> Coordinaciones estadales </div>
-                    <p class="text-muted"> Lorem ipsum dolor sitadipiscing elit, sed amet do eiusmod tempor we find a new solution </p>
-                    <div class="d-flex flex-wrap border-bottom py-2 border-top justify-content-between">
-
-                        <div class="pt-2">
-                            <h5 class="mb-0">Coordinacion de Miranda</h5>
-                            <p class="mb-0 text-muted">Miranda </p>
-                            <h5 class="mb-0">$600/mo</h5>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-wrap border-bottom py-2 justify-content-between">
-
-                        <div class="pt-2">
-                            <h5 class="mb-0">Coordinacion de Aragua</h5>
-                            <p class="mb-0 text-muted">Aragua</p>
-                            <h5 class="mb-0">$900/mo</h5>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-wrap border-bottom py-2 justify-content-between">
-
-                        <div class="pt-2">
-                            <h5 class="mb-0">Coordinacion de Anzoategui</h5>
-                            <p class="mb-0 text-muted">Anzoategui</p>
-                            <h5 class="mb-0">$900/mo</h5>
-                        </div>
-                    </div>
-                    <a class="text-black mt-3 d-block font-weight-medium h6" href="{{route('retiro_ver')}}">View all <i class="mdi mdi-chevron-right"></i></a>
-                </div>
-            </div>
+            @livewire('retiro.retiro-historial')
         </div>
     </div>
 </div>
