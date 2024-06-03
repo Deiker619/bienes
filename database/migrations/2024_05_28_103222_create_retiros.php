@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('lugar_destino');
             $table->timestamps();
 
-            $table->foreign('artificio')->references('id')->on('artificios')->onDelete('cascade');
+            $table->foreign('artificio_id')->references('id')->on('artificios')->onDelete('cascade');
             $table->foreign('lugar_destino')->references('id')->on('coordinacions')->onDelete('cascade');
             
             
