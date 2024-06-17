@@ -12,8 +12,8 @@
             <button type="button" class="btn btn-sm bg-white btn-icon-text border">
                 <i class="mdi mdi-email btn-icon-prepend"></i> Email </button>
             <button type="button" class="btn btn-sm bg-white btn-icon-text border ml-3">
-                <i class="mdi mdi-printer btn-icon-prepend"></i> Print </button>
-            <button type="button" class="btn btn-sm ml-3 btn-success"> Add User </button>
+                <i class="mdi mdi-printer btn-icon-prepend"></i> Imprimir </button>
+            <button type="button" class="btn btn-sm ml-3 btn-success"> Nuevo usuario </button>
         </div>
     </div>
     <!-- RESUMEN -->
@@ -25,8 +25,8 @@
                         <div class="card-body px-3 py-4">
                             <div class="d-flex justify-content-between align-items-start">
                                 <div class="color-card">
-                                    <p class="mb-0 color-card-head">Sales</p>
-                                    <h2 class="text-white"> $8,753.<span class="h5">00</span>
+                                    <p class="mb-0 color-card-head">Tipos de artificios</p>
+                                    <h2 class="text-white"> 8,753.<span class="h5">00</span>
                                     </h2>
                                 </div>
                                 <i class="card-icon-indicator mdi mdi-basket bg-inverse-icon-warning"></i>
@@ -40,8 +40,8 @@
                         <div class="card-body px-3 py-4">
                             <div class="d-flex justify-content-between align-items-start">
                                 <div class="color-card">
-                                    <p class="mb-0 color-card-head">Margin</p>
-                                    <h2 class="text-white"> $5,300.<span class="h5">00</span>
+                                    <p class="mb-0 color-card-head">Artificios totales</p>
+                                    <h2 class="text-white"> 5,300.<span class="h5">00</span>
                                     </h2>
                                 </div>
                                 <i class="card-icon-indicator mdi mdi-cube-outline bg-inverse-icon-danger"></i>
@@ -55,8 +55,8 @@
                         <div class="card-body px-3 py-4">
                             <div class="d-flex justify-content-between align-items-start">
                                 <div class="color-card">
-                                    <p class="mb-0 color-card-head">Orders</p>
-                                    <h2 class="text-white"> $1,753.<span class="h5">00</span>
+                                    <p class="mb-0 color-card-head">Retiros totales</p>
+                                    <h2 class="text-white"> 1,753.<span class="h5">00</span>
                                     </h2>
                                 </div>
                                 <i class="card-icon-indicator mdi mdi-briefcase-outline bg-inverse-icon-primary"></i>
@@ -70,7 +70,7 @@
                         <div class="card-body px-3 py-4">
                             <div class="d-flex justify-content-between align-items-start">
                                 <div class="color-card">
-                                    <p class="mb-0 color-card-head">Affiliate</p>
+                                    <p class="mb-0 color-card-head">Coordinaciones</p>
                                     <h2 class="text-white">2368</h2>
                                 </div>
                                 <i class="card-icon-indicator mdi mdi-account-circle bg-inverse-icon-success"></i>
@@ -87,12 +87,12 @@
                     <div class="row">
                         <div class="col-sm-7">
                             <h5>Business Survey</h5>
-                            <p class="text-muted"> Show overview jan 2018 - Dec 2019 <a class="text-muted font-weight-medium pl-2" href="#"><u>See Details</u></a>
+                                <p class="text-muted"> Graficas mensuales <a class="text-muted font-weight-medium pl-2" href="#"><u>See Details</u></a>
                             </p>
                         </div>
                         <div class="col-sm-5 text-md-right">
                             <button type="button" class="btn btn-icon-text mb-3 mb-sm-0 btn-inverse-primary font-weight-normal">
-                                <i class="mdi mdi-email btn-icon-prepend"></i>Download Report </button>
+                                <i class="mdi mdi-email btn-icon-prepend"></i>Descargar Reporte </button>
                         </div>
                     </div>
                     <div class="row">

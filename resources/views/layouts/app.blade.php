@@ -38,9 +38,9 @@
                         </div>
                         <div class="nav-profile-text d-flex flex-column pr-3">
                             <span class="font-weight-medium mb-2">{{ Auth::user()->name }}</span>
-                            <span class="font-weight-normal">$8,753.00</span>
+                            <!--    <span class="font-weight-normal">$8,753.00</span> -->
                         </div>
-                        <span class="badge badge-danger text-white ml-3 rounded">3</span>
+                        <!-- <span class="badge badge-danger text-white ml-3 rounded">3</span> -->
                     </a>
                 </li>
                 <li class="nav-item">
@@ -88,7 +88,7 @@
                         <span class="menu-title">Stock</span>
                     </a>
                 </li>
-                
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('retiro_stock')}}">
                         <i class="mdi  mdi-cube-send menu-icon"></i>
@@ -141,7 +141,7 @@
                     <div class="tiles dark"></div>
                 </div>
             </div>
-            <nav class="navbar col-lg-12 col-12 p-lg-0 fixed-top d-flex flex-row">
+            <nav class="navbar col-lg-12 col-12  p-lg-0 fixed-top d-flex flex-row">
                 <!-- BARRA SUPERIOR -->
                 <div class="navbar-menu-wrapper d-flex align-items-stretch justify-content-between">
                     <a class="navbar-brand brand-logo-mini align-self-center d-lg-none" href="index.html"><img src="../assets/images/logo-mini.svg" alt="logo" /></a>
@@ -149,11 +149,12 @@
                         <i class="mdi mdi-menu"></i>
                     </button>
                     <ul class="navbar-nav">
-                        <li class="nav-item dropdown">
+                        <!-- <li class="nav-item dropdown">
                             <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
                                 <i class="mdi mdi-bell-outline"></i>
                                 <span class="count count-varient1">7</span>
                             </a>
+                            
                             <div class="dropdown-menu navbar-dropdown navbar-dropdown-large preview-list" aria-labelledby="notificationDropdown">
                                 <h6 class="p-3 mb-0">Notifications</h6>
                                 <a class="dropdown-item preview-item">
@@ -186,8 +187,8 @@
                                 <div class="dropdown-divider"></div>
                                 <p class="p-3 mb-0">View all activities</p>
                             </div>
-                        </li>
-                        <li class="nav-item dropdown d-none d-sm-flex">
+                        </li> -->
+                        <!-- <li class="nav-item dropdown d-none d-sm-flex">
                             <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown">
                                 <i class="mdi mdi-email-outline"></i>
                                 <span class="count count-varient2">5</span>
@@ -217,23 +218,15 @@
                                 </a>
                                 <h6 class="p-3 mb-0">See all activity</h6>
                             </div>
-                        </li>
+                        </li> -->
                         <li class="nav-item nav-search border-0 ml-1 ml-md-3 ml-lg-5 d-none d-md-flex">
-                            <form class="nav-link form-inline mt-2 mt-md-0">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search" />
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">
-                                            <i class="mdi mdi-magnify"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </form>
+
+                         @livewire('search.search-show')
                         </li>
                     </ul>
                     <ul class="navbar-nav navbar-nav-right ml-lg-auto">
                         <!-- IDIOMA -->
-                        <li class="nav-item dropdown d-none d-xl-flex border-0">
+                        <!-- <li class="nav-item dropdown d-none d-xl-flex border-0">
                             <a class="nav-link dropdown-toggle" id="languageDropdown" href="#" data-toggle="dropdown">
                                 <i class="mdi mdi-earth"></i> English </a>
                             <div class="dropdown-menu navbar-dropdown" aria-labelledby="languageDropdown">
@@ -242,7 +235,7 @@
                                 <a class="dropdown-item" href="#"> Latin </a>
                                 <a class="dropdown-item" href="#"> Japanese </a>
                             </div>
-                        </li>
+                        </li> -->
                         <!-- END IDIOMA-->
                         <!-- PERFIL -->
                         <li class="nav-item nav-profile dropdown  border-0">
