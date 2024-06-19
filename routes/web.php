@@ -39,7 +39,7 @@ Route::middleware([
     })->name('registrar');
 
     /* EXPORTAR PDF DE RETIROS */
-    Route::get('/dashboard/generate-pdf', [App\Http\Controllers\PDFController::class, 'generatePDF'])->name('prueba');
+    Route::get('/dashboard/generate-pdf/{fecha_inicio}/{fecha_fin}', [App\Http\Controllers\PDFController::class, 'generatePDF'])->name('prueba');
 
 
 });
