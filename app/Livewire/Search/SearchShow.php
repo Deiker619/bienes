@@ -38,4 +38,8 @@ class SearchShow extends Component
     public function export(){
         return redirect()->route('prueba', ['fecha_inicio' => $this->fecha_inicio, 'fecha_fin' => $this->fecha_fin]);
     }
+
+    public function exportOnly($id){
+        return redirect()->route('exportOnlyRetiro', ['id' => $id]);
+    }
 }

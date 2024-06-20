@@ -43,8 +43,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Busqueda de registros</h5>
-                    <button type="button" class="close" wire:click="close_modal" data-dismiss="modal"
-                        aria-label="Close">
+                    <button type="button" class="close" wire:click="close_modal" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
@@ -60,13 +59,15 @@
                                     <a href="#" class="list-group-item list-group-item-action" aria-current="true">
                                         <div class="d-flex w-100 justify-content-between">
                                             <h5 class="mb-1">Retiro de ID: # {{$retiro->id}}</h5>
-                                            <small style="text-primary">{{ $retiro->cantidad_retirada }}
+                                            <small class="text-warning">{{ $retiro->cantidad_retirada }}
                                                 {{$retiro->artificio->name}} </small>
                                         </div>
                                         <p class="mb-1">El dia {{ $retiro->created_at }} se retiró {{
                                             $retiro->cantidad_retirada }} {{$retiro->artificio->name}} con destino a {{
                                             $retiro->coordinacion->name_coordinacion }}</p>
-                                        <small>And some small print.</small>
+                                            <small>
+                                                <button type="button" class="btn btn-sm btn-outline-info btn-icon-text" wire:click="exportOnly({{$retiro->id}})"> Imprimir <i class="mdi mdi-printer btn-icon-append"></i></button>
+                                            </small>
                                     </a>
                                     @endforeach
                                     @endif
@@ -97,10 +98,9 @@
 
                     <button type="button" class="btn btn-secondary" wire:click="close_modal">Close</button>
 
-                    <button wire:click="export" type="button" wire:loading.attr="disabled" wire:loading.class="d-none"
-                        class="btn btn-primary btn-icon-text"> Print <i class="mdi mdi-printer btn-icon-append"></i>
+                    <button wire:click="export" type="button" wire:loading.attr="disabled" wire:loading.class="d-none" class="btn btn-primary btn-icon-text"> Imprimir todo <i class="mdi mdi-printer btn-icon-append"></i>
                     </button>
-                    <button wire:loading wire:target="export" type="button" class="btn btn-primary btn-icon-text"> Print
+                    <button wire:loading wire:target="export" type="button" class="btn btn-primary btn-icon-text"> Imprimir todo
                         <div class="spinner-border spinner-border-sm text-white" role="status">
                             <span class="sr-only">Loading...</span>
                         </div>

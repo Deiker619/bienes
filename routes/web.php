@@ -34,12 +34,14 @@ Route::middleware([
     Route::get('/dashboard/coordinaciones', function () {
         return view('livewire.coordinaciones.coordinaciones-layouts-show');
     })->name('coordinacion');
+
     Route::get('/dashboard/register', function () {
         return view('auth.register');
     })->name('registrar');
 
     /* EXPORTAR PDF DE RETIROS */
     Route::get('/dashboard/generate-pdf/{fecha_inicio}/{fecha_fin}', [App\Http\Controllers\PDFController::class, 'generatePDF'])->name('prueba');
+    Route::get('/dashboard/ExportOnlyRetiro/{id}', [App\Http\Controllers\PDFController::class, 'generateOnlyRetiro'])->name('exportOnlyRetiro');
 
 
 });

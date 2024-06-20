@@ -38,4 +38,19 @@ class PDFController extends Controller
         $pdf = Pdf::loadView('prueba', $data);
         return $pdf->download(date('d-m-Y').'.pdf');
     }
+
+    public function generateOnlyRetiro($id){
+        $retiros = retiro::select('id', 'artificio_id', 'cantidad_retirada', 'lugar_destino', 'created_at')
+        ->where('id', $id)
+        ->first();
+        $data = [
+            'title' => 'Welcome to Funda of Web IT - fundaofwebit.com',
+            'date' => date('m/d/Y'),
+            'retiros' => $retiros
+        ];
+        $pdf = Pdf::loadView('exportOnlyRetiro', $data);
+        return $pdf->download(date('d-m-Y').'.pdf');
+
+
+    }
 }
