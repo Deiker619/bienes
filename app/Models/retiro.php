@@ -18,4 +18,16 @@ class retiro extends Model
     {
         return $this->belongsTo(coordinacion::class, 'lugar_destino');
     }
+    public function beneficiario()
+    {
+        return $this->belongsTo(beneficiario::class, 'beneficiario_id');
+    }
+    public function jornada()
+    {
+        return $this->belongsTo(jornada::class, 'jornada_id');
+    }
+    public function ente()
+    {
+        return $this->belongsTo(ente::class, 'ente_id');
+    }
 }
