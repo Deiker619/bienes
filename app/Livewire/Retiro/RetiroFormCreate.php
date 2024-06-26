@@ -13,7 +13,8 @@ use Livewire\Attributes\On;
 class RetiroFormCreate extends Component
 {
     public $cantidad = 0, $restante;
-    public $retiro_cantidad, $artificio_retiro, $coordinacion_retiro;
+    public $retiro_cantidad, $artificio_retiro ;
+    public $destino;
     protected $listeners = ['artificioAdded' => 'artificioAdded'];
 
     public $rules = [
@@ -31,6 +32,26 @@ class RetiroFormCreate extends Component
         $coordinaciones = coordinacion::select('id', 'name_coordinacion')->get();
         $artificios = artificio::select('id', 'name', 'created_at', 'updated_at')->orderBy('name', 'asc')->get();
         return view('livewire.retiro.retiro-form-create', compact('artificios', 'coordinaciones'));
+    }
+
+    public function changeDestino(){
+        switch ($this->destino) {
+            case 'coordinacion_retiro':
+                dd('coordinacion');
+                break;
+            
+            case 'beneficiario_retiro':
+                dd('beneficiario');
+                break;
+            
+            case 'jornada_retiro':
+                dd('jornada');
+                break;
+            
+            default:
+                dd('default');
+                break;
+        }
     }
 
     
