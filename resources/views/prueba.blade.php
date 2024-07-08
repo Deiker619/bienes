@@ -56,7 +56,7 @@
                     <td>{{$item->id }}</td>
                     <td>{{$item->artificio->name }}</td>
                     <td>{{$item->cantidad_retirada }}</td>
-                    <td>{{$item->coordinacion->name_coordinacion}}</td>
+                    <td>{{$item->coordinacion->name_coordinacion ?? $item->beneficiario->nombre ?? $item->jornada->descripcion}}</td>
                     <td>{{$item->created_at}}</td>
                 </tr>
                 @endforeach

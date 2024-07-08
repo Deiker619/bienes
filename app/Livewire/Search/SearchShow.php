@@ -21,11 +21,11 @@ class SearchShow extends Component
         $this->fecha_fin = Carbon::parse( $this->fecha_fin )->endOfDay();
 
         if($this->fecha_fin == $this->fecha_inicio){
-            $this->retiros = retiro::with('artificio:name')->select('id', 'artificio_id', 'cantidad_retirada', 'lugar_destino', 'created_at')
+            $this->retiros = retiro::with('artificio:name')->select('id', 'artificio_id', 'cantidad_retirada', 'lugar_destino', 'beneficiario_id','jornada_id', 'created_at')
             ->whereDate('created_at', $this->fecha_fin)->get();
         }else{
 
-            $this->retiros = retiro::select('id', 'artificio_id', 'cantidad_retirada', 'lugar_destino', 'created_at')
+            $this->retiros = retiro::select('id', 'artificio_id', 'cantidad_retirada', 'lugar_destino', 'beneficiario_id','jornada_id', 'created_at')
             ->whereBetween('created_at', [$this->fecha_inicio, $this->fecha_fin])->get();
         }
     }

@@ -44,4 +44,6 @@ Route::middleware([
     Route::get('/dashboard/ExportOnlyRetiro/{id}', [App\Http\Controllers\PDFController::class, 'generateOnlyRetiro'])->name('exportOnlyRetiro');
 
 
+    /* EXPORTAR STOCK */
+    Route::get('/dashboard/exportStock/', [App\Http\Controllers\PDFController::class, 'exportStock'])->name('exportStock');
 });

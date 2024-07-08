@@ -14,7 +14,8 @@ class RetiroHistorial extends Component
     public function render()
     {
         $retiros = retiro::with('coordinacion:id,name_coordinacion', 'artificio:id,name')
-            ->select('id','artificio_id','lugar_destino','cantidad_retirada','created_at')
+            ->select('id','artificio_id','lugar_destino','beneficiario_id', 'jornada_id', 'ente_id',
+            'cantidad_retirada','created_at')
             ->limit(3)
             ->orderBy('created_at', 'desc')
             ->get();

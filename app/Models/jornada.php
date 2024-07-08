@@ -9,6 +9,7 @@ use App\Models\retiro;
 class jornada extends Model
 {
     use HasFactory;
+    protected $fillable = ['descripcion', 'fecha'];
     public function retiros()
     {
         return $this->hasMany(retiro::class, 'jornada_id');

@@ -22,33 +22,34 @@
                     <h4 class="card-title">Formulario de retiro</h4>
                     <!-- <p class="card-description">Basic form layout</p> -->
                     <form class="forms-sample row g-6" wire:submit.prevent="submit">
+                        {{-- Lista de input's radio --}}
                         <div style="margin-left: 0; justify-content: left" class="d-flex form-group col-12">
                             <div class="form-check mr-3 form-check-flat form-check-primary">
                                 <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" name="optionsRadios"> Jornada <i
-                                        class="input-helper"></i>
+                                    <input type="radio" class="form-check-input"
+                                        wire:change="changeDestino($event.target.value)" value="jornada_retiro"
+                                        name="optionsRadios"> Jornada <i class="input-helper"></i>
                                 </label>
                             </div>
                             <div class="form-check mr-3 form-check-flat form-check-primary">
                                 <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" name="optionsRadios"> Coordinación <i
-                                        class="input-helper"></i>
+                                    <input type="radio" class="form-check-input"
+                                        wire:change="changeDestino($event.target.value)" value="coordinacion_retiro"
+                                        name="optionsRadios"> Coordinación <i class="input-helper"></i>
                                 </label>
                             </div>
                             <div class="form-check mr-3 form-check-flat form-check-primary">
                                 <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" name="optionsRadios"> Persona con
+                                    <input type="radio" class="form-check-input"
+                                        wire:change="changeDestino($event.target.value)" value="beneficiario_retiro"
+                                        name="optionsRadios"> Persona con
                                     discapacidad <i class="input-helper"></i>
                                 </label>
                             </div>
-                            <div class="form-check mr-3 form-check-flat form-check-primary">
-                                <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" name="optionsRadios"> Ente<i
-                                        class="input-helper"></i>
-                                </label>
-                            </div>
+                           
                         </div>
 
+                        @if($destino == 'coordinacion_retiro')
 
                         <div class="form-group col-12">
                             <label for="exampleInputUsername1">Coordinación de destino</label>
@@ -62,17 +63,44 @@
                             <x-input-error for="id" style="color:red"></x-input-error>
 
                         </div>
+                        @endif
 
-                        {{-- <div class="form-group col-12 " wire:target="artificiosDisponibles"
-                            wire:loading.attr="disabled" wire:loading.class="d-none">
-                            <label disabled>Nombre del beneficiario </label>
-                            <input type="text" class="form-control">
+                        @if($destino == 'beneficiario_retiro')
+                        <div class="form-group col-12 " wire:target="artificiosDisponibles" wire:loading.attr="disabled"
+                            wire:loading.class="d-none">
+                            <label disabled>Nombre de beneficiario </label>
+                            <input type="text" wire:model="beneficiario_nombre" class="form-control">
                         </div>
                         <div class="form-group col-12 " wire:target="artificiosDisponibles" wire:loading.attr="disabled"
                             wire:loading.class="d-none">
-                            <label disabled>Cedula del beneficiario </label>
-                            <input type="text" class="form-control">
-                        </div> --}}
+                            <label disabled>Cedula de beneficiario </label>
+                            <input type="text" wire:model="beneficiario_cedula" class="form-control">
+                        </div>
+                        @endif
+                        @if($destino == 'jornada_retiro')
+                        <div class="form-group col-12 " wire:target="artificiosDisponibles" wire:loading.attr="disabled"
+                            wire:loading.class="d-none">
+                            <label disabled> Fecha de la jornada </label>
+                            <input type="date" wire:model.blur="jornada_fecha" class="form-control">
+                        </div>
+                        <div class="form-group col-12 " wire:target="artificiosDisponibles" wire:loading.attr="disabled"
+                            wire:loading.class="d-none">
+                            <label disabled>Descripción de la jornada </label>
+                            <input type="text" wire:model.blur="jornada_descripcion" placeholder="Breve descripción de la jornada"
+                                class="form-control">
+                        </div>
+                        @endif
+                        @if($destino == 'ente_retiro')
+
+                        <div class="form-group col-12 " wire:target="artificiosDisponibles" wire:loading.attr="disabled"
+                            wire:loading.class="d-none">
+                            <label disabled>Descripción de la entrega </label>
+                            <input type="text" wire:model.blur="" placeholder="Breve descripción de la entrega"
+                                class="form-control">
+                        </div>
+                        @endif
+
+
                         <div class="form-group col-12">
                             <label for="exampleInputEmail1">Artificio a retirar</label>
 

@@ -14,9 +14,6 @@ return new class extends Migration
         Schema::create('jornadas', function (Blueprint $table) {
             $table->id();
             $table->text('descripcion');
-            $table->unsignedBigInteger('estado_id');
-            $table->unsignedBigInteger('municipio_id');
-            $table->unsignedBigInteger('parroquia_id');
             $table->timestamps();
         });
     }

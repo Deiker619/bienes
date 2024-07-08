@@ -64,7 +64,7 @@
                                         </div>
                                         <p class="mb-1">El dia {{ $retiro->created_at }} se retiró {{
                                             $retiro->cantidad_retirada }} {{$retiro->artificio->name}} con destino a {{
-                                            $retiro->coordinacion->name_coordinacion }}</p>
+                                            $retiro->coordinacion->name_coordinacion ?? $retiro->beneficiario->nombre ?? $retiro->jornada->descripcion }}</p>
                                             <small>
                                                 <button type="button" class="btn btn-sm btn-outline-info btn-icon-text" wire:click="exportOnly({{$retiro->id}})"> Imprimir <i class="mdi mdi-printer btn-icon-append"></i></button>
                                             </small>

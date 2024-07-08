@@ -9,6 +9,7 @@ use App\Models\retiro;
 class beneficiario extends Model
 {
     use HasFactory;
+    protected $fillable = ['nombre', 'cedula','apellido', 'telefono'];
 
     public function retiros()
     {

@@ -77,4 +77,8 @@ class StockLayoutsShow extends Component
         $this->dispatch('artificioAdded', 'Artificio eliminado del stock');
        
     }
+
+    public function export(){
+        return redirect()->route('exportStock');
+    }
 }

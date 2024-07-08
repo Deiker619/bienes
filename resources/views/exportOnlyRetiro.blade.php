@@ -55,7 +55,7 @@
                     <td>{{$retiros->id}}</td>
                     <td>{{$retiros->artificio->name}}</td>
                     <td>{{$retiros->cantidad_retirada}}</td>
-                    <td>{{$retiros->coordinacion->name_coordinacion}}</td>
+                    <td>{{$retiros->coordinacion->name_coordinacion ?? $retiros->beneficiario->nombre ?? $retiros->jornada->descripcion}}</td>
                     <td>{{$retiros->created_at}}</td>
                 </tr>
                 <!-- Añade más filas según sea necesario -->
