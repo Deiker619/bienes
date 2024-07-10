@@ -36,7 +36,6 @@
                                 <div class="col-12">
                                     <div class="mb-4">
                                         <h3>Ingrese aquí</h3>
-                                        <p>¿No posee cuenta? <a href="{{route('register')}}">Registrese aquí</a></p>
                                     </div>
                                 </div>
                             </div>
@@ -96,7 +95,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end mt-4">
-                                        <a href="#!">Forgot password</a>
+                                        <!-- <a href="#!">Forgot password</a> -->
                                     </div>
                                 </div>
                             </div>
