@@ -37,27 +37,24 @@
                 margin: 0;
             }
         </style>
-        <h1>Reporte de retiro</h1>
+        <h1>Reporte de stock</h1>
         <div class="table-container">
             <table>
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Nombre Artificio</th>
-              
-                        <th>Cantidad Retirada</th>
-                        <th>Lugar Destino</th>
+                        <th>Cantidad en stock</th>
                         <th>Fecha</th>
                     </tr>
                 </thead>
                 <tbody>
                     <!-- Aquí puedes agregar filas dinámicamente desde PHP -->
-                    @foreach ($retiros as $item)
+                    @foreach ($stock as $item)
                     <tr>
                         <td>{{$item->id }}</td>
                         <td>{{$item->artificio->name }}</td>
-                        <td>{{$item->cantidad_retirada }}</td>
-                        <td>{{$item->coordinacion->name_coordinacion ?? $item->beneficiario->nombre ?? $item->jornada->descripcion}}</td>
+                        <td>{{$item->cantidad_artificio }}</td>
                         <td>{{$item->created_at}}</td>
                     </tr>
                     @endforeach

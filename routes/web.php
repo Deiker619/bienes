@@ -45,5 +45,5 @@ Route::middleware([
 
 
     /* EXPORTAR STOCK */
-    Route::get('/dashboard/exportStock/', [App\Http\Controllers\PDFController::class, 'exportStock'])->name('exportStock');
+    Route::get('/dashboard/exportStock', [App\Http\Controllers\PDFController::class, 'exportStock'])->name('exportStock');
 });

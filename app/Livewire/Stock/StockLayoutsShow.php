@@ -79,6 +79,6 @@ class StockLayoutsShow extends Component
     }
 
     public function export(){
-        return redirect()->route('exportStock');
+        return redirect()->route('prueba');
     }
 }

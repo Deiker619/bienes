@@ -56,12 +56,12 @@ class PDFController extends Controller
     }
 
     public function exportStock(){
-        $stock = stock::select('id', 'artificio_id', 'cantidad_retirada', 'lugar_destino', 'beneficiario_id','jornada_id', 'created_at')
+        $stock = stock::select('id', 'artificio_id', 'cantidad_artificio', 'created_at')
         ->get();
         $data = [
             'title' => 'Welcome to Funda of Web IT - fundaofwebit.com',
             'date' => date('m/d/Y'),
-            'retiros' => $stock
+            'stock' => $stock
         ];
         $pdf = Pdf::loadView('livewire.stock.pdf.export-stock', $data);
         return $pdf->download(date('d-m-Y').'.pdf');

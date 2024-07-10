@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Livewire\Dashboard;
+
+use Livewire\Component;
+use App\Models\artificio;
+use App\Models\coordinacion;
+use App\Models\retiro;
+use App\Models\stock;
+use App\Models\beneficiario;
+use App\Models\jornada;
+
+class Cards extends Component
+{
+    public function render()
+    {
+        $total_artificio = stock::sum('cantidad_artificio');
+        $tipos_artificio = artificio::count();
+        $total_retiros = retiro::count();
+        return view('livewire.dashboard.cards', compact('total_artificio', 'tipos_artificio', 'total_retiros'));
+    }
+}
