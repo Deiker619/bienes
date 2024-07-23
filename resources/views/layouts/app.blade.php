@@ -96,7 +96,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('registrar')}}">
+                    <a class="nav-link" href="{{route('usuario')}}">
                         <i class="mdi mdi-account-multiple-plus menu-icon"></i>
                         <span class="menu-title">Crear usuario</span>
                     </a>

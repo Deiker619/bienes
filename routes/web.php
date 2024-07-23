@@ -39,6 +39,10 @@ Route::middleware([
         return view('auth.register');
     })->name('registrar');
 
+    Route::get('/dashboard/usuario', function () {
+        return view('livewire.users.user-show');
+    })->name('usuario');
+
     /* EXPORTAR PDF DE RETIROS */
     Route::get('/dashboard/generate-pdf/{fecha_inicio}/{fecha_fin}', [App\Http\Controllers\PDFController::class, 'generatePDF'])->name('prueba');
     Route::get('/dashboard/ExportOnlyRetiro/{id}', [App\Http\Controllers\PDFController::class, 'generateOnlyRetiro'])->name('exportOnlyRetiro');
