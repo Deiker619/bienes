@@ -13,5 +13,5 @@
             </ol>
         </nav>
     </div>
-   
+   @livewire('users.user-table-show')
 </x-app-layout>

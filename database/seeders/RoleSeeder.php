@@ -33,7 +33,7 @@ class RoleSeeder extends Seeder
         /* Stock */
         $permission = Permission::create(['name' => 'dashboard.Stock'])->syncRoles([$role, $role1]);; //Ver Stock
         $permission = Permission::create(['name' => 'Stock.store'])->assignRole($role);; //Agregar Stock
-        $permission = Permission::create(['name' => 'Stock.show']); //Ver Stock
+        $permission = Permission::create(['name' => 'Stock.show'])->assignRole($role);; //Ver Stock
         $permission = Permission::create(['name' => 'Stock.update'])->assignRole($role);; //editar Stock
         $permission = Permission::create(['name' => 'Stock.destroy'])->assignRole($role);; //Eliminar Stock
 

@@ -43,7 +43,7 @@
                                     <td>
                                         <div class="progress">
 
-                                            <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $total[$index]??0 ?>%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar bg-primary" role="progressbar" style="width: <?php echo $total[$index] ?? 0 ?>%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </td>
                                     <td>
@@ -55,7 +55,7 @@
                                             </span>
                                             <span class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                 <a class="dropdown-item" wire:click="edit({{$stock->id}})" style="cursor: pointer">Editar</a>
-                                                <a class="dropdown-item" wire:click="delete({{$stock->id}})" style="cursor: pointer" >Eliminar</a>
+                                                <a class="dropdown-item" wire:click="delete({{$stock->id}})" style="cursor: pointer">Eliminar</a>
                                             </span>
                                         </span>
 
@@ -74,60 +74,7 @@
 
 
     </div>
-    <!-- <div class="row">
 
-        <div class="col-xl-12 grid-margin stretch-card">
-
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">
-                        <span class="d-flex justify-content-between">
-                            <span>Actividad</span>
-                            <span class="dropdown dropleft d-block">
-                                <span id="dropdownMenuButton1" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    <span><i class="mdi mdi-dots-horizontal"></i></span>
-                                </span>
-                                <span class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <a class="dropdown-item" href="#">Contact</a>
-                                    <a class="dropdown-item" href="#">Helpdesk</a>
-                                    <a class="dropdown-item" href="#">Chat with us</a>
-                                </span>
-                            </span>
-                        </span>
-                    </h4>
-                    <ul class="gradient-bullet-list border-bottom">
-                        <li>
-                            <h6 class="mb-0"> It's awesome when we find a new solution </h6>
-                            <p class="text-muted">2h ago</p>
-                        </li>
-                        <li>
-                            <h6 class="mb-0">Report has been updated</h6>
-                            <p class="text-muted">
-                                <span>2h ago</span>
-                                <span class="d-inline-block">
-                                    <span class="d-flex d-inline-block">
-                                        <img class="ml-1" src="assets/images/faces/face1.jpg" alt="">
-                                        <img class="ml-1" src="assets/images/faces/face10.jpg" alt="">
-                                        <img class="ml-1" src="assets/images/faces/face14.jpg" alt="">
-                                    </span>
-                                </span>
-                            </p>
-                        </li>
-                        <li>
-                            <h6 class="mb-0"> Analytics dashboard has been created#Slack </h6>
-                            <p class="text-muted">2h ago</p>
-                        </li>
-                        <li>
-                            <h6 class="mb-0"> It's awesome when we find a new solution </h6>
-                            <p class="text-muted">2h ago</p>
-                        </li>
-                    </ul>
-                    <a class="text-black mt-3 mb-0 d-block h6" href="#">View all <i class="mdi mdi-chevron-right"></i></a>
-                </div>
-            </div>
-        </div>
-        
-    </div> -->
 
     @if($open_edit)
     <div class="modal-backdrop fade show"></div>
