@@ -22,7 +22,7 @@
                                     <th>Nombre del usuario</th>
                                     <th>Email</th>
                                     <th>Agregado</th>
-                     
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -34,10 +34,10 @@
                                     </td>
                                     <td>{{$user->name}}</td>
                                     <td>
-                                       {{$user->email}}
+                                        {{$user->email}}
                                     </td>
                                     <td>{{$user->created_at->format('d/m/Y') }}</td>
-                                    
+
                                     <td>
                                         <!-- <div class="badge badge-inverse-success"> Editar </div>
                                         <div class="badge badge-inverse-danger"> Eliminar </div> -->
@@ -47,7 +47,7 @@
                                             </span>
                                             <span class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                 <a class="dropdown-item" wire:click="edit({{$user->id}})" style="cursor: pointer">Editar</a>
-                                                <a class="dropdown-item" wire:click="delete({{$user->id}})" style="cursor: pointer" >Eliminar</a>
+                                                <a class="dropdown-item" wire:click="delete({{$user->id}})" style="cursor: pointer">Eliminar</a>
                                             </span>
                                         </span>
 
@@ -66,5 +66,81 @@
 
 
     </div>
-  
+    @if($open_edit)
+    <div class="modal-backdrop fade show"></div>
+    <div class="modal fade show" id="exampleModal" style="padding-right: 17px; display: block;" aria-modal="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" wire:click="$set('open_edit', false);">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Editar Usuario</h4>
+
+                            <form class="forms-sample">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label for="exampleInputUsername1">Nombre</label>
+                                        <input type="text" class="form-control" wire:model="nombre" id="exampleInputUsername1" placeholder="Ej: muletas">
+                                        <x-input-error for="cantidad_artificio" style="color:red"></x-input-error>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputUsername1">Email</label>
+                                        <input type="text" class="form-control" wire:model="email" id="exampleInputUsername1" placeholder="Ej: muletas">
+                                        <x-input-error for="cantidad_artificio" style="color:red"></x-input-error>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputUsername1">ID</label>
+                                        <input type="text" class="form-control" wire:model="ide" id="exampleInputUsername1" placeholder="Ej: muletas">
+                                        <x-input-error for="cantidad_artificio" style="color:red"></x-input-error>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <h5 class="card-title">Roles</h5>
+                                        <div class="form-group">
+
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" wire:model="roles" value="1"> Administrador <i class="input-helper"></i></label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" wire:model="roles" value="2" checked=""> Analista <i class="input-helper"></i></label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" wire:click="$set('open_edit', false);">Close</button>
+                    <button type="button" class="btn btn-primary" wire:click.prevent="update" wire:loading.attr="disabled" wire:loading.class="d-none">Guardar cambios</button>
+                    <button class="btn btn-primary" type="button" disabled wire:loading wire:target="update">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+
 </div>
