@@ -1,17 +1,17 @@
 <div>
     <!-- Search -->
 
-    <form class="nav-link form-inline mt-2 mt-md-0 d-flex p-2  justify-content-between">
-        <div class="input-group mr-2">
-            <input type="date" class="form-control" wire:model.blur='fecha_inicio' placeholder="Search" />
+    <form class="nav-link form-inline mt-md-0 d-flex flex-nowrap justify-content-between">
+        <div class="input-group mr-2 mb-2 mb-md-0 w-4">
+            <input type="date" class="form-control" wire:model.blur="fecha_inicio" placeholder="Search">
             <div class="input-group-append">
                 <span class="input-group-text">
                     <!-- <i class="mdi mdi-magnify"></i> -->
                 </span>
             </div>
         </div>
-        <div class="input-group">
-            <input type="date" wire:model.blur='fecha_fin' class="form-control" placeholder="Search" />
+        <div class="input-group mb-2 mb-md-0">
+            <input type="date" wire:model.blur="fecha_fin" class="form-control" placeholder="Search">
             <div class="input-group-append">
                 <span class="input-group-text">
                     <!-- <i class="mdi mdi-magnify"></i> -->
@@ -19,12 +19,10 @@
             </div>
         </div>
         <div class="input-group ml-2">
-
-            <button type="button" wire:click='search' class="btn btn-primary btn-rounded btn-icon">
+            <button type="button" wire:click="search" class="btn btn-primary btn-rounded btn-icon">
                 <i wire:loading.attr="disabled" wire:target="search" wire:loading.class="d-none" class="mdi mdi-account-search-outline" style="color: #f2f2f2;"></i>
-                <div class="d-flex justify-content-center" wire:loading wire:target="search">
-
-                    <div wire:loading wire:target="search" class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+                <div class="d-flex justify-content-center" wire:loading="" wire:target="search">
+                    <div wire:loading="" wire:target="search" class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
                 </div>
             </button>
         </div>
