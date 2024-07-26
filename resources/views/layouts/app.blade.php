@@ -25,8 +25,10 @@
     <div class="container-scroller">
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <div class="text-center sidebar-brand-wrapper d-flex align-items-center">
-                <a class="sidebar-brand brand-logo" href="index.html"><img src="../assets/images/logo.svg" alt="logo" /></a>
-                <a class="sidebar-brand brand-logo-mini pl-4 pt-3" href="index.html"><img src="../assets/images/logo-mini.svg" alt="logo" /></a>
+                <a class="sidebar-brand brand-logo" href="index.html"><img src="../assets/images/logo.svg"
+                        alt="logo" /></a>
+                <a class="sidebar-brand brand-logo-mini pl-4 pt-3" href="index.html"><img
+                        src="../assets/images/logo-mini.svg" alt="logo" /></a>
             </div>
             <ul class="nav">
                 <li class="nav-item nav-profile">
@@ -44,19 +46,21 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('dashboard')}}">
+                    <a class="nav-link" href="{{ route('dashboard') }}">
                         <i class="mdi mdi-home menu-icon"></i>
                         <span class="menu-title">Dashboard</span>
                     </a>
                 </li>
+                @can('dashboard.Artificios')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('artificios') }}">
+                            <i class="mdi mdi-wheelchair-accessibility menu-icon"></i>
+                            <span class="menu-title">Artificios</span>
+                        </a>
+                    </li>
+                @endcan
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('artificios')}}">
-                        <i class="mdi mdi-wheelchair-accessibility menu-icon"></i>
-                        <span class="menu-title">Artificios</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('coordinacion')}}">
+                    <a class="nav-link" href="{{ route('coordinacion') }}">
                         <i class="mdi mdi-home-city menu-icon"></i>
                         <span class="menu-title">Coordinaciones</span>
                     </a>
@@ -83,24 +87,26 @@
                     </div>
                 </li> -->
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('stock_show')}}">
+                    <a class="nav-link" href="{{ route('stock_show') }}">
                         <i class="mdi mdi-cube-outline menu-icon"></i>
                         <span class="menu-title">Stock</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('retiro_stock')}}">
+                    <a class="nav-link" href="{{ route('retiro_stock') }}">
                         <i class="mdi  mdi-cube-send menu-icon"></i>
                         <span class="menu-title">Retiro de stock</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('usuario')}}">
-                        <i class="mdi mdi-account-multiple-plus menu-icon"></i>
-                        <span class="menu-title">Crear usuario</span>
-                    </a>
-                </li>
+                @can('dashboard.usuario')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('usuario') }}">
+                            <i class="mdi mdi-account-multiple-plus menu-icon"></i>
+                            <span class="menu-title">Gestion de usuarios</span>
+                        </a>
+                    </li>
+                @endcan
                 <!-- DIVISOR -->
                 <!-- <li class="nav-item">
                     <span class="nav-link" href="#">
@@ -144,8 +150,10 @@
             <nav class="navbar col-lg-12 col-12  p-lg-0 fixed-top d-flex flex-row">
                 <!-- BARRA SUPERIOR -->
                 <div class="navbar-menu-wrapper d-flex align-items-stretch justify-content-between">
-                    <a class="navbar-brand brand-logo-mini align-self-center d-lg-none" href="index.html"><img src="../assets/images/logo-mini.svg" alt="logo" /></a>
-                    <button class="navbar-toggler navbar-toggler align-self-center mr-2" type="button" data-toggle="minimize">
+                    <a class="navbar-brand brand-logo-mini align-self-center d-lg-none" href="index.html"><img
+                            src="../assets/images/logo-mini.svg" alt="logo" /></a>
+                    <button class="navbar-toggler navbar-toggler align-self-center mr-2" type="button"
+                        data-toggle="minimize">
                         <i class="mdi mdi-menu"></i>
                     </button>
                     <ul class="navbar-nav">
@@ -221,7 +229,7 @@
                         </li> -->
                         <li class="nav-item nav-search border-0 ml-1 ml-md-3 ml-lg-5 d-none d-md-flex">
 
-                         @livewire('search.search-show')
+                            @livewire('search.search-show')
                         </li>
                     </ul>
                     <ul class="navbar-nav navbar-nav-right ml-lg-auto">
@@ -239,8 +247,10 @@
                         <!-- END IDIOMA-->
                         <!-- PERFIL -->
                         <li class="nav-item nav-profile dropdown  border-0">
-                            <a class="nav-link dropdown-toggle flex align-items-center" id="profileDropdown" href="#" data-toggle="dropdown">
-                                <img class="nav-profile-img mr-2" alt="" src="../assets/images/faces/face3.jpg" />
+                            <a class="nav-link dropdown-toggle flex align-items-center" id="profileDropdown"
+                                href="#" data-toggle="dropdown">
+                                <img class="nav-profile-img mr-2" alt=""
+                                    src="../assets/images/faces/face3.jpg" />
                                 <span class="profile-name">{{ Auth::user()->name }}</span>
                             </a>
                             <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
@@ -248,7 +258,8 @@
                                     <i class="mdi mdi-cached mr-2 text-success"></i> Perfil </a>
                                 <form action="{{ route('logout') }}" method="POST" x-data>
                                     @csrf
-                                    <a class="dropdown-item" href="{{ route('logout') }}" @click.prevent="$root.submit()">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        @click.prevent="$root.submit()">
 
                                         <i class="mdi mdi-logout mr-2 text-primary"></i> {{ __('Log Out') }}
                                     </a>
@@ -257,7 +268,8 @@
                         </li>
                         <!-- END PERFIL -->
                     </ul>
-                    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                        data-toggle="offcanvas">
                         <span class="mdi mdi-menu"></span>
                     </button>
                 </div>
@@ -273,8 +285,11 @@
                 <!-- FOOTER -->
                 <footer class="footer">
                     <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com 2020</span>
-                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard template</a> from Bootstrapdash.com</span>
+                        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright ©
+                            bootstrapdash.com 2020</span>
+                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a
+                                href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard template</a>
+                            from Bootstrapdash.com</span>
                     </div>
                 </footer>
                 <!-- END -->

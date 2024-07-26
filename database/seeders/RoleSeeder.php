@@ -31,11 +31,17 @@ class RoleSeeder extends Seeder
         $permission = Permission::create(['name' => 'Coordinaciones.update'])->assignRole($role); //editar coordinacines
         $permission = Permission::create(['name' => 'Coordinaciones.destroy'])->assignRole($role); //Eliminar coordinacines
         /* Stock */
-        $permission = Permission::create(['name' => 'dashboard.Stock'])->syncRoles([$role, $role1]);; //Ver Stock
-        $permission = Permission::create(['name' => 'Stock.store'])->assignRole($role);; //Agregar Stock
-        $permission = Permission::create(['name' => 'Stock.show'])->assignRole($role);; //Ver Stock
-        $permission = Permission::create(['name' => 'Stock.update'])->assignRole($role);; //editar Stock
-        $permission = Permission::create(['name' => 'Stock.destroy'])->assignRole($role);; //Eliminar Stock
+        $permission = Permission::create(['name' => 'dashboard.Stock'])->syncRoles([$role, $role1]); //Ver Stock
+        $permission = Permission::create(['name' => 'Stock.store'])->assignRole($role); //Agregar Stock
+        $permission = Permission::create(['name' => 'Stock.show'])->assignRole($role);//Ver Stock
+        $permission = Permission::create(['name' => 'Stock.update'])->assignRole($role); //editar Stock
+        $permission = Permission::create(['name' => 'Stock.destroy'])->assignRole($role); //Eliminar Stock
+        /* User */
+        $permission = Permission::create(['name' => 'dashboard.usuario'])->syncRoles([$role]); //Ver Stock
+        $permission = Permission::create(['name' => 'user.store'])->assignRole($role); //Agregar Stock
+        $permission = Permission::create(['name' => 'user.show'])->assignRole($role);//Ver Stock
+        $permission = Permission::create(['name' => 'user.update'])->assignRole($role); //editar Stock
+        $permission = Permission::create(['name' => 'user.destroy'])->assignRole($role); //Eliminar Stock
 
     }
 }

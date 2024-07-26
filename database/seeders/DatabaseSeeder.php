@@ -20,5 +20,11 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ])->assignRole('Admin');
+
+        User::create([
+            'name' => 'Prueba Deiker',
+            'email' => 'deiker1842@example.com',
+            'password' => bcrypt('12345678')
+        ])->assignRole('Analist');
     }
 }
