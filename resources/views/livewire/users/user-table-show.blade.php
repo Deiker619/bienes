@@ -55,7 +55,7 @@
                                                         style="cursor: pointer">Editar</a>
                                                     <a class="dropdown-item" wire:click="editRoles({{ $user->id }})"
                                                         style="cursor: pointer">Asignar roles</a>
-                                                    <a class="dropdown-item" wire:click="delete({{ $user->id }})"
+                                                    <a class="dropdown-item" wire:click="destroy({{ $user->id }})"
                                                         style="cursor: pointer">Eliminar</a>
                                                 </span>
                                             </span>
@@ -140,7 +140,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Rol actual: <b> {{ $rol->name }}</b></h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Rol actual: <b> {{ $rol->name?? " " }}</b></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true" wire:click="$set('open_roles', false);">×</span>
                         </button>
@@ -154,18 +154,15 @@
                                 <form class="forms-sample">
                                     <div class="form-group">
 
-                                        <div class="form-check">
-
-                                            <input type="radio" class="form-check-input" name="optionsRadios"
-                                                id="optionsRadios2" wire:model="r" value="1" checked=""> Admin 
-
-                                        </div>
-                                        <div class="form-check">
-
-                                            <input type="radio" class="form-check-input" name="optionsRadios"
-                                                id="optionsRadios2" wire:model="r" value="2" checked=""> Analista 
-
-                                        </div>
+                                        <div class="form-check form-check-primary">
+                                            <label class="form-check-label">
+                                              <input type="radio" wire:model="r" class="form-check-input" name="ExampleRadio1" id="ExampleRadio1" value="1" checked=""> Administrador <i class="input-helper"></i></label>
+                                          </div>
+                                        <div class="form-check form-check-primary">
+                                            <label class="form-check-label">
+                                              <input type="radio" wire:model="r" class="form-check-input" name="ExampleRadio1" id="ExampleRadio1" value="2"> Analista <i class="input-helper"></i></label>
+                                          </div>
+                                        
 
                                     </div>
 

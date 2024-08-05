@@ -17,6 +17,11 @@ class Cards extends Component
         $total_artificio = stock::sum('cantidad_artificio');
         $tipos_artificio = artificio::count();
         $total_retiros = retiro::count();
-        return view('livewire.dashboard.cards', compact('total_artificio', 'tipos_artificio', 'total_retiros'));
+        $total_coordinaciones = coordinacion::count();
+        return view('livewire.dashboard.cards', compact(
+            ['total_artificio', 'tipos_artificio', 
+            'total_retiros', 'total_coordinaciones']
+            )
+        );
     }
 }

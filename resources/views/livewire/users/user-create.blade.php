@@ -21,25 +21,32 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Agregar al stock</h4>
-                            <p class="card-description">Basic form layout</p>
+                            <h4 class="card-title">Crear nuevo usuario</h4>
                             <form class="forms-sample">
                                 <div class="form-group">
-                                    <label for="exampleSelectGender">Ingresa el nombre de usuario</label>
-                                    
-                                    <x-input-error for="id" style="color:red"></x-input-error>
+                                    <label for="exampleSelectGender">Nombre de usuario</label>
+                                    <input type="text" class="form-control" wire:model="name" placeholder="Nombre del usuario">
+                                    <x-input-error for="name" style="color:red"></x-input-error>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Email</label>
-                                    <input type="text" class="form-control" wire:model="cantidad" placeholder="cantidad de artificio de este tipo">
-                                    <x-input-error for="cantidad" style="color:red"></x-input-error>
+                                    <input type="email" class="form-control" wire:model="email" placeholder="email del usuario">
+                                    <x-input-error for="email" style="color:red"></x-input-error>
                                 </div>
-
-
-
-
-
+                                
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Contraseña</label>
+                                    <input type="password" class="form-control" wire:model="password" placeholder="ingrese la contraseña de 8 caracteres o superior">
+                                    <x-input-error for="password" style="color:red"></x-input-error>
+                                </div>
+                                <h4 class="card-title">Asignar rol</h4>
+                                @foreach($roles as $rol )
+                                <div class="form-check form-check-primary">
+                                    <label class="form-check-label">
+                                      <input type="radio" wire:model="rol" value="{{$rol->id}}" class="form-check-input" name="ExampleRadio1" id="ExampleRadio1" checked=""> {{$rol->name}} <i class="input-helper"></i></label>
+                                  </div>
+                                @endforeach
                             </form>
                         </div>
                     </div>
@@ -47,7 +54,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" wire:click="$set('open_edit', false);">Close</button>
-                    <button type="button" class="btn btn-primary" wire:click.prevent="store" wire:loading.attr="disabled" wire:loading.class="d-none">Save changes</button>
+                    <button type="button" class="btn btn-primary" wire:click.prevent="store" wire:loading.attr="disabled" wire:loading.class="d-none">Registrar</button>
                     <button class="btn btn-primary" type="button" disabled wire:loading wire:target="store" >
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         Loading...

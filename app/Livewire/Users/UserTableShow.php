@@ -64,4 +64,12 @@ class UserTableShow extends Component
         $this->open_roles = false;
         $this->dispatch('artificioAdded', 'Se modificó este usuario');
     }
+
+    public function destroy($id){
+        $usuario = user::findOrFail($id);
+        $usuario->delete();
+
+        $this->dispatch('artificioAdded', 'Usuario eliminado');
+
+    }
 }

@@ -6,12 +6,16 @@
     </x-slot>
 
     <div class="page-header flex-wrap">
-        <h3 class="mb-0"> Hi, {{Auth::user()->name}} bienvenido! <span class="pl-0 h6 pl-sm-2 text-muted d-inline-block">Your web analytics dashboard template.</span>
+        <h3 class="mb-0"> Hi, {{ Auth::user()->name }} bienvenido! <span
+                class="pl-0 h6 pl-sm-2 text-muted d-inline-block">Your web analytics dashboard template.</span>
         </h3>
         <div class="d-flex">
 
-            
+
             <button type="button" class="btn btn-sm ml-3 btn-success"> Nuevo usuario </button>
+            <a href="{{route('retiro_stock')}}">
+                <button type="button" class="btn btn-sm ml-3 btn-primary"> Nuevo retiro </button>
+            </a>
         </div>
     </div>
     <!-- RESUMEN -->
@@ -25,11 +29,13 @@
                     <div class="row">
                         <div class="col-sm-7">
                             <h5>Business Survey</h5>
-                            <p class="text-muted"> Graficas mensuales <a class="text-muted font-weight-medium pl-2" href="#"><u>See Details</u></a>
+                            <p class="text-muted"> Graficas mensuales <a class="text-muted font-weight-medium pl-2"
+                                    href="#"><u>See Details</u></a>
                             </p>
                         </div>
                         <div class="col-sm-5 text-md-right">
-                            <button type="button" class="btn btn-icon-text mb-3 mb-sm-0 btn-inverse-primary font-weight-normal">
+                            <button type="button"
+                                class="btn btn-icon-text mb-3 mb-sm-0 btn-inverse-primary font-weight-normal">
                                 <i class="mdi mdi-email btn-icon-prepend"></i>Descargar Reporte </button>
                         </div>
                     </div>
@@ -80,15 +86,14 @@
                     <div class="row my-3">
                         <div class="col-sm-12">
                             <div class="flot-chart-wrapper">
-                                <div id="flotChart" class="flot-chart">
-                                    <canvas class="flot-base"></canvas>
-                                </div>
+                                @livewire('dashboard.grafica-retiro')
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-8">
-                            <p class="text-muted mb-0"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. <b>Learn More</b>
+                            <p class="text-muted mb-0"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                eiusmod tempor incididunt ut labore et dolore. <b>Learn More</b>
                             </p>
                         </div>
                         <div class="col-sm-4">
@@ -103,5 +108,5 @@
     </div>
     <!-- END RESUMEN -->
 
-    
+
 </x-app-layout>
