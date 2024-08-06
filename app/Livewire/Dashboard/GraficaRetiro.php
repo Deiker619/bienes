@@ -25,11 +25,11 @@ class GraficaRetiro extends Component
             ->groupBy(DB::raw('DATE_FORMAT(created_at, "%M")'))
             ->get();
 
-
-
+       
 
         $data = [
             'retiros' => $datos,
+
         ];
 
         return view('livewire.dashboard.grafica-retiro', compact('data'));

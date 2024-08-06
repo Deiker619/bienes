@@ -18,16 +18,15 @@
                 return dato.total_retirada; 
             });
 
-           
             
             const ctx = document.getElementById('grafica').getContext('2d');
             new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: [labels],
+                    labels: labels,
                     datasets: [{
-                        label: 'Retiros por mes',
-                        data: [data],
+                        label: 'Cantidad de artificios retirados',
+                        data: data,
                         borderWidth: 1
                     }]
                 },
