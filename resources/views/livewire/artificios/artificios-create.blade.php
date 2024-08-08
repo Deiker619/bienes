@@ -16,20 +16,20 @@
                         <span aria-hidden="true" wire:click="$set('open_modal', false);">×</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <form class="forms-sample" wire:submit="store">
+                    <div class="modal-body">
 
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Agregar nuevo artificio</h4>
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Agregar nuevo artificio</h4>
 
-                            <form class="forms-sample">
-                                <div class="form-group">
                                     <div class="form-group">
-                                        <label for="exampleInputUsername1">Nombre del artificio</label>
-                                        <input type="text" class="form-control" wire:model="name" id="exampleInputUsername1" placeholder="Ej: muletas">
+                                        <div class="form-group">
+                                            <label for="exampleInputUsername1">Nombre del artificio</label>
+                                            <input type="text" class="form-control" wire:model="name" id="exampleInputUsername1" placeholder="Ej: muletas">
+                                        </div>
+                                        <x-input-error for="id" style="color:red"></x-input-error>
                                     </div>
-                                    <x-input-error for="id" style="color:red"></x-input-error>
-                                </div>
 
 
 
@@ -37,21 +37,22 @@
 
 
 
-                            </form>
+                                
+                            </div>
                         </div>
+
                     </div>
+                    <div class="modal-footer">
 
-                </div>
-                <div class="modal-footer">
-
-                    <button type="button" class="btn btn-secondary" wire:click="$set('open_modal', false);">Close</button>
-                    <button type="button" class="btn btn-primary" wire:click.prevent="store" wire:loading.attr="disabled" wire:loading.class="d-none">¡Guardar!</button>
-                    <button class="btn btn-primary" type="button" disabled wire:loading wire:target="store">
-                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        Loading...
-                    </button>
-                    
-                </div>
+                        <button type="button" class="btn btn-secondary" wire:click="$set('open_modal', false);">Close</button>
+                        <button type="submit" class="btn btn-primary"  wire:loading.attr="disabled" wire:loading.class="d-none">¡Guardar!</button>
+                        <button class="btn btn-primary" type="button" disabled wire:loading wire:target="store">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Loading...
+                        </button>
+                        
+                    </div>
+                </form>
             </div>
         </div>
     </div>

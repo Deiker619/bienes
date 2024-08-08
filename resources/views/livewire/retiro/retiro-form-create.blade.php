@@ -23,7 +23,7 @@
                     <!-- <p class="card-description">Basic form layout</p> -->
                     <form class="forms-sample row g-6" wire:submit.prevent="submit">
                         {{-- Lista de input's radio --}}
-                        <div style="margin-left: 0; justify-content: left" class="d-flex form-group col-12">
+                        <div style="margin-left: 0; justify-content: left" class="d-flex form-group col-12 row">
                             <div class="form-check mr-3 form-check-flat form-check-primary">
                                 <label class="form-check-label">
                                     <input type="radio" class="form-check-input"

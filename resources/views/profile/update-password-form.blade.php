@@ -7,7 +7,7 @@
         {{ __('Ensure your account is using a long, random password to stay secure.') }}
     </x-slot>
 
-    <x-slot name="form">
+    <x-slot name="form" class="">
         <div class="col-span-6 sm:col-span-4">
             <x-label for="current_password" value="{{ __('Current Password') }}" />
             <x-input id="current_password" type="password" class="mt-1 block w-full" wire:model="state.current_password" autocomplete="current-password" />
@@ -32,7 +32,7 @@
             {{ __('Saved.') }}
         </x-action-message>
 
-        <x-button>
+        <x-button class="btn btn-primary">
             {{ __('Save') }}
         </x-button>
     </x-slot>

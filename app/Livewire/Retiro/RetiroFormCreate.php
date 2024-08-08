@@ -144,7 +144,8 @@ class RetiroFormCreate extends Component
                 $stock->save(); //Guarda cambios
                 $this->dispatch('artificioAdded', 'Retiro exitoso, quedan ' . $this->restante . ' disponible');
                 $this->reset(['artificio_retiro', 'retiro_cantidad', 'coordinacion_retiro', 'cantidad',
-                 'restante', 'destino', 'beneficiario_cedula', 'beneficiario_nombre', 'jornada_fecha', 'jornada_descripcion', 'descripcion']);
+                 'restante', 'beneficiario_cedula', 'beneficiario_nombre', 'jornada_fecha', 'jornada_descripcion', 'descripcion']);
+                 
             }else{
                 $this->dispatch('error', "Se produjo un error en la transacción");
             }

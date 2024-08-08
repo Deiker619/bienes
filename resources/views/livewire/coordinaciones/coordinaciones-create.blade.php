@@ -16,13 +16,13 @@
                         <span aria-hidden="true" wire:click="$set('open_modal', false);">×</span>
                     </button>
                 </div>
+            <form class="forms-sample" wire:submit="store">
                 <div class="modal-body">
 
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Agregar al stock</h4>
                             <p class="card-description"></p>
-                            <form class="forms-sample">
                                 <div class="form-group">
                                     <label for="exampleSelectGender">Ingresa nombre de la coordinación</label>
                                     <input type="text" class="form-control" placeholder="Coordinacion de Miranda" wire:model="name_coordinacion">
@@ -30,20 +30,21 @@
                                 </div>
 
                 
-                            </form>
+                            </div>
                         </div>
-                    </div>
-
+                        
+                  
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" wire:click="$set('open_modal', false);">Close</button>
-                    <button type="button" class="btn btn-primary" wire:click.prevent="store" wire:loading.attr="disabled" wire:loading.class="d-none">Save changes</button>
+                    <button type="submit" class="btn btn-primary"  wire:loading.attr="disabled" wire:loading.class="d-none">Save changes</button>
                     <button class="btn btn-primary" type="button" disabled wire:loading wire:target="store">
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         Loading...
                     </button>
                 </div>
-            </div>
+            </form>
+        </div>
         </div>
     </div>
     @endif

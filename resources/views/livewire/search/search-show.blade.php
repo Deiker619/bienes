@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="input-group mb-2 mb-md-0">
-            <input type="date" wire:model.blur="fecha_fin" class="form-control" placeholder="Search">
+            <input type="date" wire:model.blur="fecha_fin" class="form-control " placeholder="Search">
             <div class="input-group-append">
                 <span class="input-group-text">
                     <!-- <i class="mdi mdi-magnify"></i> -->
