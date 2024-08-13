@@ -11,9 +11,11 @@ use App\Models\jornada;
 use App\Models\retiro;
 use App\Models\stock;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Validate;
 
 class RetiroFormCreate extends Component
 {
+    #[Validate]
     public $cantidad = 0, $restante;
     public $retiro_cantidad, $artificio_retiro;
     public $destino;
@@ -31,8 +33,10 @@ class RetiroFormCreate extends Component
     public $rules = [
         'artificio_retiro' => 'required',
         'cantidad' => 'required',
-        'retiro_cantidad' => 'required'
+        'retiro_cantidad' => 'required|numeric',
+
     ];
+
 
 
     public function render()
@@ -46,7 +50,35 @@ class RetiroFormCreate extends Component
 
     public function changeDestino($retiro)
     {
-        $this->destino = $retiro;
+        $this->resetValidation();
+        $this-> rules = [
+            'artificio_retiro' => 'required',
+            'cantidad' => 'required',
+            'retiro_cantidad' => 'required|numeric',
+    
+        ];
+    
+        switch ($retiro) {
+            case 'jornada_retiro':
+                $this->rules['jornada_fecha'] = 'date';
+                $this->rules['jornada_descripcion'] = 'string|max:255';
+                $this->reset(['beneficiario_cedula', 'beneficiario_nombre']);
+                $this->destino = $retiro;
+                break;
+            case 'beneficiario_retiro':
+                $this->rules['beneficiario_cedula'] = 'numeric';
+                $this->rules['beneficiario_nombre'] = 'string|max:100|regex:/^[a-zA-ZñÑ\s]+$/u';
+                $this->reset(['jornada_fecha', 'jornada_descripcion']);
+                $this->destino = $retiro;
+                break;
+
+            default:
+                # code...
+                break;
+        }
+       
+
+        /* dd($this->destino, $this->rules); */
     }
 
 
@@ -76,83 +108,93 @@ class RetiroFormCreate extends Component
 
             ]);
             return $create_beneficiario->id;
-
         }
     }
     public function add_jornada($fecha, $descripcion)
     {
 
-            $create_jornada = jornada::create([
-                'descripcion' => $descripcion,
-                'fecha' => $fecha,
+        $create_jornada = jornada::create([
+            'descripcion' => $descripcion,
+            'fecha' => $fecha,
 
-            ]);
-            return $create_jornada->id;
-
-        
+        ]);
+        return $create_jornada->id;
     }
     public function retiro()
     {
 
-
         $this->validate();
-        /* Calculo del registro */
-        $this->restante =  (int)$this->cantidad - (int)$this->retiro_cantidad;
-        if ($this->restante < 0) {
-            $this->dispatch('error', "Stock insuficiente para la cantidad solicitada");
-        }
-        if ($this->restante >= 0) {
+        try {
+            //code...
 
 
-            switch ($this->destino) {
-                case 'beneficiario_retiro':
-                   $beneficiario =  $this->add_beneficiario($this->beneficiario_cedula, $this->beneficiario_nombre);
-                    $add_retiro = retiro::create([
-                        'artificio_id' => $this->artificio_retiro,
-                        'cantidad_retirada' => $this->retiro_cantidad,
-                        'beneficiario_id' => $beneficiario
-                    ]);
-                    break;
-                case 'coordinacion_retiro':
-                    /* Agregamos el nuevo retiro */
-                    $add_retiro = retiro::create([
-                        'artificio_id' => $this->artificio_retiro,
-                        'cantidad_retirada' => $this->retiro_cantidad,
-                        'lugar_destino' => $this->coordinacion_retiro
-                    ]);
-                    break;
-                case 'jornada_retiro':
-                    /* Agregamos el nuevo retiro */
-                    $jornada =  $this->add_jornada($this->jornada_fecha, $this->jornada_descripcion);
-                    $add_retiro = retiro::create([
-                        'artificio_id' => $this->artificio_retiro,
-                        'cantidad_retirada' => $this->retiro_cantidad,
-                        'jornada_id' => $jornada
-                    ]);
-                    break;
 
-                default:
-                    # code...
-                    break;
+            /* Calculo del registro */
+            $this->restante =  (int)$this->cantidad - (int)$this->retiro_cantidad;
+            if ($this->restante < 0) {
+                $this->dispatch('error', "Stock insuficiente para la cantidad solicitada");
             }
+            if ($this->restante >= 0) {
 
 
-            if ($add_retiro) { //Si registro se cumple¿?
-                /* Procedemos a modificar el stock */
-                $stock = stock::where('artificio_id', $this->artificio_retiro)->first();
-                $stock->cantidad_artificio = $this->restante; //Actualizamos la cantidad restante del stock
-                $stock->save(); //Guarda cambios
-                $this->dispatch('artificioAdded', 'Retiro exitoso, quedan ' . $this->restante . ' disponible');
-                $this->reset(['artificio_retiro', 'retiro_cantidad', 'coordinacion_retiro', 'cantidad',
-                 'restante', 'beneficiario_cedula', 'beneficiario_nombre', 'jornada_fecha', 'jornada_descripcion', 'descripcion']);
-                 
-            }else{
-                $this->dispatch('error', "Se produjo un error en la transacción");
+                switch ($this->destino) {
+                    case 'beneficiario_retiro':
+                        $beneficiario =  $this->add_beneficiario($this->beneficiario_cedula, $this->beneficiario_nombre);
+                        $add_retiro = retiro::create([
+                            'artificio_id' => $this->artificio_retiro,
+                            'cantidad_retirada' => $this->retiro_cantidad,
+                            'beneficiario_id' => $beneficiario
+                        ]);
+                        break;
+                    case 'coordinacion_retiro':
+                        /* Agregamos el nuevo retiro */
+                        $add_retiro = retiro::create([
+                            'artificio_id' => $this->artificio_retiro,
+                            'cantidad_retirada' => $this->retiro_cantidad,
+                            'lugar_destino' => $this->coordinacion_retiro
+                        ]);
+                        break;
+                    case 'jornada_retiro':
+                        /* Agregamos el nuevo retiro */
+                        $jornada =  $this->add_jornada($this->jornada_fecha, $this->jornada_descripcion);
+                        $add_retiro = retiro::create([
+                            'artificio_id' => $this->artificio_retiro,
+                            'cantidad_retirada' => $this->retiro_cantidad,
+                            'jornada_id' => $jornada
+                        ]);
+                        break;
+
+                    default:
+                        # code...
+                        break;
+                }
+
+
+                if ($add_retiro) { //Si registro se cumple¿?
+                    /* Procedemos a modificar el stock */
+                    $stock = stock::where('artificio_id', $this->artificio_retiro)->first();
+                    $stock->cantidad_artificio = $this->restante; //Actualizamos la cantidad restante del stock
+                    $stock->save(); //Guarda cambios
+                    $this->dispatch('artificioAdded', 'Retiro exitoso, quedan ' . $this->restante . ' disponible');
+                    $this->reset([
+                        'artificio_retiro',
+                        'retiro_cantidad',
+                        'coordinacion_retiro',
+                        'cantidad',
+                        'restante',
+                        'beneficiario_cedula',
+                        'beneficiario_nombre',
+                        'jornada_fecha',
+                        'jornada_descripcion',
+                        'descripcion'
+                    ]);
+                } else {
+                    $this->dispatch('error', "Se produjo un error en la transacción");
+                }
             }
-            
-
-
-
+        } catch (\Throwable $th) {
+            //throw $th;
+            $this->dispatch('error', "Ha ocurrido un error inesperado");
 
         }
     }

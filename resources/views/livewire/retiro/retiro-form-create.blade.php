@@ -68,13 +68,15 @@
                         @if($destino == 'beneficiario_retiro')
                         <div class="form-group col-12 " wire:target="artificiosDisponibles" wire:loading.attr="disabled"
                             wire:loading.class="d-none">
-                            <label disabled>Nombre de beneficiario </label>
-                            <input type="text" wire:model="beneficiario_nombre" class="form-control">
+                            <label disabled>Nombre y apellido del beneficiario </label>
+                            <input type="text" wire:model.blur="beneficiario_nombre" class="form-control" placeholder="ej: Luis Pereira">
+                            <x-input-error for="beneficiario_nombre" style="color:red"></x-input-error>
                         </div>
                         <div class="form-group col-12 " wire:target="artificiosDisponibles" wire:loading.attr="disabled"
                             wire:loading.class="d-none">
                             <label disabled>Cedula de beneficiario </label>
-                            <input type="text" wire:model="beneficiario_cedula" class="form-control">
+                            <input type="text" wire:model="beneficiario_cedula" class="form-control" placeholder="Sin puntos ni letas">
+                            <x-input-error for="beneficiario_cedula" style="color:red"></x-input-error >
                         </div>
                         @endif
                         @if($destino == 'jornada_retiro')
@@ -82,12 +84,14 @@
                             wire:loading.class="d-none">
                             <label disabled> Fecha de la jornada </label>
                             <input type="date" wire:model.blur="jornada_fecha" class="form-control">
+                            <x-input-error for="jornada_fecha" style="color:red"></x-input-error >
                         </div>
                         <div class="form-group col-12 " wire:target="artificiosDisponibles" wire:loading.attr="disabled"
                             wire:loading.class="d-none">
                             <label disabled>Descripción de la jornada </label>
                             <input type="text" wire:model.blur="jornada_descripcion" placeholder="Breve descripción de la jornada"
                                 class="form-control">
+                             <x-input-error for="jornada_descripcion" style="color:red"></x-input-error >
                         </div>
                         @endif
                         @if($destino == 'ente_retiro')
@@ -112,6 +116,7 @@
                                 @endforeach
 
                             </select>
+                            <x-input-error for="artificio_retiro" style="color:red"></x-input-error >
 
 
 
@@ -132,6 +137,7 @@
                             <label for="exampleInputPassword1">Cantidad a retirar</label>
                             <input type="text" class="form-control" wire:model="retiro_cantidad"
                                 id="exampleInputPassword1" placeholder="Ej: 20">
+                            <x-input-error for="retiro_cantidad" style="color:red"></x-input-error>
                         </div>
 
 
