@@ -337,7 +337,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         Livewire.on('artificioAdded', (message) => {
-            console.log(message);
+            /* console.log(message); */
             const Toast = Swal.mixin({
                 toast: true,
                 position: "bottom-end",
@@ -361,7 +361,7 @@
             });
         });
         Livewire.on('error', (message) => {
-            console.log(message);
+            /* console.log(message); */
             const Toast = Swal.mixin({
                 toast: true,
                 position: "bottom-end",

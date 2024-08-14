@@ -3,19 +3,16 @@
 namespace App\Livewire\Retiro;
 
 use Livewire\Component;
-use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\artificio;
 use App\Models\beneficiario;
 use App\Models\coordinacion;
 use App\Models\jornada;
 use App\Models\retiro;
 use App\Models\stock;
-use Livewire\Attributes\On;
-use Livewire\Attributes\Validate;
 
 class RetiroFormCreate extends Component
 {
-    #[Validate]
+
     public $cantidad = 0, $restante;
     public $retiro_cantidad, $artificio_retiro;
     public $destino;
@@ -30,12 +27,18 @@ class RetiroFormCreate extends Component
 
     protected $listeners = ['artificioAdded' => 'artificioAdded'];
 
-    public $rules = [
+    public $rules = [ //Reglas de validaciones generales
         'artificio_retiro' => 'required',
         'cantidad' => 'required',
         'retiro_cantidad' => 'required|numeric',
+        'destino' => 'required'
 
     ];
+
+    public function updated($propertyName)
+    { //Funcion para que se actualice en vivo las reglas de validacion cada vez que se corrija un input
+        $this->validateOnly($propertyName);
+    }
 
 
 
@@ -51,32 +54,38 @@ class RetiroFormCreate extends Component
     public function changeDestino($retiro)
     {
         $this->resetValidation();
-        $this-> rules = [
+        $this->rules = [
             'artificio_retiro' => 'required',
             'cantidad' => 'required',
             'retiro_cantidad' => 'required|numeric',
-    
+            'destino' => 'required'
+
         ];
-    
+        //Asigan reglas de validaciones dinamicamente
         switch ($retiro) {
             case 'jornada_retiro':
-                $this->rules['jornada_fecha'] = 'date';
-                $this->rules['jornada_descripcion'] = 'string|max:255';
+                $this->rules['jornada_fecha'] = 'required|date';
+                $this->rules['jornada_descripcion'] = 'required|string|max:255';
                 $this->reset(['beneficiario_cedula', 'beneficiario_nombre']);
-                $this->destino = $retiro;
                 break;
             case 'beneficiario_retiro':
-                $this->rules['beneficiario_cedula'] = 'numeric';
-                $this->rules['beneficiario_nombre'] = 'string|max:100|regex:/^[a-zA-ZñÑ\s]+$/u';
+                $this->rules['beneficiario_cedula'] = 'required|numeric';
+                $this->rules['beneficiario_nombre'] = 'required|string|max:100|regex:/^[a-zA-ZñÑ\s]+$/u';
                 $this->reset(['jornada_fecha', 'jornada_descripcion']);
-                $this->destino = $retiro;
+
+                break;
+            case 'coordinacion_retiro':
+                $this->rules['coordinacion_retiro'] = 'required';
+                $this->reset(['jornada_fecha', 'jornada_descripcion', 'beneficiario_cedula', 'beneficiario_nombre']);
+                
                 break;
 
             default:
                 # code...
                 break;
         }
-       
+        $this->destino = $retiro;
+
 
         /* dd($this->destino, $this->rules); */
     }
@@ -122,13 +131,8 @@ class RetiroFormCreate extends Component
     }
     public function retiro()
     {
-
         $this->validate();
         try {
-            //code...
-
-
-
             /* Calculo del registro */
             $this->restante =  (int)$this->cantidad - (int)$this->retiro_cantidad;
             if ($this->restante < 0) {
@@ -195,7 +199,6 @@ class RetiroFormCreate extends Component
         } catch (\Throwable $th) {
             //throw $th;
             $this->dispatch('error', "Ha ocurrido un error inesperado");
-
         }
     }
 }

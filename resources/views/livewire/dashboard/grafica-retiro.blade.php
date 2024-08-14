@@ -28,7 +28,8 @@
                         label: 'Cantidad de artificios retirados',
                         data: data,
                         borderWidth: 1
-                    }]
+                    }],
+                    
                 },
                 options: {
                     responsive: true,

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('jornadas', function (Blueprint $table) {
             $table->id();
             $table->text('descripcion');
+            $table->date('fecha');
             $table->timestamps();
         });
     }
