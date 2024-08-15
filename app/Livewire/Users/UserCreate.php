@@ -3,15 +3,24 @@
 namespace App\Livewire\Users;
 
 use App\Models\User;
-use FontLib\Table\Type\name;
-use Livewire\Attributes\On;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
 
 class UserCreate extends Component
 {
-    
     public $open_edit, $name, $email, $password, $rol;
+    public $rules = [
+        'name' => 'required',
+        'password' => 'required|min:8',
+        'email' => 'required|email',
+        'rol' => 'required'
+    ];
+
+    public function updated($propertyName)
+    { //Funcion para que se actualice en vivo las reglas de validacion cada vez que se corrija un input
+        $this->validateOnly($propertyName);
+    }
+    
     public function render()
     {
         $roles = Role::all();
@@ -20,6 +29,7 @@ class UserCreate extends Component
 
     public function store()
     {
+        $this->validate();
        
         $create = User::create([
             'name' => $this->name,

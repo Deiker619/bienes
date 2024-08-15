@@ -21,11 +21,11 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Agregar al stock</h4>
+                            <h4 class="card-title">Agregar coordinación</h4>
                             <p class="card-description"></p>
                                 <div class="form-group">
                                     <label for="exampleSelectGender">Ingresa nombre de la coordinación</label>
-                                    <input type="text" class="form-control" placeholder="Coordinacion de Miranda" wire:model="name_coordinacion">
+                                    <input type="text" class="form-control" placeholder="Coordinacion de Miranda" wire:model.blur="name_coordinacion">
                                     <x-input-error for="name_coordinacion" style="color:red"></x-input-error>
                                 </div>
 
@@ -37,7 +37,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" wire:click="$set('open_modal', false);">Close</button>
-                    <button type="submit" class="btn btn-primary"  wire:loading.attr="disabled" wire:loading.class="d-none">Save changes</button>
+                    <button type="submit" class="btn btn-primary"  wire:loading.attr="disabled" wire:loading.class="d-none">¡Guardar!</button>
                     <button class="btn btn-primary" type="button" disabled wire:loading wire:target="store">
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         Loading...

@@ -26,9 +26,9 @@
                                     <div class="form-group">
                                         <div class="form-group">
                                             <label for="exampleInputUsername1">Nombre del artificio</label>
-                                            <input type="text" class="form-control" wire:model="name" id="exampleInputUsername1" placeholder="Ej: muletas">
+                                            <input type="text" class="form-control" wire:model.blur="name" id="exampleInputUsername1" placeholder="Ej: muletas">
                                         </div>
-                                        <x-input-error for="id" style="color:red"></x-input-error>
+                                        <x-input-error for="name" style="color:red"></x-input-error>
                                     </div>
 
 

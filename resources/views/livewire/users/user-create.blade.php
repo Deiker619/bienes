@@ -25,28 +25,29 @@
                             <form class="forms-sample">
                                 <div class="form-group">
                                     <label for="exampleSelectGender">Nombre de usuario</label>
-                                    <input type="text" class="form-control" wire:model="name" placeholder="Nombre del usuario">
+                                    <input type="text" class="form-control" wire:model.blur="name" placeholder="Nombre del usuario">
                                     <x-input-error for="name" style="color:red"></x-input-error>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Email</label>
-                                    <input type="email" class="form-control" wire:model="email" placeholder="email del usuario">
+                                    <input type="email" class="form-control" wire:model.blur="email" placeholder="email del usuario">
                                     <x-input-error for="email" style="color:red"></x-input-error>
                                 </div>
                                 
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Contraseña</label>
-                                    <input type="password" class="form-control" wire:model="password" placeholder="ingrese la contraseña de 8 caracteres o superior">
+                                    <input type="password" class="form-control" wire:model.blur="password" placeholder="ingrese la contraseña de 8 caracteres o superior">
                                     <x-input-error for="password" style="color:red"></x-input-error>
                                 </div>
                                 <h4 class="card-title">Asignar rol</h4>
                                 @foreach($roles as $rol )
                                 <div class="form-check form-check-primary">
                                     <label class="form-check-label">
-                                      <input type="radio" wire:model="rol" value="{{$rol->id}}" class="form-check-input" name="ExampleRadio1" id="ExampleRadio1" checked=""> {{$rol->name}} <i class="input-helper"></i></label>
+                                      <input type="radio" wire:model.blur="rol" value="{{$rol->id}}" class="form-check-input" name="ExampleRadio1" id="ExampleRadio1" checked=""> {{$rol->name}} <i class="input-helper"></i></label>
                                   </div>
-                                @endforeach
+                                  @endforeach
+                                  <x-input-error for="rol" style="color:red"></x-input-error>
                             </form>
                         </div>
                     </div>

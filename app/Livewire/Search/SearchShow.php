@@ -23,10 +23,17 @@ class SearchShow extends Component
         if($this->fecha_fin == $this->fecha_inicio){
             $this->retiros = retiro::with('artificio:name')->select('id', 'artificio_id', 'cantidad_retirada', 'lugar_destino', 'beneficiario_id','jornada_id', 'created_at')
             ->whereDate('created_at', $this->fecha_fin)->get();
+        
+
+            
         }else{
+
 
             $this->retiros = retiro::select('id', 'artificio_id', 'cantidad_retirada', 'lugar_destino', 'beneficiario_id','jornada_id', 'created_at')
             ->whereBetween('created_at', [$this->fecha_inicio, $this->fecha_fin])->get();
+           
+            
+
         }
     }
 

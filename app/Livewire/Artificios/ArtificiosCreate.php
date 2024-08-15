@@ -10,13 +10,17 @@ class ArtificiosCreate extends Component
     public $open_modal = false;
     public $name;
 
-    public $rules=['name'=>'required'];
+    public $rules=['name'=>'required|string|regex:/^[a-zA-ZñÑ\s]+$/u'];
+    public function updated($propertyName){
+        $this->validateOnly($propertyName);
+    }
     public function render()
     {
         return view('livewire.artificios.artificios-create');
     }
 
     public function store(){
+        $this->validate();
        $add_artificio =  artificio::create([
             'name'=> $this->name
         ]);

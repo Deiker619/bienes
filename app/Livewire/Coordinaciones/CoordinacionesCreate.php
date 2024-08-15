@@ -4,18 +4,23 @@ namespace App\Livewire\Coordinaciones;
 
 use Livewire\Component;
 use App\Models\coordinacion;
-use Livewire\Attributes\On;
+
 
 class CoordinacionesCreate extends Component
 {
     public $open_modal, $name_coordinacion, $id;
-    
+    public $rules = ['name_coordinacion'=>'required|string'];
+
+    public function updated($propertyName){
+        $this->validateOnly($propertyName);
+    }
     public function render()
     {
         return view('livewire.coordinaciones.coordinaciones-create');
     }
 
     public function store(){
+        $this->validate();
         $add_coordinacion = coordinacion::create([
             'name_coordinacion' => ucwords($this->name_coordinacion) //Guardar en mayuscula
         ]);
