@@ -13,6 +13,7 @@
     <div class="page-header flex-wrap">
         <h3 class="mb-0">Hola!, <b>{{ Auth::user()->name }}</b> <span class="pl-0 h12 pl-sm-2 text-muted d-inline-block">Esta sección permite gestionar los retiros registrados.</span>
         </h3>
+        @livewire('retiro.pdf.retiros-export')
 
     </div>
 

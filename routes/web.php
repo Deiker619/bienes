@@ -46,6 +46,7 @@ Route::middleware([
     /* EXPORTAR PDF DE RETIROS */
     Route::get('/dashboard/generate-pdf/{fecha_inicio}/{fecha_fin}', [App\Http\Controllers\PDFController::class, 'generatePDF'])->name('prueba');
     Route::get('/dashboard/ExportOnlyRetiro/{id}', [App\Http\Controllers\PDFController::class, 'generateOnlyRetiro'])->name('exportOnlyRetiro');
+    Route::get('/dashboard/ExportAllRetiros', [App\Http\Controllers\PDFController::class, 'exportAllRetiros'])->name('exportAllRetiros');
 
 
     /* EXPORTAR STOCK */

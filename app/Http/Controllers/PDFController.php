@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\beneficiario;
 use App\Models\retiro;
 use App\Models\stock;
 use Illuminate\Http\Request;
@@ -64,6 +65,19 @@ class PDFController extends Controller
             'stock' => $stock
         ];
         $pdf = Pdf::loadView('livewire.stock.pdf.export-stock', $data);
+        return $pdf->download(date('d-m-Y').'.pdf');
+    }
+
+    public function exportAllRetiros(){
+        $retiros = retiro::select('id', 'artificio_id', 'cantidad_retirada','lugar_destino','beneficiario_id','jornada_id', 'created_at')
+        ->get();
+        
+        $data = [
+            'title' => 'Welcome to Funda of Web IT - fundaofwebit.com',
+            'date' => date('m/d/Y'),
+            'retiros' => $retiros
+        ];
+        $pdf = Pdf::loadView('livewire.retiros.pdf.retiros-all', $data);
         return $pdf->download(date('d-m-Y').'.pdf');
     }
 }

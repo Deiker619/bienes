@@ -7,8 +7,6 @@ use App\Models\artificio;
 use App\Models\coordinacion;
 use App\Models\retiro;
 use App\Models\stock;
-use App\Models\beneficiario;
-use App\Models\jornada;
 
 class Cards extends Component
 {
