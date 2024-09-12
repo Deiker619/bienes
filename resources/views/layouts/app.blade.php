@@ -25,10 +25,10 @@
     <div class="container-scroller">
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <div class="text-center sidebar-brand-wrapper d-flex align-items-center">
-                <a class="sidebar-brand brand-logo" href="index.html"><img src="../assets/images/logo.svg"
+                <a class="sidebar-brand brand-logo" href="{{route('dashboard')}}"><img style="object-fit: scale-down" src="../assets/images/fundacion.png"
                         alt="logo" /></a>
-                <a class="sidebar-brand brand-logo-mini pl-4 pt-3" href="index.html"><img
-                        src="../assets/images/logo-mini.svg" alt="logo" /></a>
+                <a class="sidebar-brand brand-logo-mini pl-4 pt-3" href="{{route('dashboard')}}"><img
+                    style="object-fit: scale-down"  src="../assets/images/logo-minis-.png" alt="logo" /></a>
             </div>
             <ul class="nav">
                 <li class="nav-item nav-profile">
@@ -294,10 +294,8 @@
                 <footer class="footer">
                     <div class="d-sm-flex justify-content-center justify-content-sm-between">
                         <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright ©
-                            bootstrapdash.com 2020</span>
-                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a
-                                href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard template</a>
-                            from Bootstrapdash.com</span>
+                            Fundación José Gregorio Hernández {{date('Y')}}</span>
+                        
                     </div>
                 </footer>
                 <!-- END -->
