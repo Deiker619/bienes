@@ -96,7 +96,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('retiro_stock') }}">
                         <i class="mdi  mdi-cube-send menu-icon"></i>
-                        <span class="menu-title">Retiro de stock</span>
+                        <span class="menu-title">Retiro DE stock</span>
                     </a>
                 </li>
                 @can('dashboard.usuario')
