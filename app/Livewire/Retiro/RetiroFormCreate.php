@@ -9,10 +9,12 @@ use App\Models\coordinacion;
 use App\Models\jornada;
 use App\Models\retiro;
 use App\Models\stock;
+use Illuminate\Support\Facades\DB;
 
 class RetiroFormCreate extends Component
 {
 
+    public $retornar;
     public $cantidad = 0, $restante;
     public $retiro_cantidad, $artificio_retiro;
     public $destino;
@@ -44,8 +46,6 @@ class RetiroFormCreate extends Component
 
     public function render()
     {
-
-
         $coordinaciones = coordinacion::select('id', 'name_coordinacion')->get();
         $artificios = artificio::select('id', 'name', 'created_at', 'updated_at')->orderBy('name', 'asc')->get();
         return view('livewire.retiro.retiro-form-create', compact('artificios', 'coordinaciones'));
@@ -77,7 +77,7 @@ class RetiroFormCreate extends Component
             case 'coordinacion_retiro':
                 $this->rules['coordinacion_retiro'] = 'required';
                 $this->reset(['jornada_fecha', 'jornada_descripcion', 'beneficiario_cedula', 'beneficiario_nombre']);
-                
+
                 break;
 
             default:
@@ -89,6 +89,7 @@ class RetiroFormCreate extends Component
 
         /* dd($this->destino, $this->rules); */
     }
+
 
 
     public function artificiosDisponibles($id)
@@ -129,9 +130,12 @@ class RetiroFormCreate extends Component
         ]);
         return $create_jornada->id;
     }
+
+
     public function retiro()
     {
         $this->validate();
+        DB::beginTransaction();
         try {
             /* Calculo del registro */
             $this->restante =  (int)$this->cantidad - (int)$this->retiro_cantidad;
@@ -142,6 +146,7 @@ class RetiroFormCreate extends Component
 
 
                 switch ($this->destino) {
+                        /* Agregamos el nuevo retiro */
                     case 'beneficiario_retiro':
                         $beneficiario =  $this->add_beneficiario($this->beneficiario_cedula, $this->beneficiario_nombre);
                         $add_retiro = retiro::create([
@@ -174,6 +179,7 @@ class RetiroFormCreate extends Component
                 }
 
 
+
                 if ($add_retiro) { //Si registro se cumple¿?
                     /* Procedemos a modificar el stock */
                     $stock = stock::where('artificio_id', $this->artificio_retiro)->first();
@@ -194,11 +200,15 @@ class RetiroFormCreate extends Component
                     ]);
                 } else {
                     $this->dispatch('error', "Se produjo un error en la transacción");
+                    DB::rollback();
+
                 }
+                DB::commit();
             }
         } catch (\Throwable $th) {
             //throw $th;
             $this->dispatch('error', "Ha ocurrido un error inesperado");
+            DB::rollback();
         }
     }
 }

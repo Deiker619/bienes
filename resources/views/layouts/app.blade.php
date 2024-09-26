@@ -96,14 +96,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('retiro_stock') }}">
                         <i class="mdi  mdi-cube-send menu-icon"></i>
-                        <span class="menu-title">Retiro DE stock</span>
+                        <span class="menu-title">Retirar de stock</span>
                     </a>
                 </li>
                 @can('dashboard.usuario')
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('usuario') }}">
                             <i class="mdi mdi-account-multiple-plus menu-icon"></i>
-                            <span class="menu-title">Gestion de usuarios</span>
+                            <span class="menu-title">Gestión de usuarios</span>
                         </a>
                     </li>
                 @endcan
@@ -355,7 +355,8 @@
             });
             Toast.fire({
                 icon: "success",
-                title: message
+                title: message,
+               
             });
         });
         Livewire.on('error', (message) => {
@@ -383,6 +384,7 @@
             });
         });
     </script>
+
     @if (isset($js))
         {{ $js }}
 
