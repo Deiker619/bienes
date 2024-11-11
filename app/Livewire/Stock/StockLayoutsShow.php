@@ -6,10 +6,11 @@ use App\Models\artificio;
 use App\Models\stock;
 use Livewire\Component;
 use Livewire\Attributes\On;
-
+use Livewire\WithPagination;
 
 class StockLayoutsShow extends Component
 {
+    use WithPagination;
     protected $listeners = ['artificioAdded' => 'artificioAdded'];
     public $cantidad_artificio, $artificio, $open_edit, $id;
     #[On('artificioAdded')]
@@ -18,7 +19,7 @@ class StockLayoutsShow extends Component
         $stocks = stock::with('artificio:id,name')
             ->select('id', 'cantidad_artificio','created_at' ,'updated_at',  'artificio_id')
             ->orderBy('cantidad_artificio', 'desc')
-            ->get();
+            ->paginate(10);
         $suma = stock::sum('cantidad_artificio');
         $total = $this->calculoPorcentaje();
 

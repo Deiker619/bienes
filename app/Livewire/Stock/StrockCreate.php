@@ -7,9 +7,11 @@ use Livewire\Attributes\Layout;
 use App\Models\stock;
 use App\Models\artificio;
 use Livewire\Attributes\On;
+use Livewire\WithPagination;
 
 class StrockCreate extends Component
 {
+    use WithPagination;
     public $open_modal = false;
     public $id, $cantidad;
 
@@ -21,6 +23,7 @@ class StrockCreate extends Component
     #[Layout('layouts.app')] //EVITA PROBLEMAS CON LA PLANTILLA */
     public function render()
     {
+
         $artificios = artificio::select('id', 'name')->orderBy('name', 'asc')->get();
 
         return view('livewire.stock.strock-create', compact('artificios'));

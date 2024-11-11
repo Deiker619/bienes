@@ -77,9 +77,17 @@
                                         </td>
                                     </tr>
                                 @endforeach
-
                             </tbody>
+                            
                         </table>
+                        @if($stocks->hasPages())
+                        <nav aria-label="Page navigation example">
+
+                            <a class="page-link">{{ $stocks->links() }}</a>
+
+
+                        </nav>
+                        @endif
                     </div>
                 </div>
 

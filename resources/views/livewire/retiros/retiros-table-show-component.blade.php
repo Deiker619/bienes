@@ -86,6 +86,14 @@
 
                             </tbody>
                         </table>
+                        @if($retiros->hasPages())
+                        <nav aria-label="Page navigation example">
+
+                            <a class="page-link">{{ $retiros->links() }}</a>
+
+
+                        </nav>
+                        @endif
                     </div>
                 </div>
 

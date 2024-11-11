@@ -19,8 +19,8 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Artificios registrados</h4>
-                    <div class="table-responsive">
-                        <table class="table  table-hover">
+                    <div class="table">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -71,11 +71,19 @@
 
                                     </tr>
                                 @endforeach
-
+                               
 
                             </tbody>
                         </table>
                     </div>
+                    @if($artificios->hasPages())
+                    <nav aria-label="Page navigation example">
+
+                        <a class="page-link">{{ $artificios->links() }}</a>
+
+
+                    </nav>
+                    @endif
                 </div>
 
             </div>

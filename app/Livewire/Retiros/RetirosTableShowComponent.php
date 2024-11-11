@@ -5,14 +5,14 @@ namespace App\Livewire\Retiros;
 use Livewire\Component;
 use App\Models\retiro;
 use Livewire\Attributes\On;
-
-
+use Livewire\WithPagination;
 
 class RetirosTableShowComponent extends Component
 {
+    use WithPagination;
     public function render()
     {
-        $retiros = retiro::select('id', 'artificio_id', 'cantidad_retirada', 'lugar_destino', 'beneficiario_id', 'jornada_id','ente_id' ,'created_at')->orderby('created_at', 'desc')->get();
+        $retiros = retiro::select('id', 'artificio_id', 'cantidad_retirada', 'lugar_destino', 'beneficiario_id', 'jornada_id','ente_id' ,'created_at')->orderby('created_at', 'desc')->paginate(10);
         return view('livewire.retiros.retiros-table-show-component', compact('retiros'));
     }
 }
