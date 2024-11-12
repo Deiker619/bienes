@@ -65,9 +65,18 @@
                                         </td>
                                     </tr>
                                 @endforeach
+                            
                             </tbody>
                         </table>
                     </div>
+                    @if($coordinaciones->hasPages())
+                    <nav aria-label="Page navigation example">
+
+                        <a class="page-link">{{ $coordinaciones->links() }}</a>
+
+
+                    </nav>
+                    @endif
                 </div>
 
             </div>
