@@ -25,6 +25,6 @@ class DatabaseSeeder extends Seeder
             'name' => 'Prueba Deiker',
             'email' => 'deiker1842@example.com',
             'password' => bcrypt('12345678')
-        ])->assignRole('Admin');
+        ])->assignRole('Analist');
     }
 }
