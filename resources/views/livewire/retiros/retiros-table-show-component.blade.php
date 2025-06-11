@@ -71,9 +71,9 @@
                                                         style="cursor: pointer"></i></span>
                                             </span>
                                             <span class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <a class="dropdown-item" wire:click=""
-                                                    style="cursor: pointer">Editar</a>
-                                                <a class="dropdown-item" wire:click=""
+                                                <a class="dropdown-item" wire:click='exportRetiroWithNote({{$retiro->id}})'
+                                                    style="cursor: pointer">Exportar con nota de entrega</a>
+                                                <a class="dropdown-item" wire:click="deleteRetiro({{$retiro->id}})"
                                                     style="cursor: pointer">Eliminar</a>
                                             </span>
                                         </span>

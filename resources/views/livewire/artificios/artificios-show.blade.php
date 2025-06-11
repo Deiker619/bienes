@@ -71,18 +71,18 @@
 
                                     </tr>
                                 @endforeach
-                               
+
 
                             </tbody>
                         </table>
                     </div>
-                    @if($artificios->hasPages())
-                    <nav aria-label="Page navigation example">
+                    @if ($artificios->hasPages())
+                        <nav aria-label="Page navigation example">
 
-                        <a class="page-link">{{ $artificios->links() }}</a>
+                            <a class="page-link">{{ $artificios->links() }}</a>
 
 
-                    </nav>
+                        </nav>
                     @endif
                 </div>
 
@@ -119,12 +119,6 @@
                                             <x-input-error for="name" style="color:red"></x-input-error>
                                         </div>
                                     </div>
-
-
-
-
-
-
 
                                 </form>
                             </div>
