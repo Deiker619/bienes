@@ -5,10 +5,11 @@ namespace App\Livewire\Coordinaciones;
 use Livewire\Component;
 use App\Models\coordinacion;
 use Livewire\Attributes\On;
-
+use Livewire\WithPagination;
 
 class CoordinacionesShow extends Component
 {
+    use WithPagination;
 
     public $name_coordinacion, $id, $open_edit;
 
@@ -16,7 +17,7 @@ class CoordinacionesShow extends Component
     #[On('artificioAdded')]
     public function render()
     {
-        $coordinaciones = coordinacion::select('id','name_coordinacion')->get();
+        $coordinaciones = coordinacion::select('id','name_coordinacion')->paginate(10);
         return view('livewire.coordinaciones.coordinaciones-show', compact('coordinaciones'));
     }
 
