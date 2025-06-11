@@ -146,7 +146,7 @@ class RetiroFormCreate extends Component
 
 
                 switch ($this->destino) {
-                        /* Agregamos el nuevo retiro */
+                    /* Agregamos el nuevo retiro */
                     case 'beneficiario_retiro':
                         $beneficiario =  $this->add_beneficiario($this->beneficiario_cedula, $this->beneficiario_nombre);
                         $add_retiro = retiro::create([
@@ -201,7 +201,6 @@ class RetiroFormCreate extends Component
                 } else {
                     $this->dispatch('error', "Se produjo un error en la transacción");
                     DB::rollback();
-
                 }
                 DB::commit();
             }
