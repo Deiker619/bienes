@@ -50,7 +50,7 @@
     </style>
 </head>
 <body>
-
+    
    
 
     <div class="nota-title">
@@ -70,12 +70,12 @@
             </tr>
             <tr >
                 <th colspan="2">DIRIGIDO A</th>
-                <th colspan="3">SEGURIDAD - ADMINISTRACION</th>
-                <th colspan="1">Fecha: 09/06/25</th>
+                <th colspan="3">SEGURIDAD - ADMINISTRACIÓN</th>
+                <th colspan="1">Fecha: {{ $retiro->created_at}}</th>
             </tr>
             <tr>
                 <th colspan="1" height=20>Nro.</th>
-                <th colspan="1" >Descripcion</th>
+                <th colspan="1" >Descripción</th>
                 <th colspan="1">Unidad de medida</th>
                 <th colspan="1">Cantidad</th>
                 <th colspan="2">Observaciones</th>
@@ -83,10 +83,10 @@
             </tr>
             <tr>
                 <th colspan="1" height=40>1</th>
-                <th colspan="1">Panales talla M</th>
+                <th colspan="1">{{$retiro->artificio->name}}</th>
                 <th colspan="1">Unidad</th>
-                <th colspan="1">20</th>
-                <th colspan="2">Calidad de donacion por despacho de la presidencia</th>
+                <th colspan="1">{{$retiro->cantidad_retirada}}</th>
+                <th colspan="2">{{$retiro->observacion}}</th>
                
             </tr>
             <tr>

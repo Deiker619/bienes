@@ -15,7 +15,7 @@ class RetiroPDF extends Controller
         $retiro = retiro::where('id', $id)
             ->first();
         $dataPDF = ['retiro' => $retiro];
-        $pdf = Pdf::loadView('livewire.retiro.pdf.retiros-with-note')->setPaper('A4', 'landscape'); // 👈 orientación horizontal;
+        $pdf = Pdf::loadView('livewire.retiro.pdf.retiros-with-note', $dataPDF)->setPaper('A4', 'landscape'); // 👈 orientación horizontal;
         return $pdf->stream();
     }
 }

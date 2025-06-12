@@ -9,16 +9,23 @@ use App\Models\coordinacion;
 use App\Models\jornada;
 use App\Models\retiro;
 use App\Models\stock;
+use Livewire\Attributes\On;
+
+
 use Illuminate\Support\Facades\DB;
 
 class RetiroFormCreate extends Component
 {
 
-    public $retornar;
+    public $cargado = false;
     public $cantidad = 0, $restante;
     public $retiro_cantidad, $artificio_retiro;
     public $destino;
     public $coordinacion_retiro;
+    public $observacion;
+    public $recibe_tercero = false;
+    public $nombre_tercero;
+    public $cedula_tercero;
 
     /* Datos de beneficiario */
     public $beneficiario_cedula, $beneficiario_nombre;
@@ -33,9 +40,15 @@ class RetiroFormCreate extends Component
         'artificio_retiro' => 'required',
         'cantidad' => 'required',
         'retiro_cantidad' => 'required|numeric',
-        'destino' => 'required'
+        'destino' => 'required',
+        'observacion' => 'required',
+        'recibe_tercero' => 'boolean',
+        'nombre_tercero' => 'required_if:recibe_tercero,1',
+        'cedula_tercero' => 'required_if:recibe_tercero,1'
 
     ];
+
+
 
     public function updated($propertyName)
     { //Funcion para que se actualice en vivo las reglas de validacion cada vez que se corrija un input
@@ -43,7 +56,7 @@ class RetiroFormCreate extends Component
     }
 
 
-
+    #[On('artificioAdded')]
     public function render()
     {
         $coordinaciones = coordinacion::select('id', 'name_coordinacion')->get();
@@ -152,7 +165,10 @@ class RetiroFormCreate extends Component
                         $add_retiro = retiro::create([
                             'artificio_id' => $this->artificio_retiro,
                             'cantidad_retirada' => $this->retiro_cantidad,
-                            'beneficiario_id' => $beneficiario
+                            'beneficiario_id' => $beneficiario,
+                            'observacion' => $this->observacion,
+                            'nombre_tercero' => $this->nombre_tercero,
+                            'cedula_tercero' => $this->cedula_tercero
                         ]);
                         break;
                     case 'coordinacion_retiro':
@@ -160,7 +176,10 @@ class RetiroFormCreate extends Component
                         $add_retiro = retiro::create([
                             'artificio_id' => $this->artificio_retiro,
                             'cantidad_retirada' => $this->retiro_cantidad,
-                            'lugar_destino' => $this->coordinacion_retiro
+                            'lugar_destino' => $this->coordinacion_retiro,
+                            'observacion' => $this->observacion,
+                            'nombre_tercero' => $this->nombre_tercero,
+                            'cedula_tercero' => $this->cedula_tercero
                         ]);
                         break;
                     case 'jornada_retiro':
@@ -169,7 +188,10 @@ class RetiroFormCreate extends Component
                         $add_retiro = retiro::create([
                             'artificio_id' => $this->artificio_retiro,
                             'cantidad_retirada' => $this->retiro_cantidad,
-                            'jornada_id' => $jornada
+                            'jornada_id' => $jornada,
+                            'observacion' => $this->observacion,
+                            'nombre_tercero' => $this->nombre_tercero,
+                            'cedula_tercero' => $this->cedula_tercero
                         ]);
                         break;
 
@@ -196,7 +218,11 @@ class RetiroFormCreate extends Component
                         'beneficiario_nombre',
                         'jornada_fecha',
                         'jornada_descripcion',
-                        'descripcion'
+                        'descripcion',
+                        'observacion',
+                        'nombre_tercero',
+                        'cedula_tercero',
+                        'destino'
                     ]);
                 } else {
                     $this->dispatch('error', "Se produjo un error en la transacción");
@@ -209,5 +235,9 @@ class RetiroFormCreate extends Component
             $this->dispatch('error', "Ha ocurrido un error inesperado");
             DB::rollback();
         }
+    }
+    public function changeRecibeTercero()
+    {
+        $this->recibe_tercero = !$this->recibe_tercero;
     }
 }

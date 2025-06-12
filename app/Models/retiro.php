@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class retiro extends Model
 {
     use HasFactory;
-    protected $fillable = ['artificio_id', 'cantidad_retirada', 'lugar_destino', 'beneficiario_id','jornada_id', 'ente_id'];
+    protected $fillable = ['artificio_id','observacion', 'cantidad_retirada','cedula_tercero', 'nombre_tercero' ,'lugar_destino', 'beneficiario_id','jornada_id', 'ente_id'];
 
     public function artificio()
     {

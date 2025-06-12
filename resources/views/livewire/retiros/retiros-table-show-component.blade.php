@@ -1,12 +1,12 @@
 <div>
     
-    <div class="row">
-        <div class=" grid-margin stretch-card">
+    <div class="container-fluid">
+        <div class=" grid-margin ">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body ">
                     <h4 class="card-title">Retiros del stock</h4>
-                    <div class="table-responsive">
-                        <table class="table  table-hover">
+                    <div class=" overflow-auto">
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -14,6 +14,7 @@
                                     <th>Cantidad retirada</th>
                                     <th>Persona/Coordinacion/jornada entregada</th>
                                     <th>Tipo de ente</th>
+                                    <th>Observación</th>
                                     <th>Fecha de retiro del stock</th>
                                     <th></th>
 
@@ -55,6 +56,9 @@
                                     </td>
                                     <td>
                                         <label class="badge badge-info">{{$name}}</label>
+                                    </td>
+                                    <td>
+                                        {{$retiro->observacion}}
                                     </td>
 
                                     <td>

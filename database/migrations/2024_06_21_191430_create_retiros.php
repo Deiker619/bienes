@@ -16,6 +16,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('artificio_id');
             $table->integer('cantidad_retirada');
+            $table->string('observacion');
+            $table->string('nombre_tercero')->nullable();
+            $table->integer('cedula_tercero')->nullable();
             $table->unsignedBigInteger('lugar_destino')->nullable();
             $table->unsignedBigInteger('beneficiario_id')->nullable();
             $table->unsignedBigInteger('jornada_id')->nullable();
