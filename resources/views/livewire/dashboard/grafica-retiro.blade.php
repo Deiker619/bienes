@@ -1,6 +1,6 @@
 <div>
-    <div id="flot-chart" class="row h-50">
-        <canvas id="grafica" class="h-2"></canvas>
+    <div id="flot-chart" class="row">
+        <canvas id="grafica" class=""></canvas>
         
     </div>
 

@@ -18,7 +18,7 @@
                 </span>
             </div>
         </div>
-        <div class="input-group ml-2">
+        <div class=" ml-2">
             <button type="button" wire:click="search" class="btn btn-primary btn-rounded btn-icon">
                 <i wire:loading.attr="disabled" wire:target="search" wire:loading.class="d-none" class="mdi mdi-account-search-outline" style="color: #f2f2f2;"></i>
                 <div class="d-flex justify-content-center" wire:loading="" wire:target="search">

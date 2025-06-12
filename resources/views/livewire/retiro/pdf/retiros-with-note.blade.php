@@ -5,11 +5,12 @@
     <style>
         @page {
             margin: 20px;
+            font-size: 16px
         }
 
         body {
             font-family: DejaVu Sans, sans-serif;
-            font-size: 11px;
+
         }
 
         .header {
@@ -40,7 +41,7 @@
         }
 
         .data-table th, .data-table td {
-            border: 1px solid black;
+            border: 1.5px solid black;
             padding: 6px;
             text-align: center;
         }
@@ -53,33 +54,59 @@
    
 
     <div class="nota-title">
-        NOTA DE SALIDA Nº 098 - 2025
+        <img src="assets/images/cintillo.jpg" alt="" srcset="">
     </div>
 
    
 
     <table class="data-table">
-        <thead>
+        
             <tr>
-                <th>Nº</th>
-                <th>DESCRIPCIÓN</th>
-                <th>UNIDAD DE MEDIDA</th>
-                <th>CANTIDAD</th>
-                <th>OBSERVACIONES</th>
+                <th colspan="4">
+                    NOTA DE SALIDA
+                    
+                </th>
+                <th colspan="2">Nº 098 - 2025</th>
             </tr>
-        </thead>
-        <tbody>
+            <tr >
+                <th colspan="2">DIRIGIDO A</th>
+                <th colspan="3">SEGURIDAD - ADMINISTRACION</th>
+                <th colspan="1">Fecha: 09/06/25</th>
+            </tr>
             <tr>
-                <td>1</td>
-                <td>Pañales Talla M</td>
-                <td>Unidad</td>
-                <td>20</td>
-                <td class="observacion">Calidad de Donación para el Despacho de la Presidencia</td>
+                <th colspan="1" height=20>Nro.</th>
+                <th colspan="1" >Descripcion</th>
+                <th colspan="1">Unidad de medida</th>
+                <th colspan="1">Cantidad</th>
+                <th colspan="2">Observaciones</th>
+               
             </tr>
-        </tbody>
+            <tr>
+                <th colspan="1" height=40>1</th>
+                <th colspan="1">Panales talla M</th>
+                <th colspan="1">Unidad</th>
+                <th colspan="1">20</th>
+                <th colspan="2">Calidad de donacion por despacho de la presidencia</th>
+               
+            </tr>
+            <tr>
+                <th colspan="3">Autorizado</th>
+                <th colspan="3">Recibido por</th>
+                
+               
+            </tr>
+            <tr>
+                <th height=200 colspan="3">Autorizado</th>
+                <th colspan="3">Recibido por</th>
+                
+               
+            </tr>
+        
+        
+       
     </table>
 
-    <table class="firmas">
+   {{--  <table class="firmas">
         <tr>
             <td>
                 <p>Autorizado:</p>
@@ -97,7 +124,7 @@
                 Fecha: 09/06/2025
             </td>
         </tr>
-    </table>
+    </table> --}}
 
 </body>
 </html>
