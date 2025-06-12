@@ -256,8 +256,7 @@
                         <li class="nav-item nav-profile dropdown  border-0">
                             <a class="nav-link dropdown-toggle flex align-items-center" id="profileDropdown"
                                 href="#" data-toggle="dropdown">
-                                <img class="nav-profile-img mr-2" alt=""
-                                    src="../assets/images/faces/face3.jpg" />
+                                
                                 <span class="profile-name">{{ Auth::user()->name }}</span>
                             </a>
                             <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
