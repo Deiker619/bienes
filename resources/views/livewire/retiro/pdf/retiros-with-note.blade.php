@@ -96,8 +96,32 @@
                
             </tr>
             <tr>
-                <th height=200 colspan="3">Autorizado</th>
-                <th colspan="3">Recibido por</th>
+                <th height=200 colspan="3">
+                    <br>
+                    <br>
+                    <br>
+                    <div style="text-align: center">
+                        <p style="padding: 0; margin: 0">Ing. Jeanne Nava</p>
+                     
+                        <p style="padding: 0; margin: 0">Directora</p>
+                      
+                        <p style="padding: 0; margin: 0">Fundación Misión José Gregorio Hernandez</p>
+                     
+                        <p style="padding: 0; margin: 0">Según Providencia Administrativa N°003-16 fecha de 05 de enero del 2016</p>
+                    </div>
+                </th>
+                <th colspan="3">
+                    <br>
+                    <br>
+                    <br>
+                    <div style="text-align: center">
+                        <p style="padding: 0; margin: 0">{{$retiro->nombre_tercero}}</p>
+                     
+                        <p style="padding: 0; margin: 0">V-{{$retiro->cedula_tercero}}</p>
+                      
+                       
+                    </div>
+                </th>
                 
                
             </tr>
