@@ -53,7 +53,7 @@
                                     <input type="radio" class="form-check-input" @checked(false)
                                         wire:target="render,changeDestino" wire:loading.attr="disabled"
                                         wire:change="changeDestino($event.target.value)" value="beneficiario_retiro"
-                                        name="optionsRadios"> Persona con discapacidad <i class="input-helper"></i>
+                                        name="optionsRadios"> Beneficiario <i class="input-helper"></i>
 
                                 </label>
 

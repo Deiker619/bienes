@@ -66,10 +66,11 @@
                     NOTA DE SALIDA
                     
                 </th>
-                <th colspan="2">Nº 098 - 2025</th>
+                <th colspan="2">Nº {{$retiro->id}} - {{Date('Y')}}</th>
             </tr>
             <tr >
-                <th colspan="2">DIRIGIDO A</th>
+                <th colspan="2">DIRIGIDO A: {{$retiro->beneficiario->nombre }} <br>
+                    V-{{$retiro->beneficiario->cedula }}</th>
                 <th colspan="3">SEGURIDAD - ADMINISTRACIÓN</th>
                 <th colspan="1">Fecha: {{ $retiro->created_at}}</th>
             </tr>
@@ -115,9 +116,9 @@
                     <br>
                     <br>
                     <div style="text-align: center">
-                        <p style="padding: 0; margin: 0">{{$retiro->nombre_tercero}}</p>
+                        <p style="padding: 0; margin: 0">{{$retiro->nombre_tercero??$retiro->beneficiario->nombre}}</p>
                      
-                        <p style="padding: 0; margin: 0">V-{{$retiro->cedula_tercero}}</p>
+                        <p style="padding: 0; margin: 0">V-{{$retiro->cedula_tercero??$retiro->beneficiario->cedula}}</p>
                       
                        
                     </div>
