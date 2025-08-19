@@ -14,6 +14,7 @@ class RetiroPDF extends Controller
     {
         $retiro = retiro::where('id', $id)
             ->first();
+        //dd($retiro->coordinacion, $retiro->beneficiario);
         $dataPDF = ['retiro' => $retiro];
         $pdf = Pdf::loadView('livewire.retiro.pdf.retiros-with-note', $dataPDF)->setPaper('A4', 'landscape'); // 👈 orientación horizontal;
         return $pdf->stream();
