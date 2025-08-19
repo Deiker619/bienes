@@ -48,7 +48,7 @@
             @endif
 
 
-            <a class="text-black mt-3 d-block font-weight-medium h6" href="{{route('retiro_ver')}}">View all <i
+            <a class="text-black mt-3 d-block font-weight-medium h6" href="{{route('retiro_ver')}}">Ver todos <i
                     class="mdi mdi-chevron-right"></i></a>
         </div>
     </div>

@@ -94,7 +94,7 @@
                         </div>
                         <div class="form-group col-12 " wire:target="artificiosDisponibles" wire:loading.attr="disabled"
                             wire:loading.class="d-none">
-                            <label disabled>Cedula de beneficiario </label>
+                            <label disabled>Cédula de beneficiario </label>
                             <input type="text" wire:model.blur="beneficiario_cedula" class="form-control"
                                 placeholder="Sin puntos ni letas">
                             <x-input-error for="beneficiario_cedula" style="color:red"></x-input-error>
