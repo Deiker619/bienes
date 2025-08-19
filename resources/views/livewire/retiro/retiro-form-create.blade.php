@@ -158,7 +158,7 @@
                         <div class="form-group col-12">
                             <label for="exampleInputPassword1">Observación</label>
                             <textarea class="form-control" id="exampleInputPassword1" wire:model.blur='observacion'
-                                placeholder="Ej: 20"></textarea>
+                                placeholder="Ej: descripción del retiro"></textarea>
                             <x-input-error for="retiro_cantidad" style="color:red"></x-input-error>
                         </div>
                         <div style="margin-left: 0; justify-content: left" class=" form-group col-12 ">
