@@ -70,8 +70,8 @@
                         @if ($destino == 'coordinacion_retiro')
 
                         <div class="form-group col-12">
-                            <label for="exampleInputUsername1">Coordinación de destino</label>
-                            <select class="form-control" id="exampleSelectGender" wire:model="coordinacion_retiro">
+                            <label for="corrdinacion">Coordinación de destino</label>
+                            <select class="form-control" id="corrdinacion" wire:model="coordinacion_retiro">
                                 <option value="" selected>Seleccionar</option>
                                 @foreach ($coordinaciones as $coordinacion)
                                 <option value="{{ $coordinacion->id }}">{{ $coordinacion->name_coordinacion }}
