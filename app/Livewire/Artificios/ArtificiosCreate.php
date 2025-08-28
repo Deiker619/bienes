@@ -10,7 +10,7 @@ class ArtificiosCreate extends Component
     public $open_modal = false;
     public $name;
 
-    public $rules=['name'=>'required|string|regex:/^[a-zA-ZñÑ\s]+$/u'];
+    public $rules=['name'=>'required|string']; 
     public function updated($propertyName){
         $this->validateOnly($propertyName);
     }
