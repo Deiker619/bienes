@@ -9,6 +9,7 @@ use App\Models\coordinacion;
 use App\Models\jornada;
 use App\Models\retiro;
 use App\Models\stock;
+use App\Services\RetiroService;
 use Livewire\Attributes\On;
 
 
@@ -16,9 +17,10 @@ use Illuminate\Support\Facades\DB;
 
 class RetiroFormCreate extends Component
 {
-
+    protected $retiroService;
     public $cargado = false;
     public $cantidad = 0, $restante;
+    
     public $retiro_cantidad, $artificio_retiro;
     public $destino;
     public $coordinacion_retiro;
@@ -53,6 +55,9 @@ class RetiroFormCreate extends Component
     public function updated($propertyName)
     { //Funcion para que se actualice en vivo las reglas de validacion cada vez que se corrija un input
         $this->validateOnly($propertyName);
+    }
+    public function boot(RetiroService $retirosService){
+        $this->retiroService = $retirosService;
     }
 
 
@@ -107,31 +112,13 @@ class RetiroFormCreate extends Component
 
     public function artificiosDisponibles($id)
     {
-        $consulta = stock::select('cantidad_artificio')
-            ->where('artificio_id', $id)
-            ->first(); // Obtener solo el primer resultado
-
-        if ($consulta) {
-            $this->cantidad = $consulta->cantidad_artificio;
-        } else {
-            $this->cantidad = 0; // O cualquier otro valor predeterminado si no hay resultados
-        }
+       $this->cantidad = $this->retiroService->artificiosDisponibles($id);
     }
+
     public function add_beneficiario($cedula, $nombre)
     {
 
-        $beneficiario = beneficiario::where('cedula', $cedula)->first();
-
-        if ($beneficiario) {
-            return $beneficiario->id;
-        } else {
-            $create_beneficiario = beneficiario::create([
-                'nombre' => $nombre,
-                'cedula' => $cedula,
-
-            ]);
-            return $create_beneficiario->id;
-        }
+        $this->retiroService->add_beneficiario($cedula, $nombre);
     }
     public function add_jornada($fecha, $descripcion)
     {

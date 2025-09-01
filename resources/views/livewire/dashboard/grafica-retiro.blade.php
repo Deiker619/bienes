@@ -1,6 +1,6 @@
 <div>
-    <div id="flot-chart" class="row">
-        <canvas id="grafica" class=""></canvas>
+    <div id="flot-chart" class="row ">
+        <canvas id="grafica" class="h-50 w-100"></canvas>
         
     </div>
 
@@ -32,7 +32,8 @@
                     
                 },
                 options: {
-                    responsive: true,
+                    responsive: false,
+                    maintainAspectRatio: false,
                     scales: {
                         y: {
                             beginAtZero: true
