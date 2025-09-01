@@ -3,8 +3,10 @@
 namespace App\Services;
 
 use App\Models\beneficiario;
+use App\Models\jornada;
 use App\Models\retiro;
 use App\Models\stock;
+use Illuminate\Support\Facades\DB;
 
 class RetiroService
 {
@@ -52,5 +54,19 @@ class RetiroService
             ]);
             return $create_beneficiario->id;
         }
+    }
+    public function add_jornada($fecha, $descripcion)
+    {
+
+        $create_jornada = jornada::create([
+            'descripcion' => $descripcion,
+            'fecha' => $fecha,
+
+        ]);
+        return $create_jornada->id;
+    }
+    public function retiro()
+    {
+       
     }
 }

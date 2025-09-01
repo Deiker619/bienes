@@ -125,36 +125,78 @@
                         @endif
 
 
-                        <div class="form-group col-12">
-                            <label for="exampleInputEmail1">Artificio a retirar</label>
 
-                            <select class="form-control" wire:model="artificio_retiro"
-                                wire:change="artificiosDisponibles($event.target.value)" id="exampleSelectGender">
-                                <option value="" selected>Seleccionar</option>
-                                @foreach ($artificios as $artificio)
-                                <option value="{{ $artificio->id }}">{{ $artificio->name }}</option>
-                                @endforeach
 
-                            </select>
-                            <x-input-error for="artificio_retiro" style="color:red"></x-input-error>
-                            <x-input-error for="id" style="color:red"></x-input-error>
-                        </div>
-                        <div class="form-group col-12" wire:loading wire:target="artificiosDisponibles">
-                            <div class="spinner-border  spinner-border-sm text-primary" role="status">
-                                <span class="sr-only">Loading...</span>
+                        <div class="col-12">
+                            @foreach ($artificiosRetiro as $index => $registro)
+                            <div class="border rounded p-3 mb-3">
+                                <!-- Selector de artificio -->
+                                <div class="mb-3 form-group">
+                                    <label for="artificioSelect{{ $index }}">Artificio a retirar</label>
+                                    <select id="artificioSelect{{ $index }}" class="form-control"
+                                        wire:model="artificiosRetiro.{{ $index }}.artificio_retiro"
+                                        wire:change="artificiosDisponibles($event.target.value, {{ $index }})">
+                                        <option value="" selected>Seleccionar</option>
+                                        @foreach ($artificios as $artificio)
+                                        <option value="{{ $artificio->id }}">{{ $artificio->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <x-input-error for="artificiosRetiro.{{ $index }}.artificio_retiro"
+                                        class="text-danger" />
+                                </div>
+
+                                <!-- Spinner -->
+                                <div class="mb-3" wire:loading wire:target="artificiosDisponibles">
+                                    <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                        
+                                    </div>
+                                </div>
+
+                                <!-- Stock disponible -->
+                                <div class="mb-3 form-group">
+                                    <label class="form-label">Cantidad disponible en stock</label>
+                                    <input type="text" class="form-control"
+                                        wire:model.blur="artificiosRetiro.{{ $index }}.cantidad" readonly disabled>
+                                </div>
+
+                                <!-- Cantidad a retirar -->
+                                <div class="mb-3 form-group">
+                                    <label for="retiroCantidad{{ $index }}" class="form-label">Cantidad a
+                                        retirar</label>
+                                    <input id="retiroCantidad{{ $index }}" type="text" class="form-control"
+                                        wire:model.blur="artificiosRetiro.{{ $index }}.retiro_cantidad"
+                                        placeholder="Ej: 20">
+                                    <x-input-error for="artificiosRetiro.{{ $index }}.retiro_cantidad"
+                                        class="text-danger" />
+                                </div>
+
+                                <!-- Botón eliminar -->
+                                <button type="button" class="btn btn-danger btn-sm"
+                                    wire:click="removeRegistro({{ $index }})">
+                                    Eliminar
+                                </button>
+                            </div>
+                            @endforeach
+
+                            <!-- Botón agregar -->
+                            <div class="text-center mt-3">
+                                <button type="button" class="btn btn-secondary" wire:click="addRegistro">
+                                    Agregar nuevo registro
+                                </button>
                             </div>
                         </div>
-                        <div class="form-group col-12 " wire:target="artificiosDisponibles" wire:loading.attr="disabled"
-                            wire:loading.class="d-none">
-                            <label disabled>Cantidad disponible en stock </label>
-                            <input type="text" disabled wire:model.blur="cantidad" readonly class="form-control">
-                        </div>
-                        <div class="form-group col-12">
-                            <label for="exampleInputPassword1">Cantidad a retirar</label>
-                            <input type="text" class="form-control" wire:model.blur="retiro_cantidad"
-                                id="exampleInputPassword1" placeholder="Ej: 20">
-                            <x-input-error for="retiro_cantidad" style="color:red"></x-input-error>
-                        </div>
+
+
+                        {{-- <div class="d-flex justify-content-center align-items-center m-20 w-100" style="h">
+                            <button type="button" class="btn btn-secondary">Agregar más artificios</button>
+                        </div> --}}
+
+
+
+
+
+
+
                         <div class="form-group col-12">
                             <label for="exampleInputPassword1">Observación</label>
                             <textarea class="form-control" id="exampleInputPassword1" wire:model.blur='observacion'
@@ -172,7 +214,8 @@
                         </div>
                         @if ($recibe_tercero)
                         <div class="form-group col-12">
-                            <label for="nombre_tercero" {{ $errors->has('nombre_tercero') ? 'style=color:red' : '' }}>Nombre del tercero que recibe</label>
+                            <label for="nombre_tercero" {{ $errors->has('nombre_tercero') ? 'style=color:red' : ''
+                                }}>Nombre del tercero que recibe</label>
                             <input type="text" class="form-control" wire:model.blur="nombre_tercero"
                                 name="nombre_tercero">
                         </div>
@@ -202,9 +245,9 @@
                     @else
                     <div class="d-flex justify-content-center align-items-center h-100 w-100">
                         Cargando...
-                    </div>                    
-                    
-                   
+                    </div>
+
+
                     @endif
 
                 </div>
@@ -212,7 +255,7 @@
         </div>
 
         <!-- RETIROS -->
-        <div class="col-md-4 col-sm-6 grid-margin stretch-card">
+        <div class="col-md-4 border col-sm-6 grid-margin stretch-card">
             @livewire('retiro.retiro-historial')
         </div>
     </div>
