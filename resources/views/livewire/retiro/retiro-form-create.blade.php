@@ -88,16 +88,16 @@
                         <div class="form-group col-12 " wire:target="artificiosDisponibles" wire:loading.attr="disabled"
                             wire:loading.class="d-none">
                             <label disabled>Nombre y apellido del beneficiario </label>
-                            <input type="text" wire:model.blur="beneficiario_nombre" class="form-control"
+                            <input type="text" wire:model.blur="formBeneficiario.beneficiario_nombre" class="form-control"
                                 placeholder="ej: Luis Pereira">
-                            <x-input-error for="beneficiario_nombre" style="color:red"></x-input-error>
+                            <x-input-error for="formBeneficiario.beneficiario_nombre" style="color:red"></x-input-error>
                         </div>
                         <div class="form-group col-12 " wire:target="artificiosDisponibles" wire:loading.attr="disabled"
                             wire:loading.class="d-none">
                             <label disabled>Cédula de beneficiario </label>
-                            <input type="text" wire:model.blur="beneficiario_cedula" class="form-control"
+                            <input type="text" wire:model.blur="formBeneficiario.beneficiario_cedula" class="form-control"
                                 placeholder="Sin puntos ni letas">
-                            <x-input-error for="beneficiario_cedula" style="color:red"></x-input-error>
+                            <x-input-error for="formBeneficiario.beneficiario_cedula" style="color:red"></x-input-error>
                         </div>
                         @endif
                         @if ($destino == 'jornada_retiro')
@@ -148,7 +148,7 @@
                                 <!-- Spinner -->
                                 <div class="mb-3" wire:loading wire:target="artificiosDisponibles">
                                     <div class="spinner-border spinner-border-sm text-primary" role="status">
-                                        
+
                                     </div>
                                 </div>
 
@@ -171,11 +171,13 @@
                                 </div>
 
                                 <!-- Botón eliminar -->
-                                
+                                @if(count($artificiosRetiro) > 1)
+
                                 <button type="button" class="btn btn-danger btn-sm"
                                     wire:click="removeRegistro({{ $index }})">
                                     Eliminar
                                 </button>
+                                @endif
                             </div>
                             @endforeach
 
@@ -186,15 +188,6 @@
                                 </button>
                             </div>
                         </div>
-
-
-                        {{-- <div class="d-flex justify-content-center align-items-center m-20 w-100" style="h">
-                            <button type="button" class="btn btn-secondary">Agregar más artificios</button>
-                        </div> --}}
-
-
-
-
 
 
 
@@ -256,7 +249,7 @@
         </div>
 
         <!-- RETIROS -->
-        <div class="col-md-4 border col-sm-6 grid-margin stretch-card">
+        <div class="col-md-4  col-sm-6 ">
             @livewire('retiro.retiro-historial')
         </div>
     </div>

@@ -65,7 +65,7 @@
 
         <tr>
             <th colspan="4">
-                NOTA DE SALIDA
+                NOTA DE ENTREGA
 
             </th>
             <th colspan="2">Nº {{$retiro->id}} - {{Date('Y')}}</th>

@@ -27,7 +27,6 @@ class RetiroFormCreate extends Component
     public $cedula_tercero;
 
     /* Datos de beneficiario */
-    public $beneficiario_cedula, $beneficiario_nombre;
     public $formBeneficiario =['beneficiario_cedula' => '', 'beneficiario_nombre' => '' ];
     /* Datos de jornada */
     public $jornada_fecha, $jornada_descripcion;
@@ -103,7 +102,12 @@ class RetiroFormCreate extends Component
     public function retiro()
     {
         $this->validate();
-        dd($this->artificiosRetiro);
+        $destino = [
+            'destino' => $this->destino,
+            'beneficiario' => $this->formBeneficiario,
+            'observacion' => $this->observacion
+        ];
+        $this->retiroService->retiro($this->artificiosRetiro, $destino);
     }
     public function changeRecibeTercero()
     {
@@ -119,17 +123,20 @@ class RetiroFormCreate extends Component
             case 'jornada_retiro':
                 $this->rules['jornada_fecha'] = 'required|date';
                 $this->rules['jornada_descripcion'] = 'required|string|max:255';
-                $this->reset(['beneficiario_cedula', 'beneficiario_nombre']);
+                $this->reset(
+                    'formBeneficiario.beneficiario_cedula', 
+                    'formBeneficiario.beneficiario_nombre'
+                );
                 break;
             case 'beneficiario_retiro':
-                $this->rules['beneficiario_cedula'] = 'required|numeric';
-                $this->rules['beneficiario_nombre'] = 'required|string|max:100|regex:/^[a-zA-ZñÑ\s]+$/u';
+                $this->rules['formBeneficiario.beneficiario_cedula'] = 'required|numeric';
+                $this->rules['formBeneficiario.beneficiario_nombre'] = 'required|string|max:100|regex:/^[a-zA-ZñÑ\s]+$/u';
                 $this->reset(['jornada_fecha', 'jornada_descripcion']);
 
                 break;
             case 'coordinacion_retiro':
                 $this->rules['coordinacion_retiro'] = 'required';
-                $this->reset(['jornada_fecha', 'jornada_descripcion', 'beneficiario_cedula', 'beneficiario_nombre']);
+                $this->reset(['jornada_fecha', 'jornada_descripcion', 'formBeneficiario.beneficiario_cedula', 'formBeneficiario.beneficiario_nombre']);
 
                 break;
 
