@@ -171,6 +171,7 @@
                                 </div>
 
                                 <!-- Botón eliminar -->
+                                
                                 <button type="button" class="btn btn-danger btn-sm"
                                     wire:click="removeRegistro({{ $index }})">
                                     Eliminar

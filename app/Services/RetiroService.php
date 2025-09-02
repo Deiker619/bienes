@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class RetiroService
 {
-    
+
     public function deleteRetiro($id)
     {
         $retiro = retiro::find($id);
@@ -65,8 +65,91 @@ class RetiroService
         ]);
         return $create_jornada->id;
     }
-    public function retiro()
-    {
-       
-    }
+    /* public function retiro() {
+        try {
+           
+            $this->restante =  (int)$this->cantidad - (int)$this->retiro_cantidad;
+            if ($this->restante < 0) {
+                $this->dispatch('error', "Stock insuficiente para la cantidad solicitada");
+            }
+            if ($this->restante >= 0) {
+
+
+                switch ($this->destino) {
+            
+                    case 'beneficiario_retiro':
+                        $beneficiario =  $this->add_beneficiario($this->beneficiario_cedula, $this->beneficiario_nombre);
+                        $add_retiro = retiro::create([
+                            'artificio_id' => $this->artificio_retiro,
+                            'cantidad_retirada' => $this->retiro_cantidad,
+                            'beneficiario_id' => $beneficiario,
+                            'observacion' => $this->observacion,
+                            'nombre_tercero' => $this->nombre_tercero,
+                            'cedula_tercero' => $this->cedula_tercero
+                        ]);
+                        break;
+                    case 'coordinacion_retiro':
+           
+                        $add_retiro = retiro::create([
+                            'artificio_id' => $this->artificio_retiro,
+                            'cantidad_retirada' => $this->retiro_cantidad,
+                            'lugar_destino' => $this->coordinacion_retiro,
+                            'observacion' => $this->observacion,
+                            'nombre_tercero' => $this->nombre_tercero,
+                            'cedula_tercero' => $this->cedula_tercero
+                        ]);
+                        break;
+                    case 'jornada_retiro':
+                 
+                        $jornada =  $this->add_jornada($this->jornada_fecha, $this->jornada_descripcion);
+                        $add_retiro = retiro::create([
+                            'artificio_id' => $this->artificio_retiro,
+                            'cantidad_retirada' => $this->retiro_cantidad,
+                            'jornada_id' => $jornada,
+                            'observacion' => $this->observacion,
+                            'nombre_tercero' => $this->nombre_tercero,
+                            'cedula_tercero' => $this->cedula_tercero
+                        ]);
+                        break;
+
+                    default:
+                        # code...
+                        break;
+                }
+
+
+
+                if ($add_retiro) {
+         
+                    $stock = stock::where('artificio_id', $this->artificio_retiro)->first();
+                    $stock->cantidad_artificio = $this->restante; //Actualizamos la cantidad restante del stock
+                    $stock->save(); 
+                    $this->dispatch('artificioAdded', 'Retiro exitoso, quedan ' . $this->restante . ' disponible');
+                    $this->reset([
+                        'artificio_retiro',
+                        'retiro_cantidad',
+                        'coordinacion_retiro',
+                        'cantidad',
+                        'restante',
+                        'beneficiario_cedula',
+                        'beneficiario_nombre',
+                        'jornada_fecha',
+                        'jornada_descripcion',
+                        'descripcion',
+                        'observacion',
+                        'nombre_tercero',
+                        'cedula_tercero',
+                        'destino'
+                    ]);
+                } else {
+                    $this->dispatch('error', "Se produjo un error en la transacción");
+                    DB::rollback();
+                }
+                DB::commit();
+            }
+        } catch (\Throwable $th) {
+            $this->dispatch('error', "Ha ocurrido un error inesperado");
+            DB::rollback();
+        }
+    } */
 }
