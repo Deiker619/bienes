@@ -15,8 +15,9 @@ return new class extends Migration
         Schema::create('artificios', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            // Ente será FMJGH por defecto si no se envía valor
+            $table->enum('ente', ['FMJGH', 'CONAPDIS'])->default('FMJGH')->nullable();
             $table->timestamps();
-            
         });
     }
 

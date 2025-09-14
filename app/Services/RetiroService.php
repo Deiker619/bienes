@@ -128,7 +128,7 @@ class RetiroService
                 // Procesar según el destino
                 array_push($data, Retiro_artificio::create([
                     'artificio_id' => $artificio['artificio_retiro'],
-                    'cantidad' => $artificio['cantidad'],
+                    'cantidad' => $artificio["retiro_cantidad"],
                     'retiro_id' => $retiro->id
                 ]));
                 $this->actualizarStock($artificio['artificio_retiro'], $restante);

@@ -7,15 +7,22 @@ use App\Models\retiro;
 use App\Models\stock;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Services\DataRetiroService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 
 
 class PDFController extends Controller
 {
+    protected $DataRetiroService;
+    public function __construct(DataRetiroService $DataRetiroService)
+    {
+        $this->DataRetiroService = $DataRetiroService;
+    }
     public function generatePDF($fecha_inicio, $fecha_fin)
     {
         /* $users = User::get(); */
+
 
         $fecha_inicio = Carbon::parse($fecha_inicio)->startOfDay();
         $fecha_fin = Carbon::parse($fecha_fin)->endOfDay();
@@ -69,15 +76,14 @@ class PDFController extends Controller
     }
 
     public function exportAllRetiros(){
-        $retiros = retiro::select('id', 'artificio_id', 'cantidad_retirada','lugar_destino','beneficiario_id','jornada_id', 'created_at')
-        ->get();
-        
+        $retiros = $this->DataRetiroService->allRetiros();
         $data = [
             'title' => 'Welcome to Funda of Web IT - fundaofwebit.com',
             'date' => date('m/d/Y'),
             'retiros' => $retiros
         ];
         $pdf = Pdf::loadView('livewire.retiros.pdf.retiros-all', $data);
+        $pdf->stream();
         return $pdf->download(date('d-m-Y').'.pdf');
     }
 }

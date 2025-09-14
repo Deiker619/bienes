@@ -5,8 +5,6 @@ namespace App\Livewire\Retiro;
 use Livewire\Component;
 use App\Models\artificio;
 use App\Models\coordinacion;
-use App\Models\retiro;
-use App\Models\stock;
 use App\Services\RetiroService;
 use Livewire\Attributes\On;
 
@@ -22,7 +20,9 @@ class RetiroFormCreate extends Component
     public $destino;
     public $coordinacion_retiro;
     public $observacion;
+    public $formEntrega = ['cedula_entrega' => '', 'nombre_entrega'=> ''];
     public $recibe_tercero = false;
+
     public $nombre_tercero;
     public $cedula_tercero;
 
@@ -118,6 +118,7 @@ class RetiroFormCreate extends Component
 
         // Reinicia arrays manualmente
         $this->formBeneficiario = ['beneficiario_cedula' => '', 'beneficiario_nombre' => ''];
+        $this->formEntrega = ['cedula_entrega' => '', 'entrega_nombre' => ''];
         $this->formJornada = ['jornada_fecha' => '', 'jornada_descripcion' => ''];
         $this->artificiosRetiro = [
             ['artificio_retiro' => '', 'cantidad' => '', 'retiro_cantidad' => '']
@@ -128,12 +129,15 @@ class RetiroFormCreate extends Component
         $this->validate();
         $destino = [
             'destino' => $this->destino,
+            'nombre_tercero' => $this->nombre_tercero,
+            'cedula_tercero' => $this->cedula_tercero,
             'beneficiario' => $this->formBeneficiario,
             'observacion' => $this->observacion,
             'coordinacion' => $this->coordinacion_retiro,
-            'jornada' => $this->formJornada
+            'jornada' => $this->formJornada,
+            'entrega' => $this->formEntrega
         ];
-        try {
+            try {
             $data = $this->retiroService->retiro($this->artificiosRetiro,  $destino);
             if (isset($data['retiro'])) {
                 $this->resetPropertys();

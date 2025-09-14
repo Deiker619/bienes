@@ -30,7 +30,7 @@ class RetirosTableShowComponent extends Component
                         ]);
                 },
             ])
-            ->select('id', 'lugar_destino', 'beneficiario_id', 'jornada_id', 'ente_id', 'created_at')
+            ->select('id', 'lugar_destino', 'observacion', 'beneficiario_id', 'jornada_id', 'ente_id', 'created_at')
             ->with([
                 'beneficiario:id,nombre',
                 'jornada:id,descripcion',
