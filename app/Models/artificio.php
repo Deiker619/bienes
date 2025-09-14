@@ -19,6 +19,10 @@ class artificio extends Model
     {
         return $this->hasMany(retiro::class, 'artificio_id');
     }
+
+    public function retiro_artificios(){
+        return $this->hasMany(Retiro_artificio::class, 'artificio_id');
+    }
 }
    
 

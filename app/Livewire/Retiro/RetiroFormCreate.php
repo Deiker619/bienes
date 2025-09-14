@@ -133,13 +133,18 @@ class RetiroFormCreate extends Component
             'coordinacion' => $this->coordinacion_retiro,
             'jornada' => $this->formJornada
         ];
-        //dd($destino);
-        $data =  $this->retiroService->retiro($this->artificiosRetiro, $destino);
-        //dd($data);
-        if (isset($data['retiro'])) {
-            $this->resetPropertys();
-            return  $this->dispatch('artificioAdded', 'Retiro exitoso del stock');
-        };
+        try {
+            $data = $this->retiroService->retiro($this->artificiosRetiro,  $destino);
+            if (isset($data['retiro'])) {
+                $this->resetPropertys();
+                return  $this->dispatch('artificioAdded', 'Retiro exitoso del stock');
+            };
+        } catch (\Throwable $th) {
+            //throw $th;
+            $this->dispatch('error', $th);
+        }
+
+
         return $this->dispatch('error', $data);
     }
     public function changeRecibeTercero()

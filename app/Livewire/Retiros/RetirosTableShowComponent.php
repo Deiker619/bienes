@@ -21,7 +21,25 @@ class RetirosTableShowComponent extends Component
     #[On('renderTableRetiros')]
     public function render()
     {
-        $retiros = retiro::select('id', 'artificio_id', 'cantidad_retirada', 'lugar_destino', 'observacion', 'beneficiario_id', 'jornada_id', 'ente_id', 'created_at')->orderby('created_at', 'desc')->paginate(10);
+        $retiros = retiro::query()
+            ->with([
+                'retiro_artificios' => function ($query) {
+                    $query->select('id', 'artificio_id', 'retiro_id', 'cantidad', 'created_at')
+                        ->with([
+                            'artificio:id,name'
+                        ]);
+                },
+            ])
+            ->select('id', 'lugar_destino', 'beneficiario_id', 'jornada_id', 'ente_id', 'created_at')
+            ->with([
+                'beneficiario:id,nombre',
+                'jornada:id,descripcion',
+                'coordinacion:id,name_coordinacion',
+                'ente:id,descripcion'
+            ])
+
+            ->latest()
+            ->paginate(10);
         return view('livewire.retiros.retiros-table-show-component', compact('retiros'));
     }
 

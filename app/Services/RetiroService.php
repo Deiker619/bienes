@@ -6,6 +6,7 @@ use App\Models\artificio;
 use App\Models\beneficiario;
 use App\Models\jornada;
 use App\Models\retiro;
+use App\Models\Retiro_artificio;
 use App\Models\stock;
 use Illuminate\Support\Facades\DB;
 
@@ -70,12 +71,51 @@ class RetiroService
     {
         return artificio::findOrFail($id);
     }
+
+    public function createRetiro($destino)
+    {
+
+        $data = [
+            'observacion' => $destino['observacion'] ?? null,
+            'nombre_tercero' => $destino['nombre_tercero'] ?? null,
+            'cedula_tercero' => $destino['cedula_tercero'] ?? null,
+        ];
+
+        // Detecta el tipo de destino para asignar el ID correcto
+        switch ($destino['destino']) {
+            case 'beneficiario_retiro':
+                $entidadId = $this->add_beneficiario(
+                    $destino['beneficiario']['beneficiario_cedula'] ?? null,
+                    $destino['beneficiario']['beneficiario_nombre'] ?? null
+                );
+                $data['beneficiario_id'] = $entidadId;
+                break;
+            case 'coordinacion_retiro':
+                $data['lugar_destino'] = $destino['coordinacion'];
+                break;
+            case 'jornada_retiro':
+                $entidadId = $this->add_jornada(
+                    $destino['jornada']['jornada_fecha'] ?? null,
+                    $destino['jornada']['jornada_descripcion'] ?? null
+                );
+                $data['jornada_id'] = $entidadId;
+                break;
+            default:
+                throw new \Exception("Destino no válido: {$destino['destino']}");
+        }
+
+        return $isRetiro = retiro::create($data);
+    }
     public function retiro($artificiosRetiro, $destino)
     {
+
+        $data = [];
+
         try {
             // Iniciar transacción si es necesario
             DB::beginTransaction();
-            // Recorrer todos los artificios del retiro
+            $retiro = $this->createRetiro($destino);
+
             foreach ($artificiosRetiro as $artificio) {
                 $restante = (int)$artificio['cantidad'] - (int)$artificio["retiro_cantidad"];
 
@@ -86,28 +126,20 @@ class RetiroService
                 }
 
                 // Procesar según el destino
-                switch ($destino['destino']) {
-                    case "beneficiario_retiro":
-                        $data =  $this->procesarBeneficiario($artificio, $destino, $restante);
-                        break;
-
-                    case 'coordinacion_retiro':
-                        $data = $this->procesarCoordinacion($artificio, $destino, $restante);
-
-                        break;
-
-                    case 'jornada_retiro':
-                        $data = $this->procesarJornada($artificio, $destino, $restante);
-                        break;
-
-                    default:
-                        throw new \Exception('Destino no válido: ' . $destino['destino']);
-                }
+                array_push($data, Retiro_artificio::create([
+                    'artificio_id' => $artificio['artificio_retiro'],
+                    'cantidad' => $artificio['cantidad'],
+                    'retiro_id' => $retiro->id
+                ]));
+                $this->actualizarStock($artificio['artificio_retiro'], $restante);
             }
 
             // Confirmar transacción si todo fue exitoso
             DB::commit();
-            // Éxito
+            $data = [
+                'retiro' => $retiro,
+                'data' => $data
+            ];
             return $data;
         } catch (\Exception $e) {
             // Revertir transacción en caso de error
@@ -117,75 +149,7 @@ class RetiroService
     }
 
 
-    public function addRetiro($artificio, $destino, $entidadId, $restante)
-    {
-        // Debug temporal
-        // dd($artificio, $destino, $entidadId, $restante);
 
-        $data = [
-            'artificio_id' => $artificio['artificio_retiro'],
-            'cantidad_retirada' => $artificio['retiro_cantidad'],
-            'observacion' => $destino['observacion'] ?? null,
-            'nombre_tercero' => $destino['nombre_tercero'] ?? null,
-            'cedula_tercero' => $destino['cedula_tercero'] ?? null,
-        ];
-
-        // Detecta el tipo de destino para asignar el ID correcto
-        switch ($destino['destino']) {
-            case 'beneficiario_retiro':
-                $data['beneficiario_id'] = $entidadId;
-                break;
-            case 'coordinacion_retiro':
-                $data['lugar_destino'] = $entidadId;
-                break;
-            case 'jornada_retiro':
-                $data['jornada_id'] = $entidadId;
-                break;
-            default:
-                throw new \Exception("Destino no válido: {$destino['destino']}");
-        }
-
-        $isRetiro = retiro::create($data);
-        // Actualiza stock
-        $this->actualizarStock($artificio['artificio_retiro'], $restante);
-        return $isRetiro;
-    }
-
-    // Métodos auxiliares para cada tipo de destino
-    protected function procesarBeneficiario($artificio, $destino, $restante)
-    {
-        // Lógica para beneficiario
-        $beneficiario = $this->add_beneficiario(
-            $destino['beneficiario']['beneficiario_cedula'] ?? null,
-            $destino['beneficiario']['beneficiario_nombre'] ?? null
-        );
-        if ($beneficiario) {
-            $addRetiro = $this->addRetiro($artificio, $destino, $beneficiario, $restante);
-            return ['beneficiario' => $beneficiario, 'retiro' => $addRetiro];
-        };
-    }
-
-    protected function procesarCoordinacion($artificio, $destino, $restante)
-    {
-
-        $addRetiro = $this->addRetiro($artificio, $destino, $destino['coordinacion'], $restante);
-        return ['retiro' => $addRetiro];
-    }
-
-    protected function procesarJornada($artificio, $destino, $restante)
-    {
-        // Lógica para jornada
-        $jornada = $this->add_jornada(
-            $destino['jornada']['jornada_fecha'] ?? null,
-            $destino['jornada']['jornada_descripcion'] ?? null
-        );
-
-        if ($jornada) {
-            $addRetiro = $this->addRetiro($artificio, $destino, $jornada, $restante);
-            return ['jornada' => $jornada, 'retiro' => $addRetiro];
-        };
-
-    }
 
     // Método para actualizar stock (ejemplo)
     public function actualizarStock($artificioId, $nuevaCantidad)

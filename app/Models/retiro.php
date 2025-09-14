@@ -8,12 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class retiro extends Model
 {
     use HasFactory;
-    protected $fillable = ['artificio_id','observacion', 'cantidad_retirada','cedula_tercero', 'nombre_tercero' ,'lugar_destino', 'beneficiario_id','jornada_id', 'ente_id'];
+    protected $fillable = ['observacion','cedula_tercero', 'nombre_tercero' ,'lugar_destino', 'beneficiario_id','jornada_id', 'ente_id'];
 
-    public function artificio()
-    {
-        return $this->belongsTo(artificio::class, 'artificio_id');
-    }
+ 
     public function coordinacion()
     {
         return $this->belongsTo(coordinacion::class, 'lugar_destino');
@@ -29,5 +26,8 @@ class retiro extends Model
     public function ente()
     {
         return $this->belongsTo(ente::class, 'ente_id');
+    }
+    public function retiro_artificios(){
+        return $this->hasMany(Retiro_artificio::class, 'retiro_id');
     }
 }
