@@ -104,15 +104,15 @@
                         <div class="form-group col-12 " wire:target="artificiosDisponibles" wire:loading.attr="disabled"
                             wire:loading.class="d-none">
                             <label disabled> Fecha de la jornada </label>
-                            <input type="date" wire:model.blur="jornada_fecha" class="form-control">
-                            <x-input-error for="jornada_fecha" style="color:red"></x-input-error>
+                            <input type="date" wire:model.blur="formJornada.jornada_fecha" class="form-control">
+                            <x-input-error for="formJornada.jornada_fecha" style="color:red"></x-input-error>
                         </div>
                         <div class="form-group col-12 " wire:target="artificiosDisponibles" wire:loading.attr="disabled"
                             wire:loading.class="d-none">
                             <label disabled>Descripción de la jornada </label>
-                            <input type="text" wire:model.blur="jornada_descripcion"
+                            <input type="text" wire:model.blur="formJornada.jornada_descripcion"
                                 placeholder="Breve descripción de la jornada" class="form-control">
-                            <x-input-error for="jornada_descripcion" style="color:red"></x-input-error>
+                            <x-input-error for="formJornada.jornada_descripcion" style="color:red"></x-input-error>
                         </div>
                         @endif
                         @if ($destino == 'ente_retiro')

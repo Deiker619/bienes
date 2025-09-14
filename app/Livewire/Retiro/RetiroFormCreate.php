@@ -29,9 +29,7 @@ class RetiroFormCreate extends Component
     /* Datos de beneficiario */
     public $formBeneficiario = ['beneficiario_cedula' => '', 'beneficiario_nombre' => ''];
     /* Datos de jornada */
-    public $jornada_fecha, $jornada_descripcion;
-    /* Datos de ente */
-    public $descripcion;
+    public $formJornada = ['jornada_fecha' => '', 'jornada_descripcion' => ''];
     public $artificiosRetiro = [
         ['artificio_retiro' => '', 'cantidad' => '', 'retiro_cantidad' => '']
     ];
@@ -116,13 +114,11 @@ class RetiroFormCreate extends Component
             'rules',
             'nombre_tercero',
             'cedula_tercero',
-            'jornada_fecha',
-            'jornada_descripcion',
-            'descripcion'
         );
 
         // Reinicia arrays manualmente
         $this->formBeneficiario = ['beneficiario_cedula' => '', 'beneficiario_nombre' => ''];
+        $this->formJornada = ['jornada_fecha' => '', 'jornada_descripcion' => ''];
         $this->artificiosRetiro = [
             ['artificio_retiro' => '', 'cantidad' => '', 'retiro_cantidad' => '']
         ];
@@ -135,9 +131,11 @@ class RetiroFormCreate extends Component
             'beneficiario' => $this->formBeneficiario,
             'observacion' => $this->observacion,
             'coordinacion' => $this->coordinacion_retiro,
+            'jornada' => $this->formJornada
         ];
-
+        //dd($destino);
         $data =  $this->retiroService->retiro($this->artificiosRetiro, $destino);
+        //dd($data);
         if (isset($data['retiro'])) {
             $this->resetPropertys();
             return  $this->dispatch('artificioAdded', 'Retiro exitoso del stock');
@@ -162,8 +160,8 @@ class RetiroFormCreate extends Component
         // Reglas dinámicas dependiendo del destino
         switch ($this->destino) {
             case 'jornada_retiro':
-                $rules['jornada_fecha'] = 'required|date';
-                $rules['jornada_descripcion'] = 'required|string|max:255';
+                $rules['formJornada.jornada_fecha'] = 'required|date';
+                $rules['formJornada.jornada_descripcion'] = 'required|string|max:255';
                 break;
 
             case 'beneficiario_retiro':

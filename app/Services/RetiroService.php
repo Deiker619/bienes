@@ -97,7 +97,7 @@ class RetiroService
                         break;
 
                     case 'jornada_retiro':
-                        $this->procesarJornada($artificio, $destino, $restante);
+                        $data = $this->procesarJornada($artificio, $destino, $restante);
                         break;
 
                     default:
@@ -139,7 +139,7 @@ class RetiroService
                 $data['lugar_destino'] = $entidadId;
                 break;
             case 'jornada_retiro':
-                $data['jornada'] = $entidadId;
+                $data['jornada_id'] = $entidadId;
                 break;
             default:
                 throw new \Exception("Destino no válido: {$destino['destino']}");
@@ -176,21 +176,15 @@ class RetiroService
     {
         // Lógica para jornada
         $jornada = $this->add_jornada(
-            $destino['jornada_fecha'] ?? null,
-            $destino['jornada_descripcion'] ?? null
+            $destino['jornada']['jornada_fecha'] ?? null,
+            $destino['jornada']['jornada_descripcion'] ?? null
         );
 
-        /* $add_retiro = retiro::create([
-            'artificio_id' => $artificio['artificio_id'],
-            'cantidad_retirada' => $artificio['retiro_cantidad'],
-            'jornada_id' => $jornada,
-            'observacion' => $destino['observacion'] ?? null,
-            'nombre_tercero' => $destino['nombre_tercero'] ?? null,
-            'cedula_tercero' => $destino['cedula_tercero'] ?? null
-        ]); */
+        if ($jornada) {
+            $addRetiro = $this->addRetiro($artificio, $destino, $jornada, $restante);
+            return ['jornada' => $jornada, 'retiro' => $addRetiro];
+        };
 
-        // Para depuración
-        dd('Procesando jornada', $artificio, $destino, $restante);
     }
 
     // Método para actualizar stock (ejemplo)
