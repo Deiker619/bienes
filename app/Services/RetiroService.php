@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\artificio;
 use App\Models\beneficiario;
 use App\Models\jornada;
 use App\Models\retiro;
@@ -65,104 +66,120 @@ class RetiroService
         ]);
         return $create_jornada->id;
     }
-    public function retiro($artificiosRetiro, $destino) {
+    public function dataArtificio($id)
+    {
+        return artificio::findOrFail($id);
+    }
+    public function retiro($artificiosRetiro, $destino)
+    {
         try {
             // Iniciar transacción si es necesario
             DB::beginTransaction();
             // Recorrer todos los artificios del retiro
             foreach ($artificiosRetiro as $artificio) {
                 $restante = (int)$artificio['cantidad'] - (int)$artificio["retiro_cantidad"];
-                
+
                 if ($restante < 0) {
                     // Usar excepción en lugar de dd() para manejo profesional de errores
-                    throw new \Exception('Stock insuficiente para la cantidad solicitada en el artificio: ' . ($artificio['nombre'] ?? ''));
+                    $artificioInsuficiente = $this->dataArtificio($artificio['artificio_retiro']);
+                    throw new \Exception('Stock insuficiente para el artificio: ' . ($artificioInsuficiente['name'] ?? ''));
                 }
-                
+
                 // Procesar según el destino
                 switch ($destino['destino']) {
                     case "beneficiario_retiro":
-                        $this->procesarBeneficiario($artificio, $destino, $restante);
+                        $data =  $this->procesarBeneficiario($artificio, $destino, $restante);
                         break;
-                        
+
                     case 'coordinacion_retiro':
-                        $this->procesarCoordinacion($artificio, $destino, $restante);
+                        $data = $this->procesarCoordinacion($artificio, $destino, $restante);
+
                         break;
-                        
+
                     case 'jornada_retiro':
                         $this->procesarJornada($artificio, $destino, $restante);
                         break;
-    
+
                     default:
                         throw new \Exception('Destino no válido: ' . $destino['destino']);
                 }
-                
             }
-            
+
             // Confirmar transacción si todo fue exitoso
             DB::commit();
-            
             // Éxito
-            // $this->dispatch('artificioAdded', 'Retiro exitoso');
-            
+            return $data;
         } catch (\Exception $e) {
             // Revertir transacción en caso de error
             DB::rollback();
-            // Manejar error
-            // $this->dispatch('error', $e->getMessage());
-            
-            // Para depuración
-            dd('Error: ' . $e->getMessage(), $artificiosRetiro);
+            return $e->getMessage();
         }
     }
-    
-    // Métodos auxiliares para cada tipo de destino
-    protected function procesarBeneficiario($artificio, $destino, $restante) {
-        // Lógica para beneficiario
-        $beneficiario = $this->add_beneficiario(
-            $destino['beneficiario']['beneficiario_cedula'] ?? null, 
-            $destino['beneficiario']['beneficiario_nombre'] ?? null
-        );
-        if($beneficiario){
-            //dd($artificio, $destino, $restante );
-           $addRetiro = $this->addRetiro($artificio, $destino, $beneficiario, $restante);
-            
-        };
 
-    }
-    public function addRetiro($artificio, $destino, $beneficiario,$restante){
-        $isRetiro = retiro::create([
+
+    public function addRetiro($artificio, $destino, $entidadId, $restante)
+    {
+        // Debug temporal
+        // dd($artificio, $destino, $entidadId, $restante);
+
+        $data = [
             'artificio_id' => $artificio['artificio_retiro'],
             'cantidad_retirada' => $artificio['retiro_cantidad'],
-            'beneficiario_id' => $beneficiario,
             'observacion' => $destino['observacion'] ?? null,
             'nombre_tercero' => $destino['nombre_tercero'] ?? null,
-            'cedula_tercero' => $destino['cedula_tercero'] ?? null
-        ]);
+            'cedula_tercero' => $destino['cedula_tercero'] ?? null,
+        ];
+
+        // Detecta el tipo de destino para asignar el ID correcto
+        switch ($destino['destino']) {
+            case 'beneficiario_retiro':
+                $data['beneficiario_id'] = $entidadId;
+                break;
+            case 'coordinacion_retiro':
+                $data['lugar_destino'] = $entidadId;
+                break;
+            case 'jornada_retiro':
+                $data['jornada'] = $entidadId;
+                break;
+            default:
+                throw new \Exception("Destino no válido: {$destino['destino']}");
+        }
+
+        $isRetiro = retiro::create($data);
+        // Actualiza stock
         $this->actualizarStock($artificio['artificio_retiro'], $restante);
+        return $isRetiro;
     }
-    
-    protected function procesarCoordinacion($artificio, $destino, $restante) {
-        // Lógica para coordinación
-        /* $add_retiro = retiro::create([
-            'artificio_id' => $artificio['artificio_id'],
-            'cantidad_retirada' => $artificio['retiro_cantidad'],
-            'lugar_destino' => $destino['coordinacion_retiro'] ?? null,
-            'observacion' => $destino['observacion'] ?? null,
-            'nombre_tercero' => $destino['nombre_tercero'] ?? null,
-            'cedula_tercero' => $destino['cedula_tercero'] ?? null
-        ]); */
-        
-        // Para depuración
-        dd('Procesando coordinación', $artificio, $destino, $restante);
+
+    // Métodos auxiliares para cada tipo de destino
+    protected function procesarBeneficiario($artificio, $destino, $restante)
+    {
+        // Lógica para beneficiario
+        $beneficiario = $this->add_beneficiario(
+            $destino['beneficiario']['beneficiario_cedula'] ?? null,
+            $destino['beneficiario']['beneficiario_nombre'] ?? null
+        );
+        if ($beneficiario) {
+            $addRetiro = $this->addRetiro($artificio, $destino, $beneficiario, $restante);
+            return ['beneficiario' => $beneficiario, 'retiro' => $addRetiro];
+        };
     }
-    
-    protected function procesarJornada($artificio, $destino, $restante) {
+
+    protected function procesarCoordinacion($artificio, $destino, $restante)
+    {
+
+        $addRetiro = $this->addRetiro($artificio, $destino, $destino['coordinacion'], $restante);
+        return ['retiro' => $addRetiro];
+    }
+
+    protected function procesarJornada($artificio, $destino, $restante)
+    {
         // Lógica para jornada
         $jornada = $this->add_jornada(
-            $destino['jornada_fecha'] ?? null, 
+            $destino['jornada_fecha'] ?? null,
             $destino['jornada_descripcion'] ?? null
         );
-        
+
         /* $add_retiro = retiro::create([
             'artificio_id' => $artificio['artificio_id'],
             'cantidad_retirada' => $artificio['retiro_cantidad'],
@@ -171,18 +188,18 @@ class RetiroService
             'nombre_tercero' => $destino['nombre_tercero'] ?? null,
             'cedula_tercero' => $destino['cedula_tercero'] ?? null
         ]); */
-        
+
         // Para depuración
         dd('Procesando jornada', $artificio, $destino, $restante);
     }
-    
+
     // Método para actualizar stock (ejemplo)
-    public function actualizarStock($artificioId, $nuevaCantidad) {
+    public function actualizarStock($artificioId, $nuevaCantidad)
+    {
         $stock = stock::where('artificio_id', $artificioId)->first();
         if ($stock) {
             $stock->cantidad_artificio = $nuevaCantidad;
             $stock->save();
         }
     }
-    
 }

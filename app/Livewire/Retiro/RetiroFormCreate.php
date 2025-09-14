@@ -27,7 +27,7 @@ class RetiroFormCreate extends Component
     public $cedula_tercero;
 
     /* Datos de beneficiario */
-    public $formBeneficiario =['beneficiario_cedula' => '', 'beneficiario_nombre' => '' ];
+    public $formBeneficiario = ['beneficiario_cedula' => '', 'beneficiario_nombre' => ''];
     /* Datos de jornada */
     public $jornada_fecha, $jornada_descripcion;
     /* Datos de ente */
@@ -49,17 +49,23 @@ class RetiroFormCreate extends Component
 
     protected $listeners = ['artificioAdded' => 'artificioAdded'];
 
-    public $rules = [ //Reglas de validaciones generales
+    // En la clase, define reglas base:
+    protected $baseRules = [
         'artificiosRetiro.*.artificio_retiro' => 'required',
         'artificiosRetiro.*.cantidad' => 'required',
         'artificiosRetiro.*.retiro_cantidad' => 'required|numeric',
         'destino' => 'required',
-        'observacion' => 'required',
         'recibe_tercero' => 'boolean',
         'nombre_tercero' => 'required_if:recibe_tercero,1',
         'cedula_tercero' => 'required_if:recibe_tercero,1'
-
     ];
+
+    public $rules = [];
+
+    public function mount()
+    {
+        $this->rules = $this->baseRules;
+    }
 
 
 
@@ -98,16 +104,45 @@ class RetiroFormCreate extends Component
         return $this->retiroService->add_jornada($fecha, $descripcion);
     }
 
+    public function resetPropertys()
+    {
+        // Reinicia propiedades simples
+        $this->reset(
+            'cantidad',
+            'restante',
+            'coordinacion_retiro',
+            'observacion',
+            'recibe_tercero',
+            'rules',
+            'nombre_tercero',
+            'cedula_tercero',
+            'jornada_fecha',
+            'jornada_descripcion',
+            'descripcion'
+        );
 
+        // Reinicia arrays manualmente
+        $this->formBeneficiario = ['beneficiario_cedula' => '', 'beneficiario_nombre' => ''];
+        $this->artificiosRetiro = [
+            ['artificio_retiro' => '', 'cantidad' => '', 'retiro_cantidad' => '']
+        ];
+    }
     public function retiro()
     {
         $this->validate();
         $destino = [
             'destino' => $this->destino,
             'beneficiario' => $this->formBeneficiario,
-            'observacion' => $this->observacion
+            'observacion' => $this->observacion,
+            'coordinacion' => $this->coordinacion_retiro,
         ];
-        $this->retiroService->retiro($this->artificiosRetiro, $destino);
+
+        $data =  $this->retiroService->retiro($this->artificiosRetiro, $destino);
+        if (isset($data['retiro'])) {
+            $this->resetPropertys();
+            return  $this->dispatch('artificioAdded', 'Retiro exitoso del stock');
+        };
+        return $this->dispatch('error', $data);
     }
     public function changeRecibeTercero()
     {
@@ -115,35 +150,32 @@ class RetiroFormCreate extends Component
     }
     public function changeDestino($retiro)
     {
-        $this->resetValidation();
-        $this->rules = $this->rules;
         $this->destino = $retiro;
-        //Asigan reglas de validaciones dinamicamente
-        switch ($retiro) {
+        $this->resetValidation(); // Limpia errores antiguos
+    }
+
+    public function rules()
+    {
+        // Reglas base, siempre presentes
+        $rules = $this->baseRules;
+
+        // Reglas dinámicas dependiendo del destino
+        switch ($this->destino) {
             case 'jornada_retiro':
-                $this->rules['jornada_fecha'] = 'required|date';
-                $this->rules['jornada_descripcion'] = 'required|string|max:255';
-                $this->reset(
-                    'formBeneficiario.beneficiario_cedula', 
-                    'formBeneficiario.beneficiario_nombre'
-                );
+                $rules['jornada_fecha'] = 'required|date';
+                $rules['jornada_descripcion'] = 'required|string|max:255';
                 break;
+
             case 'beneficiario_retiro':
-                $this->rules['formBeneficiario.beneficiario_cedula'] = 'required|numeric';
-                $this->rules['formBeneficiario.beneficiario_nombre'] = 'required|string|max:100|regex:/^[a-zA-ZñÑ\s]+$/u';
-                $this->reset(['jornada_fecha', 'jornada_descripcion']);
-
+                $rules['formBeneficiario.beneficiario_cedula'] = 'required|numeric';
+                $rules['formBeneficiario.beneficiario_nombre'] = 'required|string|max:100|regex:/^[a-zA-ZñÑ\s]+$/u';
                 break;
+
             case 'coordinacion_retiro':
-                $this->rules['coordinacion_retiro'] = 'required';
-                $this->reset(['jornada_fecha', 'jornada_descripcion', 'formBeneficiario.beneficiario_cedula', 'formBeneficiario.beneficiario_nombre']);
-
-                break;
-
-            default:
-                # code...
+                $rules['coordinacion_retiro'] = 'required';
                 break;
         }
-        
+
+        return $rules;
     }
 }
