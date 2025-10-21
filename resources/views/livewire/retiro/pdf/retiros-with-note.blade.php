@@ -26,7 +26,7 @@
         .nota-title img{
             display: block;
             margin: 0 auto;
-            max-width: 1500px;
+            max-width: 1200px;
             width: 100%;
             height: auto;
             
