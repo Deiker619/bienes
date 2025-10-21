@@ -23,11 +23,13 @@
             line-height: 1.3;
         }
 
-        .nota-title {
-            text-align: center;
-            font-weight: bold;
-            margin-top: 10px;
-            margin-bottom: 5px;
+        .nota-title img{
+            display: block;
+            margin: 0 auto;
+            max-width: 1500px;
+            width: 100%;
+            height: auto;
+            
         }
 
         .info-table,
@@ -56,7 +58,7 @@
 
 
     <div class="nota-title">
-        <img src="assets/images/cintillo.jpg" alt="" srcset="">
+        <img src="assets/images/cintillo2.png" alt="" srcset="">
     </div>
 
 
