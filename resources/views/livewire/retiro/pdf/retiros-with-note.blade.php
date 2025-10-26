@@ -23,11 +23,13 @@
             line-height: 1.3;
         }
 
-        .nota-title {
-            text-align: center;
-            font-weight: bold;
-            margin-top: 10px;
-            margin-bottom: 5px;
+          .nota-title img{
+            display: block;
+            margin: 0 auto;
+            max-width: 1200px;
+            width: 100%;
+            height: auto;
+            
         }
 
         .info-table,
@@ -56,7 +58,7 @@
 
 
     <div class="nota-title">
-        <img src="assets/images/cintillo.jpg" alt="" srcset="">
+        <img src="assets/images/cintillo2.png" alt="" srcset="">
     </div>
 
 
@@ -85,22 +87,20 @@
             <th colspan="1">Fecha: {{ $retiro->created_at }}</th>
         </tr>
         <tr>
-            <th colspan="1" height=20>ID.</th>
-            <th colspan="1">Descripción</th>
+    
+            <th colspan="2">Descripción</th>
             <th colspan="1">Unidad de medida</th>
             <th colspan="1">Cantidad</th>
             <th colspan="2">Observaciones</th>
 
         </tr>
         @foreach ($retiro->retiro_artificios as $artificios)
-            <tr>
-                <th colspan="1" height=40>{{$artificios->artificio->id}}</th>
-                <th colspan="1">{{ $artificios->artificio->name }}</th>
-                <th colspan="1">Unidad</th>
-                <th colspan="1">{{ $artificios->cantidad }}</th>
-
-                <th colspan="2">{{ $retiro->observacion }}</th>
-            </tr>
+           <tr>
+        <th colspan="2" height="40">{{ $artificios->artificio->name }}</th>
+        <th colspan="1">Unidad</th>
+        <th colspan="1">{{ $artificios->cantidad }}</th>
+        <th colspan="2">{{ $retiro->observacion }}</th>
+    </tr>
         @endforeach
         <tr>
             <th colspan="2">Autorizado</th>
