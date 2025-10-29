@@ -1,25 +1,45 @@
 <?php
 
 namespace App\Livewire\Retiro;
+
 use App\Models\retiro;
+use App\Models\Retiro_artificio;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
 class RetiroHistorial extends Component
 {
 
-   protected $listeners = ['artificioAdded' => 'artificioAdded'];
+    protected $listeners = ['artificioAdded' => 'artificioAdded'];
 
     #[On('artificioAdded')]
     public function render()
     {
-        $retiros = retiro::with('coordinacion:id,name_coordinacion', 'artificio:id,name')
-            ->select('id','artificio_id','lugar_destino','beneficiario_id', 'jornada_id', 'ente_id',
-            'cantidad_retirada','created_at')
+        $retiros = retiro::query()
+            ->with([
+                'retiro_artificios' => function ($query) {
+                    $query->select('id', 'artificio_id', 'retiro_id', 'cantidad', 'created_at')
+                        ->with([
+                            'artificio:id,name'
+                        ]);
+                },
+            ])
+            ->select('id', 'lugar_destino', 'beneficiario_id', 'jornada_id', 'ente_id', 'created_at')
+            ->with([
+                'beneficiario:id,nombre',
+                'jornada:id,descripcion',
+                'coordinacion:id,name_coordinacion',
+                'ente:id,descripcion'
+            ])
+
+            ->latest()
             ->limit(3)
-            ->orderBy('created_at', 'desc')
             ->get();
+
+        //dd($retiros);
+
+
+
         return view('livewire.retiro.retiro-historial', compact('retiros'));
     }
-
 }

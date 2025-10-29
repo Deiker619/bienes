@@ -3,6 +3,7 @@
 namespace App\Livewire\Dashboard;
 
 use App\Models\retiro;
+use App\Models\Retiro_artificio;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -18,9 +19,9 @@ class GraficaRetiro extends Component
         ->whereYear('created_at', date('Y'))
         ->groupBy('created_at', 'cantidad_retirada')->get(); */
 
-        $datos = retiro::select(
+        $datos = Retiro_artificio::select(
             DB::raw('DATE_FORMAT(created_at, "%M") as month'),
-            DB::raw('SUM(cantidad_retirada) as total_retirada')
+            DB::raw('SUM(cantidad) as total_retirada')
         )->whereYear('created_at', date('Y'))
             ->groupBy(DB::raw('DATE_FORMAT(created_at, "%M")'))
             ->get();

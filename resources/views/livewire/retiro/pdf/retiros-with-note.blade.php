@@ -23,13 +23,11 @@
             line-height: 1.3;
         }
 
-        .nota-title img{
-            display: block;
-            margin: 0 auto;
-            max-width: 1200px;
-            width: 100%;
-            height: auto;
-            
+        .nota-title {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 5px;
         }
 
         .info-table,
@@ -57,65 +55,68 @@
 
 
 
-    <div class="nota-title">
-        <img src="assets/images/cintillo2.png" alt="" srcset="">
-    </div>
-
+<div class="nota-title">
+    <img src="assets/images/cintillo2.png" alt="" style="max-width: 1100px; width: 100%; height: auto;">
+</div>
 
 
     <table class="data-table">
 
         <tr>
             <th colspan="4">
-                NOTA DE SALIDA
+                NOTA DE ENTREGA
 
             </th>
-            <th colspan="2">Nº {{$retiro->id}} - {{Date('Y')}}</th>
+            <th colspan="2">Nº {{ $retiro->id }} - {{ Date('Y') }}</th>
         </tr>
         <tr>
-            <th colspan="2">DIRIGIDO A:
-                @if($retiro->beneficiario)
-                {{$retiro->beneficiario->nombre }} <br>
-                V-{{$retiro->beneficiario->cedula }}</th>
-                @endif
+            <th colspan="2">BENEFICIARIO:
+                @if ($retiro->beneficiario)
+                    {{ $retiro->beneficiario->nombre }} <br>
+                    V-{{ $retiro->beneficiario->cedula }}
+            </th>
+            @endif
 
-                @if($retiro->coordinacion)
-                {{$retiro->coordinacion->name_coordinacion }} <br>
-                @endif
-            <th colspan="3">SEGURIDAD - ADMINISTRACIÓN</th>
-            <th colspan="1">Fecha: {{ $retiro->created_at}}</th>
+            @if ($retiro->coordinacion)
+                {{ $retiro->coordinacion->name_coordinacion }} <br>
+            @endif
+            <th colspan="3">FMJGH - {{ env('APP_GERENCIA') }}</th>
+            <th colspan="1">Fecha: {{ $retiro->created_at }}</th>
         </tr>
         <tr>
-            <th colspan="1" height=20>Nro.</th>
+            <th colspan="1" height=20>ID.</th>
             <th colspan="1">Descripción</th>
             <th colspan="1">Unidad de medida</th>
             <th colspan="1">Cantidad</th>
             <th colspan="2">Observaciones</th>
 
         </tr>
+        @foreach ($retiro->retiro_artificios as $artificios)
+            <tr>
+                <th colspan="1" height=40>{{$artificios->artificio->id}}</th>
+                <th colspan="1">{{ $artificios->artificio->name }}</th>
+                <th colspan="1">Unidad</th>
+                <th colspan="1">{{ $artificios->cantidad }}</th>
+
+                <th colspan="2">{{ $retiro->observacion }}</th>
+            </tr>
+        @endforeach
         <tr>
-            <th colspan="1" height=40>1</th>
-            <th colspan="1">{{$retiro->artificio->name}}</th>
-            <th colspan="1">Unidad</th>
-            <th colspan="1">{{$retiro->cantidad_retirada}}</th>
-            <th colspan="2">{{$retiro->observacion}}</th>
+            <th colspan="2">Autorizado</th>
+            <th colspan="2">Entregado por</th>
+            <th colspan="2">Recibido por</th>
+
 
         </tr>
         <tr>
-            <th colspan="3">Autorizado</th>
-            <th colspan="3">Recibido por</th>
-
-
-        </tr>
-        <tr>
-            <th height=200 colspan="3">
+            <th height=100 colspan="2">
                 <br>
                 <br>
                 <br>
                 <div style="text-align: center">
-                    <p style="padding: 0; margin: 0">Ing. Jeanne Nava</p>
+                    <p style="padding: 0; margin: 0">{{env('APP_GERENTE')}}</p>
 
-                    <p style="padding: 0; margin: 0">Directora</p>
+                    <p style="padding: 0; margin: 0">{{env('APP_CARGO')}}</p>
 
                     <p style="padding: 0; margin: 0">Fundación Misión José Gregorio Hernandez</p>
 
@@ -123,19 +124,35 @@
                         2016</p>
                 </div>
             </th>
-            <th colspan="3">
+            <th colspan="2">
                 <br>
                 <br>
                 <br>
                 <div style="text-align: center">
-                    
-                    <p style="padding: 0; margin: 0">{{$retiro->nombre_tercero??$retiro->beneficiario->nombre??$retiro->coordinacion->name_coordinacion}}</p>
-                    
+
                     <p style="padding: 0; margin: 0">
-                        @if($retiro->cedula_tercero || $retiro->beneficiario)
+                        {{ auth()->user()->name }}
+                    </p>
+
+                    
+
+                </div>
+            </th>
+            <th colspan="2">
+                <br>
+                <br>
+                <br>
+                <div style="text-align: center">
+
+                    <p style="padding: 0; margin: 0">
+                        {{ $retiro->nombre_tercero ?? ($retiro->beneficiario->nombre ?? $retiro->coordinacion->name_coordinacion) }}
+                    </p>
+
+                    <p style="padding: 0; margin: 0">
+                        @if ($retiro->cedula_tercero || $retiro->beneficiario)
                             V-
                         @endif
-                        {{ $retiro->cedula_tercero??$retiro->beneficiario->cedula??''}}
+                        {{ $retiro->cedula_tercero ?? ($retiro->beneficiario->cedula ?? '') }}
                     </p>
 
 
@@ -149,25 +166,6 @@
 
     </table>
 
-    {{-- <table class="firmas">
-        <tr>
-            <td>
-                <p>Autorizado:</p>
-                <br><br><br>
-                <strong>Ing. Jeanne Nava</strong><br>
-                Directora<br>
-                Fundación Misión José Gregorio Hernández
-                <p class="stamp">Según Providencia Administrativa Nº003-16 de fecha 05 de enero de 2016</p>
-            </td>
-            <td>
-                <p>Recibido Por:</p>
-                <br><br><br>
-                ___________________________<br>
-                Firma y Cédula<br>
-                Fecha: 09/06/2025
-            </td>
-        </tr>
-    </table> --}}
 
 </body>
 

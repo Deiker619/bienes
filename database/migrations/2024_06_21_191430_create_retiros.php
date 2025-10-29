@@ -14,8 +14,7 @@ return new class extends Migration
         //
         Schema::create('retiros', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('artificio_id');
-            $table->integer('cantidad_retirada');
+
             $table->string('observacion');
             $table->string('nombre_tercero')->nullable();
             $table->integer('cedula_tercero')->nullable();
@@ -25,7 +24,7 @@ return new class extends Migration
             $table->unsignedBigInteger('ente_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('artificio_id')->references('id')->on('artificios')->onDelete('cascade');
+       
             $table->foreign('lugar_destino')->references('id')->on('coordinacions')->onDelete('cascade');
             $table->foreign('beneficiario_id')->references('id')->on('beneficiarios')->onDelete('cascade');
             $table->foreign('jornada_id')->references('id')->on('jornadas')->onDelete('cascade');
