@@ -23,11 +23,12 @@
             line-height: 1.3;
         }
 
-        .nota-title {
-            text-align: center;
-            font-weight: bold;
-            margin-top: 10px;
-            margin-bottom: 5px;
+        .nota-title img {
+            width: 116%;
+            max-width: none;
+            height: auto;
+            display: block;
+            margin-left: -8%;
         }
 
         .info-table,
@@ -55,9 +56,9 @@
 
 
 
-<div class="nota-title">
-    <img src="assets/images/cintillo2.png" alt="" style="max-width: 1100px; width: 100%; height: auto;">
-</div>
+    <div class="nota-title">
+        <img src="assets/images/cintillo2.png" alt="">
+    </div>
 
 
     <table class="data-table">
@@ -93,7 +94,7 @@
         </tr>
         @foreach ($retiro->retiro_artificios as $artificios)
             <tr>
-                <th colspan="1" height=40>{{$artificios->artificio->id}}</th>
+                <th colspan="1" height=40>{{ $artificios->artificio->id }}</th>
                 <th colspan="1">{{ $artificios->artificio->name }}</th>
                 <th colspan="1">Unidad</th>
                 <th colspan="1">{{ $artificios->cantidad }}</th>
@@ -114,9 +115,9 @@
                 <br>
                 <br>
                 <div style="text-align: center">
-                    <p style="padding: 0; margin: 0">{{env('APP_GERENTE')}}</p>
+                    <p style="padding: 0; margin: 0">{{ env('APP_GERENTE') }}</p>
 
-                    <p style="padding: 0; margin: 0">{{env('APP_CARGO')}}</p>
+                    <p style="padding: 0; margin: 0">{{ env('APP_CARGO') }}</p>
 
                     <p style="padding: 0; margin: 0">Fundación Misión José Gregorio Hernandez</p>
 
@@ -128,16 +129,16 @@
                 <br>
                 <br>
                 <br>
-               <div style="text-align: center">
-        <p style="padding: 0; margin: 0">
-            {{ $retiro->nombre_entrega ?? auth()->user()->name }}
-        </p>
-        @if($retiro->cedula_entrega)
-            <p style="padding: 0; margin: 0">
-                V-{{ $retiro->cedula_entrega }}
-            </p>
-        @endif
-    </div>
+                <div style="text-align: center">
+                    <p style="padding: 0; margin: 0">
+                        {{ $retiro->nombre_entrega ?? auth()->user()->name }}
+                    </p>
+                    @if ($retiro->cedula_entrega)
+                        <p style="padding: 0; margin: 0">
+                            V-{{ $retiro->cedula_entrega }}
+                        </p>
+                    @endif
+                </div>
             </th>
             <th colspan="2">
                 <br>
