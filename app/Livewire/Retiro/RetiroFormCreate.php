@@ -118,7 +118,7 @@ class RetiroFormCreate extends Component
 
         // Reinicia arrays manualmente
         $this->formBeneficiario = ['beneficiario_cedula' => '', 'beneficiario_nombre' => ''];
-        $this->formEntrega = ['cedula_entrega' => '', 'entrega_nombre' => ''];
+        $this->formEntrega = ['cedula_entrega' => '', 'nombre_entrega' => ''];
         $this->formJornada = ['jornada_fecha' => '', 'jornada_descripcion' => ''];
         $this->artificiosRetiro = [
             ['artificio_retiro' => '', 'cantidad' => '', 'retiro_cantidad' => '']

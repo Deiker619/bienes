@@ -211,14 +211,14 @@
                             <div class="col-12 row">
                                 <div class="form-group col-6">
                                     <label for="campo1">¿Quién entrega?</label>
-                                    <input type="text" class="form-control" id="campo1" wire:model.blur="formEntrega.nombre_entrega"
+                                    <input type="text" class="form-control" id="campo1" wire:model.defer="formEntrega.nombre_entrega"
                                         placeholder="Ej: Pablo López">
                                     <x-input-error for="retiro_cantidad" style="color:red"></x-input-error>
                                 </div>
 
                                 <div class="form-group col-6">
                                     <label for="campo2">Cédula</label>
-                                    <input type="text" class="form-control" id="campo2" wire:model.blur="formEntrega.cedula_entrega"
+                                    <input type="text" class="form-control" id="campo2" wire:model.defer="formEntrega.cedula_entrega"
                                         placeholder="Ej: 46541254">
                                     <x-input-error for="retiro_cantidad" style="color:red"></x-input-error>
                                 </div>

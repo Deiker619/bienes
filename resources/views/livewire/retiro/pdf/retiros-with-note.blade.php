@@ -128,15 +128,16 @@
                 <br>
                 <br>
                 <br>
-                <div style="text-align: center">
-
-                    <p style="padding: 0; margin: 0">
-                        {{ auth()->user()->name }}
-                    </p>
-
-                    
-
-                </div>
+               <div style="text-align: center">
+        <p style="padding: 0; margin: 0">
+            {{ $retiro->nombre_entrega ?? auth()->user()->name }}
+        </p>
+        @if($retiro->cedula_entrega)
+            <p style="padding: 0; margin: 0">
+                V-{{ $retiro->cedula_entrega }}
+            </p>
+        @endif
+    </div>
             </th>
             <th colspan="2">
                 <br>
