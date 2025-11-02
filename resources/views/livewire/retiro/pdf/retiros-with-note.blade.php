@@ -147,7 +147,7 @@
                 <div style="text-align: center">
 
                     <p style="padding: 0; margin: 0">
-                        {{ $retiro->nombre_tercero ?? ($retiro->beneficiario->nombre ?? $retiro->coordinacion->name_coordinacion) }}
+                      {{ $retiro->nombre_tercero ?? ($retiro->beneficiario->nombre ?? ($retiro->coordinacion?->name_coordinacion ?? '')) }}
                     </p>
 
                     <p style="padding: 0; margin: 0">

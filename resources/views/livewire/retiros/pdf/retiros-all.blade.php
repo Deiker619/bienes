@@ -59,13 +59,23 @@
                             <td>{{ $r->id }}</td>
                             <td>{{ $ra->artificio->name }}</td>
                             <td>{{ $ra->cantidad }}</td>
-                            <td>{{ $r->lugar_destino??$r->coordinacion->name_coordinacion?? $r->beneficiario->nombre}}</td>
+
+                            {{-- ✅ corregido: uso de operador ?-> y ?? '' --}}
                             <td>
-                                {{ $r->coordinacion->name_coordinacion 
-                                    ?? $r->beneficiario->nombre 
-                                    ?? $r->jornada->descripcion 
-                                    ?? $r->ente->descripcion }}
+                                {{ $r->lugar_destino
+                                    ?? ($r->coordinacion?->name_coordinacion
+                                    ?? ($r->beneficiario?->nombre ?? '')) }}
                             </td>
+
+                            {{-- ✅ corregido: acceso seguro a relaciones --}}
+                            <td>
+                                {{ $r->coordinacion?->name_coordinacion
+                                    ?? $r->beneficiario?->nombre
+                                    ?? $r->jornada?->descripcion
+                                    ?? $r->ente?->descripcion
+                                    ?? '' }}
+                            </td>
+
                             <td>{{ $r->created_at->format('d/m/Y H:i') }}</td>
                         </tr>
                     @endforeach
