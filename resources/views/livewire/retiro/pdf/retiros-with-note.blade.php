@@ -68,7 +68,8 @@
                 NOTA DE ENTREGA
 
             </th>
-            <th colspan="2">Nº {{ $retiro->id }} - {{ Date('Y') }}</th>
+            <th colspan="2">Nº {{ str_pad($retiro->id, 4, '0', STR_PAD_LEFT) }} - {{date('Y') }} 
+            </th>
         </tr>
         <tr>
             <th colspan="2">BENEFICIARIO:
