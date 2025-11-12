@@ -23,13 +23,12 @@
             line-height: 1.3;
         }
 
-          .nota-title img{
-            display: block;
-            margin: 0 auto;
-            max-width: 1200px;
-            width: 100%;
+        .nota-title img {
+            width: 116%;
+            max-width: none;
             height: auto;
-            
+            display: block;
+            margin-left: -8%;
         }
 
         .info-table,
@@ -58,9 +57,8 @@
 
 
     <div class="nota-title">
-        <img src="assets/images/cintillo2.png" alt="" srcset="">
+        <img src="assets/images/cintillo2.png" alt="">
     </div>
-
 
 
     <table class="data-table">
@@ -70,10 +68,11 @@
                 NOTA DE ENTREGA
 
             </th>
-            <th colspan="2">Nº {{ $retiro->id }} - {{ Date('Y') }}</th>
+            <th colspan="2">Nº {{ str_pad($retiro->id, 4, '0', STR_PAD_LEFT) }} - {{date('Y') }} 
+            </th>
         </tr>
         <tr>
-            <th colspan="2">DIRIGIDO A:
+            <th colspan="2">BENEFICIARIO:
                 @if ($retiro->beneficiario)
                     {{ $retiro->beneficiario->nombre }} <br>
                     V-{{ $retiro->beneficiario->cedula }}
@@ -87,20 +86,22 @@
             <th colspan="1">Fecha: {{ $retiro->created_at }}</th>
         </tr>
         <tr>
-    
-            <th colspan="2">Descripción</th>
+            <th colspan="1" height=20>ID.</th>
+            <th colspan="1">Descripción</th>
             <th colspan="1">Unidad de medida</th>
             <th colspan="1">Cantidad</th>
             <th colspan="2">Observaciones</th>
 
         </tr>
         @foreach ($retiro->retiro_artificios as $artificios)
-           <tr>
-        <th colspan="2" height="40">{{ $artificios->artificio->name }}</th>
-        <th colspan="1">Unidad</th>
-        <th colspan="1">{{ $artificios->cantidad }}</th>
-        <th colspan="2">{{ $retiro->observacion }}</th>
-    </tr>
+            <tr>
+                <th colspan="1" height=40>{{ $artificios->artificio->id }}</th>
+                <th colspan="1">{{ $artificios->artificio->name }}</th>
+                <th colspan="1">Unidad</th>
+                <th colspan="1">{{ $artificios->cantidad }}</th>
+
+                <th colspan="2">{{ $retiro->observacion }}</th>
+            </tr>
         @endforeach
         <tr>
             <th colspan="2">Autorizado</th>
@@ -115,9 +116,9 @@
                 <br>
                 <br>
                 <div style="text-align: center">
-                    <p style="padding: 0; margin: 0">{{env('APP_GERENTE')}}</p>
+                    <p style="padding: 0; margin: 0">{{ env('APP_GERENTE') }}</p>
 
-                    <p style="padding: 0; margin: 0">{{env('APP_CARGO')}}</p>
+                    <p style="padding: 0; margin: 0">{{ env('APP_CARGO') }}</p>
 
                     <p style="padding: 0; margin: 0">Fundación Misión José Gregorio Hernandez</p>
 
@@ -130,13 +131,14 @@
                 <br>
                 <br>
                 <div style="text-align: center">
-
                     <p style="padding: 0; margin: 0">
-                        {{ auth()->user()->name }}
+                        {{ $retiro->nombre_entrega ?? auth()->user()->name }}
                     </p>
-
-                    
-
+                    @if ($retiro->cedula_entrega)
+                        <p style="padding: 0; margin: 0">
+                            V-{{ $retiro->cedula_entrega }}
+                        </p>
+                    @endif
                 </div>
             </th>
             <th colspan="2">
@@ -146,7 +148,7 @@
                 <div style="text-align: center">
 
                     <p style="padding: 0; margin: 0">
-                        {{ $retiro->nombre_tercero ?? ($retiro->beneficiario->nombre ?? $retiro->coordinacion->name_coordinacion) }}
+                      {{ $retiro->nombre_tercero ?? ($retiro->beneficiario->nombre ?? ($retiro->coordinacion?->name_coordinacion ?? '')) }}
                     </p>
 
                     <p style="padding: 0; margin: 0">

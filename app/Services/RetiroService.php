@@ -79,6 +79,8 @@ class RetiroService
             'observacion' => $destino['observacion'] ?? null,
             'nombre_tercero' => $destino['nombre_tercero'] ?? null,
             'cedula_tercero' => $destino['cedula_tercero'] ?? null,
+            'nombre_entrega' => $destino['entrega']['nombre_entrega'] ?? null,
+            'cedula_entrega' => $destino['entrega']['cedula_entrega'] ?? null,
         ];
 
         // Detecta el tipo de destino para asignar el ID correcto

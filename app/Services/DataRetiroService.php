@@ -19,7 +19,7 @@ class DataRetiroService
                         ]);
                 },
             ])
-            ->select('id', 'lugar_destino', 'observacion', 'nombre_tercero', 'cedula_tercero', 'beneficiario_id', 'jornada_id', 'ente_id', 'created_at')
+            ->select('id', 'lugar_destino', 'observacion', 'nombre_tercero', 'cedula_tercero','nombre_entrega','cedula_entrega', 'beneficiario_id', 'jornada_id', 'ente_id', 'created_at')
             ->where('id', $retiro)
             ->with([
                 'beneficiario:id,nombre,cedula',
@@ -43,7 +43,7 @@ class DataRetiroService
                         ]);
                 },
             ])
-            ->select('id', 'lugar_destino', 'observacion', 'nombre_tercero', 'cedula_tercero', 'beneficiario_id', 'jornada_id', 'ente_id', 'created_at')
+            ->select('id', 'lugar_destino', 'observacion', 'nombre_tercero', 'cedula_tercero','nombre_entrega','cedula_entrega', 'beneficiario_id', 'jornada_id', 'ente_id', 'created_at')
             ->with([
                 'beneficiario:id,nombre,cedula',
                 'jornada:id,descripcion',
