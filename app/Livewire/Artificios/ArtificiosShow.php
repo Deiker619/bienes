@@ -36,7 +36,7 @@ class ArtificiosShow extends Component
     public function update()
     {
         
-        $registro = artificio::find($this->id);
+        $registro = Artificio::find($this->id);
         $registro->fill($this->all());
         $registro->save();
 
