@@ -6,33 +6,44 @@
             margin: 0;
             padding: 20px;
         }
+
         .table-container {
             width: 100%;
             margin: 0 auto;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
         }
-        table, th, td {
+
+        table,
+        th,
+        td {
             border: 1px solid black;
         }
-        th, td {
+
+        th,
+        td {
             padding: 8px;
             text-align: left;
             vertical-align: top;
         }
+
         th {
             background-color: #f2f2f2;
         }
+
         tr:nth-child(even) {
             background-color: #f9f9f9;
         }
+
         .header {
             text-align: center;
             margin-bottom: 20px;
         }
+
         .header h1 {
             margin: 0;
         }
@@ -57,20 +68,21 @@
                     @foreach ($r->retiro_artificios as $ra)
                         <tr>
                             <td>{{ $r->id }}</td>
-                            <td>{{ $ra->artificio->name }}</td>
-                            <td>{{ $ra->cantidad }}</td>
-                            <td>{{ $r->lugar_destino??$r->coordinacion->name_coordinacion?? $r->beneficiario->nombre}}</td>
+                            <td>{{ $ra->artificio?->name ?? '' }}</td>
+                            <td>{{ $ra->cantidad ?? '' }}</td>
                             <td>
-                                {{ $r->coordinacion->name_coordinacion 
-                                    ?? $r->beneficiario->nombre 
-                                    ?? $r->jornada->descripcion 
-                                    ?? $r->ente->descripcion }}
+                                {{ $r->lugar_destino ?? ($r->coordinacion?->name_coordinacion ?? ($r->beneficiario?->nombre ?? '')) }}
                             </td>
-                            <td>{{ $r->created_at->format('d/m/Y H:i') }}</td>
+                            <td>
+                                {{ $r->coordinacion?->name_coordinacion ??
+                                    ($r->beneficiario?->nombre ?? ($r->jornada?->descripcion ?? ($r->ente?->descripcion ?? ''))) }}
+                            </td>
+                            <td>{{ $r->created_at?->format('d/m/Y H:i') ?? '' }}</td>
                         </tr>
                     @endforeach
                 @endforeach
             </tbody>
+
         </table>
     </div>
 </div>
