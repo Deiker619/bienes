@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\artificio;
+use App\Models\Artificio;
 use App\Models\beneficiario;
 use App\Models\jornada;
 use App\Models\retiro;
@@ -69,7 +69,7 @@ class RetiroService
     }
     public function dataArtificio($id)
     {
-        return artificio::findOrFail($id);
+        return Artificio::findOrFail($id);
     }
 
     public function createRetiro($destino)
