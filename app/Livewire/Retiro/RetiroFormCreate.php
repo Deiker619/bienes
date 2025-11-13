@@ -3,7 +3,7 @@
 namespace App\Livewire\Retiro;
 
 use Livewire\Component;
-use App\Models\artificio;
+use App\Models\Artificio;
 use App\Models\coordinacion;
 use App\Services\RetiroService;
 use Livewire\Attributes\On;
@@ -81,7 +81,7 @@ class RetiroFormCreate extends Component
     public function render()
     {
         $coordinaciones = coordinacion::select('id', 'name_coordinacion')->get();
-        $artificios = artificio::select('id', 'name', 'created_at', 'updated_at')->orderBy('name', 'asc')->get();
+        $artificios = Artificio::select('id', 'name', 'created_at', 'updated_at')->orderBy('name', 'asc')->get();
         return view('livewire.retiro.retiro-form-create', compact('artificios', 'coordinaciones'));
     }
 

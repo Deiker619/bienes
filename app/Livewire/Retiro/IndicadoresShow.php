@@ -6,7 +6,7 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 use App\Models\coordinacion;
 use App\Models\retiro;
-use App\Models\artificio;
+use App\Models\Artificio;
 use App\Models\stock;
 
 class IndicadoresShow extends Component
@@ -16,7 +16,7 @@ class IndicadoresShow extends Component
     public function render()
     {
         $total_artificio = stock::sum('cantidad_artificio');
-        $tipos_artificio = artificio::count();
+        $tipos_artificio = Artificio::count();
         $total_retiros = retiro::count();
         return view('livewire.retiro.indicadores-show', compact('total_artificio', 'tipos_artificio', 'total_retiros'));
     }
