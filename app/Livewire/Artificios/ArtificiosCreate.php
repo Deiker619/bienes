@@ -3,7 +3,7 @@
 namespace App\Livewire\Artificios;
 
 use Livewire\Component;
-use App\Models\artificio;
+use App\Models\Artificio;
 
 class ArtificiosCreate extends Component
 {
@@ -21,7 +21,7 @@ class ArtificiosCreate extends Component
 
     public function store(){
         $this->validate();
-       $add_artificio =  artificio::create([
+       $add_artificio =  Artificio::create([
             'name'=> $this->name
         ]);
         if($add_artificio){

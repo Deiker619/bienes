@@ -3,7 +3,7 @@
 namespace App\Livewire\Artificios;
 
 use Livewire\Component;
-use App\Models\artificio;
+use App\Models\Artificio;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
 
@@ -16,7 +16,7 @@ class ArtificiosShow extends Component
     #[On('artificioAdded')]
     public function render()
     {
-        $artificios = artificio::select('id', 'name', 'created_at', 'updated_at')->orderBy('name', 'asc')->paginate(10);
+        $artificios = Artificio::select('id', 'name', 'created_at', 'updated_at')->orderBy('name', 'asc')->paginate(10);
         return view('livewire.artificios.artificios-show', compact('artificios'));
     }
 
@@ -26,7 +26,7 @@ class ArtificiosShow extends Component
     public function edit($id)
     {
         $this->open_edit = true;
-        $registro = artificio::findOrfail($id);
+        $registro = Artificio::findOrfail($id);
 
         $this->name = $registro->name;
         $this->id = $registro->id;
@@ -47,7 +47,7 @@ class ArtificiosShow extends Component
     public function delete($id)
     {
         
-        $registro = artificio::findOrFail($id);
+        $registro = Artificio::findOrFail($id);
         $registro->delete();
 
         $this->dispatch('artificioAdded', 'Artificio eliminado');
