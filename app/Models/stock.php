@@ -13,6 +13,6 @@ class stock extends Model
      // Definir la relación con el modelo User
      public function artificio()
      {
-         return $this->belongsTo(artificio::class, 'artificio_id');
+         return $this->belongsTo(Artificio::class, 'artificio_id');
      }
 }
