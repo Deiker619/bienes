@@ -3,7 +3,7 @@
 namespace App\Livewire\Stock;
 
 use Livewire\Component;
-use App\Models\artificio;
+use App\Models\Artificio;
 use App\Models\stock;
 
 

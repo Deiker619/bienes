@@ -5,7 +5,7 @@ namespace App\Livewire\Stock;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use App\Models\stock;
-use App\Models\artificio;
+use App\Models\Artificio;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
 
@@ -24,7 +24,7 @@ class StrockCreate extends Component
     public function render()
     {
 
-        $artificios = artificio::select('id', 'name')->orderBy('name', 'asc')->get();
+        $artificios = Artificio::select('id', 'name')->orderBy('name', 'asc')->get();
 
         return view('livewire.stock.strock-create', compact('artificios'));
     }

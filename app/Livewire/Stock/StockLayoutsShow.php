@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Stock;
 
-use App\Models\artificio;
+use App\Models\Artificio;
 use App\Models\stock;
 use Livewire\Component;
 use Livewire\Attributes\On;
