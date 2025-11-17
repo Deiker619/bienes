@@ -6,6 +6,17 @@
             margin: 0;
             padding: 20px;
         }
+
+          .nota-title img{
+            width: 116%;
+            max-width: none;
+            height: auto;
+            display: block;
+            margin-left: -8%;
+            position: relative;
+            top: -30px;
+        }
+
         .table-container {
             width: 100%;
             margin: 0 auto;
@@ -36,6 +47,9 @@
             margin: 0;
         }
     </style>
+       <div class="nota-title">
+        <img src="assets/images/cintillo2.png" alt="">
+    </div>
     <h1>Reporte de retiro</h1>
     <div class="table-container">
         <table>
@@ -51,14 +65,22 @@
             </thead>
             <tbody>
                 <!-- Aquí puedes agregar filas dinámicamente desde PHP -->
-                @foreach ($retiros as $item)
-                <tr>
-                    <td>{{$item->id }}</td>
-                    <td>{{$item->artificio->name }}</td>
-                    <td>{{$item->cantidad_retirada }}</td>
-                    <td>{{$item->coordinacion->name_coordinacion ?? $item->beneficiario->nombre ?? $item->jornada->descripcion}}</td>
-                    <td>{{$item->created_at}}</td>
-                </tr>
+                 @foreach ($retiros as $item)
+                    @foreach ($item->retiro_artificios as $detalle)
+                        <tr>
+                            <td>{{ $item->id }}</td>
+
+                            <td>{{ $detalle->artificio->name }}</td>
+
+                            <td>{{ $detalle->cantidad }}</td>
+
+                            <td>
+                                {{ $item->coordinacion->name_coordinacion ?? ($item->beneficiario->nombre ?? $item->jornada->descripcion) }}
+                            </td>
+
+                            <td>{{ $item->created_at }}</td>
+                        </tr>
+                    @endforeach
                 @endforeach
                 <!-- Añade más filas según sea necesario -->
             </tbody>

@@ -29,13 +29,17 @@ class PDFController extends Controller
 
 
         
-        if($fecha_fin == $fecha_inicio){
-            $retiros = retiro::with('artificio:name')->select('id', 'artificio_id', 'cantidad_retirada', 'lugar_destino', 'beneficiario_id','jornada_id', 'created_at')
-            ->whereDate('created_at', $fecha_fin)->get();
-        }else{
+        if ($fecha_fin == $fecha_inicio) {
 
-            $retiros = retiro::select('id', 'artificio_id', 'cantidad_retirada',  'lugar_destino', 'beneficiario_id','jornada_id', 'created_at')
-            ->whereBetween('created_at', [$fecha_inicio, $fecha_fin])->get();
+
+            $retiros = retiro::with(['retiro_artificios.artificio'])
+                ->whereDate('created_at', [$fecha_fin])
+                ->get();
+        } else {
+
+            $retiros = retiro::with(['retiro_artificios.artificio'])
+                ->whereBetween('created_at', [$fecha_inicio, $fecha_fin])
+                ->get();
         }
 
         $data = [
@@ -45,37 +49,43 @@ class PDFController extends Controller
         ];
 
         $pdf = Pdf::loadView('prueba', $data);
-        return $pdf->download(date('d-m-Y').'.pdf');
+        return $pdf->download(date('d-m-Y') . '.pdf');
     }
 
-    public function generateOnlyRetiro($id){
-        $retiros = retiro::select('id', 'artificio_id', 'cantidad_retirada', 'lugar_destino', 'beneficiario_id','jornada_id', 'created_at')
-        ->where('id', $id)
-        ->first();
+    public function generateOnlyRetiro($id)
+    {
+
+        $retiros = retiro::with(['retiro_artificios.artificio'])
+            ->where('id', $id)
+            ->first();
+
+
         $data = [
             'title' => 'Welcome to Funda of Web IT - fundaofwebit.com',
             'date' => date('m/d/Y'),
             'retiros' => $retiros
         ];
+
+
         $pdf = Pdf::loadView('exportOnlyRetiro', $data);
-        return $pdf->download(date('d-m-Y').'.pdf');
-
-
+        return $pdf->download(date('d-m-Y') . '.pdf');
     }
 
-    public function exportStock(){
+    public function exportStock()
+    {
         $stock = stock::select('id', 'artificio_id', 'cantidad_artificio', 'created_at')
-        ->get();
+            ->get();
         $data = [
             'title' => 'Welcome to Funda of Web IT - fundaofwebit.com',
             'date' => date('m/d/Y'),
             'stock' => $stock
         ];
         $pdf = Pdf::loadView('livewire.stock.pdf.export-stock', $data);
-        return $pdf->download(date('d-m-Y').'.pdf');
+        return $pdf->download(date('d-m-Y') . '.pdf');
     }
 
-    public function exportAllRetiros(){
+    public function exportAllRetiros()
+    {
         $retiros = $this->DataRetiroService->allRetiros();
         $data = [
             'title' => 'Welcome to Funda of Web IT - fundaofwebit.com',
@@ -84,6 +94,6 @@ class PDFController extends Controller
         ];
         $pdf = Pdf::loadView('livewire.retiros.pdf.retiros-all', $data);
         $pdf->stream();
-        return $pdf->download(date('d-m-Y').'.pdf');
+        return $pdf->download(date('d-m-Y') . '.pdf');
     }
 }
