@@ -7,6 +7,19 @@
                 margin: 0;
                 padding: 20px;
             }
+
+                .nota-title img {
+                width: 116%;
+                max-width: none;
+                height: auto;
+                display: block;
+                margin-left: -8%;
+                position: relative;
+                top: -30px;
+            }
+
+
+
             .table-container {
                 width: 100%;
                 margin: 0 auto;
@@ -37,6 +50,12 @@
                 margin: 0;
             }
         </style>
+
+        
+        <div class="nota-title">
+            <img src="assets/images/cintillo2.png" alt="">
+        </div>
+        
         <h1>Reporte de stock</h1>
         <div class="table-container">
             <table>
