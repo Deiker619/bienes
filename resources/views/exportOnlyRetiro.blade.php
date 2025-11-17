@@ -78,7 +78,7 @@
                 </thead>
                 <tbody>
                     <!-- Aquí puedes agregar filas dinámicamente desde PHP -->
-                    <tr>
+                    
                         @foreach ($retiros->retiro_artificios as $detalle)
                     <tr>
                         <td>{{ $retiros->id }}</td>
