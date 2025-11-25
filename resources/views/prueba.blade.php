@@ -68,7 +68,7 @@
                  @foreach ($retiros as $item)
                     @foreach ($item->retiro_artificios as $detalle)
                         <tr>
-                            <td>{{ $item->id }}</td>
+                            <td>{{ str_pad($item->id, 4 , '0', STR_PAD_LEFT)}}</td>
 
                             <td>{{ $detalle->artificio->name }}</td>
 
