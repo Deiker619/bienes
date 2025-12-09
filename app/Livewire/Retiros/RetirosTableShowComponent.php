@@ -29,36 +29,44 @@ class RetirosTableShowComponent extends Component
     #[On('renderTableRetiros')]
     public function render()
     {
-        $search = '%' . $this->search . '%';
 
-        $retiros = retiro::query()
-            ->with([
-                'retiro_artificios' => function ($query) {
-                    $query->select('id', 'artificio_id', 'retiro_id', 'cantidad', 'created_at')
-                        ->with([
-                            'artificio:id,name'
-                        ]);
-                },
-                'beneficiario:id,nombre',
-                'jornada:id,descripcion',
-                'coordinacion:id,name_coordinacion',
-            ])
-            /* Donde se filtra cada dato de la tabla*/
-            ->where(function ($q) use ($search) {
-                $q->where('id', 'LIKE', $search)
-                  ->orWhere('observacion', 'LIKE', $search)
-                  ->orWhere('created_at', 'LIKE', $search)
+  $search= trim($this->search);
 
-                  ->orWhereHas('beneficiario', fn($b) => $b->where('nombre', 'LIKE', $search))
-                  ->orWhereHas('jornada', fn($j) => $j->where('descripcion', 'LIKE', $search))
-                  ->orWhereHas('coordinacion', fn($c) => $c->where('name_coordinacion', 'LIKE', $search))
-                  ->orWhereHas('retiro_artificios.artificio', fn($a) => $a->where('name', 'LIKE', $search));
-            })
-            ->latest()
-            ->paginate(10);
+    $retiros = retiro::query()
+        ->with([
+            'retiro_artificios' => function ($query) {
+                $query->select('id', 'artificio_id', 'retiro_id', 'cantidad', 'created_at')
+                    ->with(['artificio:id,name']);
+            },
+            'beneficiario:id,nombre',
+            'jornada:id,descripcion',
+            'coordinacion:id,name_coordinacion',
+        ])
+        ->when(is_numeric($search), function ($q) use ($search) {
+            //  Búsqueda precisa por ID cuando el usuario escribe números
+            $q->where('id', $search);
+        })
+        ->when(preg_match('/^\d{4}-\d{2}-\d{2}$/', $search), function ($q) use ($search) {
+            //  Búsqueda precisa por fecha YYYY-MM-DD
+            $q->whereDate('created_at', $search);
+        })
+        ->when(strlen($search) >= 2 && !is_numeric($search) && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $search), function ($q) use ($search) {
+            // SOLO buscar texto cuando tiene más de 2 caracteres
+            $like = "%{$search}%";
 
-        return view('livewire.retiros.retiros-table-show-component', compact('retiros'));
-    }
+            $q->where(function ($q) use ($like) {
+                $q->where('observacion', 'LIKE', $like)
+                    ->orWhereHas('beneficiario', fn($b) => $b->where('nombre', 'LIKE', $like))
+                    ->orWhereHas('jornada', fn($j) => $j->where('descripcion', 'LIKE', $like))
+                    ->orWhereHas('coordinacion', fn($c) => $c->where('name_coordinacion', 'LIKE', $like))
+                    ->orWhereHas('retiro_artificios.artificio', fn($a) => $a->where('name', 'LIKE', $like));
+            });
+        })
+        ->latest()
+        ->paginate(10);
+
+    return view('livewire.retiros.retiros-table-show-component', compact('retiros'));
+}
 
     public function deleteRetiro($id)
     {
