@@ -43,6 +43,7 @@ class RetirosTableShowComponent extends Component
                 'jornada:id,descripcion',
                 'coordinacion:id,name_coordinacion',
             ])
+            /* Donde se filtra cada dato de la tabla*/
             ->where(function ($q) use ($search) {
                 $q->where('id', 'LIKE', $search)
                   ->orWhere('observacion', 'LIKE', $search)
