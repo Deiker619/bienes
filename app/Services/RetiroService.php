@@ -57,6 +57,32 @@ class RetiroService
             return $create_beneficiario->id;
         }
     }
+
+    public function obtenerRetirosConTotal($fecha_inicio = null, $fecha_fin = null)
+{
+    $query = retiro::with([
+        'retiro_artificios.artificio',
+        'beneficiario',
+        'coordinacion',
+        'jornada',
+        'ente'
+    ]);
+
+    // Filtrar por fechas si vienen parámetros
+    if ($fecha_inicio && $fecha_fin) {
+        $query->whereBetween('created_at', [$fecha_inicio, $fecha_fin]);
+    }
+
+    $retiros = $query->get();
+
+    $totalArtificios = $retiros->sum(fn($r) => $r->retiro_artificios->sum('cantidad'));
+
+    return [
+        'retiros' => $retiros,
+        'totalArtificios' => $totalArtificios
+    ];
+}
+
     public function add_jornada($fecha, $descripcion)
     {
 

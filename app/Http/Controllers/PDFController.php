@@ -2,97 +2,101 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\beneficiario;
-use App\Models\retiro;
 use App\Models\stock;
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Services\DataRetiroService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
-
+use App\Services\RetiroService;
 
 class PDFController extends Controller
 {
-    protected $DataRetiroService;
-    public function __construct(DataRetiroService $DataRetiroService)
+    protected $retiroService;
+
+    public function __construct(RetiroService $retiroService)
     {
-        $this->DataRetiroService = $DataRetiroService;
+        $this->retiroService = $retiroService;
     }
+
+    /**
+     * Generar PDF de retiros entre fechas
+     */
     public function generatePDF($fecha_inicio, $fecha_fin)
     {
-        /* $users = User::get(); */
-
-
         $fecha_inicio = Carbon::parse($fecha_inicio)->startOfDay();
         $fecha_fin = Carbon::parse($fecha_fin)->endOfDay();
 
-
-        
-        if ($fecha_fin == $fecha_inicio) {
-
-
-            $retiros = retiro::with(['retiro_artificios.artificio'])
-                ->whereDate('created_at', [$fecha_fin])
-                ->get();
-        } else {
-
-            $retiros = retiro::with(['retiro_artificios.artificio'])
-                ->whereBetween('created_at', [$fecha_inicio, $fecha_fin])
-                ->get();
-        }
+        $resultado = $this->retiroService->obtenerRetirosConTotal($fecha_inicio, $fecha_fin);
 
         $data = [
-            'title' => 'Welcome to Funda of Web IT - fundaofwebit.com',
-            'date' => date('m/d/Y'),
-            'retiros' => $retiros
+            'title' => 'Reporte de Retiros',
+            'date' => date('d/m/Y'),
+            'retiros' => $resultado['retiros'],
+            'totalArtificios' => $resultado['totalArtificios']
         ];
 
         $pdf = Pdf::loadView('prueba', $data);
+
         return $pdf->download(date('d-m-Y') . '.pdf');
     }
 
+    /**
+     * Generar PDF de un retiro específico
+     */
     public function generateOnlyRetiro($id)
     {
+        $resultado = $this->retiroService->obtenerRetirosConTotal();
 
-        $retiros = retiro::with(['retiro_artificios.artificio'])
-            ->where('id', $id)
-            ->first();
+        $retiros = $resultado['retiros'];
+        $totalArtificios = $resultado['totalArtificios'];
 
+        // Obtener solo el retiro solicitado
+        $retiro = $retiros->where('id', $id)->first();
 
         $data = [
-            'title' => 'Welcome to Funda of Web IT - fundaofwebit.com',
-            'date' => date('m/d/Y'),
-            'retiros' => $retiros
+            'title' => 'Reporte de Retiro',
+            'date' => date('d/m/Y'),
+            'retiros' => collect([$retiro]), // para mantener compatibilidad Blade
+            'totalArtificios' => $retiro ? $retiro->retiro_artificios->sum('cantidad') : 0
         ];
-
 
         $pdf = Pdf::loadView('exportOnlyRetiro', $data);
         return $pdf->download(date('d-m-Y') . '.pdf');
     }
 
+    /**
+     * Exportar stock
+     */
     public function exportStock()
     {
-        $stock = stock::select('id', 'artificio_id', 'cantidad_artificio', 'created_at')
-            ->get();
+        $stock = stock::select('id', 'artificio_id', 'cantidad_artificio', 'created_at')->get();
+
         $data = [
-            'title' => 'Welcome to Funda of Web IT - fundaofwebit.com',
-            'date' => date('m/d/Y'),
+            'title' => 'Reporte de Stock',
+            'date' => date('d/m/Y'),
             'stock' => $stock
         ];
+
         $pdf = Pdf::loadView('livewire.stock.pdf.export-stock', $data);
         return $pdf->download(date('d-m-Y') . '.pdf');
     }
 
+    /**
+     * Exportar todos los retiros
+     */
     public function exportAllRetiros()
     {
-        $retiros = $this->DataRetiroService->allRetiros();
+        $resultado = $this->retiroService->obtenerRetirosConTotal();
+
         $data = [
-            'title' => 'Welcome to Funda of Web IT - fundaofwebit.com',
-            'date' => date('m/d/Y'),
-            'retiros' => $retiros
+            'title' => 'Reporte Completo de Retiros',
+            'date' => date('d/m/Y'),
+            'retiros' => $resultado['retiros'],
+            'totalArtificios' => $resultado['totalArtificios']
         ];
+
         $pdf = Pdf::loadView('livewire.retiros.pdf.retiros-all', $data);
+
+        // Mostrar en pantalla y descargar
         $pdf->stream();
         return $pdf->download(date('d-m-Y') . '.pdf');
     }

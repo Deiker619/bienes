@@ -6,7 +6,7 @@
                     <h4 class="card-title">Retiros del stock</h4>
                     <div class="overflow-auto">
                         <div class="form-group">
-                            <input type="text" wire:model.live="search" class="form-control" placeholder="Buscar" style="width: 200px">
+                          
                             
                         </div>
                         <table class="table">

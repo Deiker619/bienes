@@ -94,5 +94,8 @@
                 @endforeach
             </tbody>
         </table>
+        <div style="margin-top: 15px; font-weight: bold; text-align: right;">
+    Total de artificios retirados: {{ $totalArtificios }}
+</div>
     </div>
 </div>
