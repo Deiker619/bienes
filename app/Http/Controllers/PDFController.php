@@ -40,28 +40,32 @@ class PDFController extends Controller
     }
 
     /**
-     * Generar PDF de un retiro específico
+     * Generar PDF de un retiro específico (compatible con Blade antiguo)
      */
-    public function generateOnlyRetiro($id)
-    {
-        $resultado = $this->retiroService->obtenerRetirosConTotal();
+public function generateOnlyRetiro($id)
+{
+    // Obtener retiro único
+    $retiros = \App\Models\retiro::with(['retiro_artificios.artificio'])
+        ->where('id', $id)
+        ->first();
 
-        $retiros = $resultado['retiros'];
-        $totalArtificios = $resultado['totalArtificios'];
-
-        // Obtener solo el retiro solicitado
-        $retiro = $retiros->where('id', $id)->first();
-
-        $data = [
-            'title' => 'Reporte de Retiro',
-            'date' => date('d/m/Y'),
-            'retiros' => collect([$retiro]), // para mantener compatibilidad Blade
-            'totalArtificios' => $retiro ? $retiro->retiro_artificios->sum('cantidad') : 0
-        ];
-
-        $pdf = Pdf::loadView('exportOnlyRetiro', $data);
-        return $pdf->download(date('d-m-Y') . '.pdf');
+    if (!$retiros) {
+        abort(404, 'Retiro no encontrado');
     }
+
+    // Total de artificios de este retiro
+    $totalArtificios = $retiros->retiro_artificios->sum('cantidad');
+
+    $data = [
+        'title' => 'Reporte de Retiro',
+        'date' => date('d/m/Y'),
+        'retiros' => $retiros,       // se mantiene igual que antes
+        'totalArtificios' => $totalArtificios
+    ];
+
+    $pdf = Pdf::loadView('exportOnlyRetiro', $data);
+    return $pdf->download(date('d-m-Y') . '.pdf');
+}
 
     /**
      * Exportar stock
@@ -96,7 +100,6 @@ class PDFController extends Controller
 
         $pdf = Pdf::loadView('livewire.retiros.pdf.retiros-all', $data);
 
-        // Mostrar en pantalla y descargar
         $pdf->stream();
         return $pdf->download(date('d-m-Y') . '.pdf');
     }
