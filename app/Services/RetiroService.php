@@ -109,6 +109,14 @@ class RetiroService
             'cedula_entrega' => $destino['entrega']['cedula_entrega'] ?? null,
         ];
 
+        // Soporte para reserva programada
+        if (isset($destino['is_reserva'])) {
+            $data['is_reserva'] = (bool)$destino['is_reserva'];
+        }
+        if (!empty($destino['scheduled_at'])) {
+            $data['scheduled_at'] = $destino['scheduled_at'];
+        }
+
         // Detecta el tipo de destino para asignar el ID correcto
         switch ($destino['destino']) {
             case 'beneficiario_retiro':

@@ -10,11 +10,12 @@ use Livewire\Attributes\On;
 
 
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class RetiroFormCreate extends Component
 {
     protected $retiroService;
-    public $cargado = false;
+    public $cargado = true;
     public $cantidad = 0, $restante;
 
     public $destino;
@@ -33,6 +34,10 @@ class RetiroFormCreate extends Component
     public $artificiosRetiro = [
         ['artificio_retiro' => '', 'cantidad' => '', 'retiro_cantidad' => '']
     ];
+
+    // Reserva programada
+    public $reservar = false;
+    public $fecha_reserva = null;
 
     public function addRegistro()
     {
@@ -55,22 +60,27 @@ class RetiroFormCreate extends Component
         'destino' => 'required',
         'recibe_tercero' => 'boolean',
         'nombre_tercero' => 'required_if:recibe_tercero,1',
-        'cedula_tercero' => 'required_if:recibe_tercero,1'
+        'cedula_tercero' => 'required_if:recibe_tercero,1',
+        'reservar' => 'boolean'
     ];
 
-    public $rules = [];
+
 
     public function mount()
     {
-        $this->rules = $this->baseRules;
+
     }
 
 
 
     public function updated($propertyName)
-    { //Funcion para que se actualice en vivo las reglas de validacion cada vez que se corrija un input
+{
+    try {
         $this->validateOnly($propertyName);
+    } catch (\Throwable $th) {
+        // evitar errores de validacion reactiva
     }
+}
     public function boot(RetiroService $retirosService)
     {
         $this->retiroService = $retirosService;
@@ -111,9 +121,10 @@ class RetiroFormCreate extends Component
             'coordinacion_retiro',
             'observacion',
             'recibe_tercero',
-            'rules',
             'nombre_tercero',
             'cedula_tercero',
+            'reservar',
+            'fecha_reserva'
         );
 
         // Reinicia arrays manualmente
@@ -135,21 +146,33 @@ class RetiroFormCreate extends Component
             'observacion' => $this->observacion,
             'coordinacion' => $this->coordinacion_retiro,
             'jornada' => $this->formJornada,
-            'entrega' => $this->formEntrega
+            'entrega' => $this->formEntrega,
+            'is_reserva' => $this->reservar,
+            'scheduled_at' => $this->fecha_reserva
         ];
             try {
             $data = $this->retiroService->retiro($this->artificiosRetiro,  $destino);
             if (isset($data['retiro'])) {
                 $this->resetPropertys();
-                return  $this->dispatch('artificioAdded', 'Retiro exitoso del stock');
+                return  $this->dispatch('artificioAdded', $this->reservar ? 'Reserva creada y stock actualizado' : 'Retiro exitoso del stock');
             };
         } catch (\Throwable $th) {
             //throw $th;
-            $this->dispatch('error', $th);
+            $this->dispatch('error', $th->getMessage());
         }
 
 
         return $this->dispatch('error', $data);
+    }
+
+    public function toggleReservar()
+    {
+        $this->reservar = !$this->reservar;
+    }
+
+    public function setFecha3Dias()
+    {
+        $this->fecha_reserva = Carbon::now()->addDays(3)->format('Y-m-d');
     }
     public function changeRecibeTercero()
     {
@@ -181,6 +204,11 @@ class RetiroFormCreate extends Component
             case 'coordinacion_retiro':
                 $rules['coordinacion_retiro'] = 'required';
                 break;
+        }
+
+        // Validación para reservas programadas
+        if ($this->reservar) {
+            $rules['fecha_reserva'] = 'required|date|after_or_equal:today';
         }
 
         return $rules;
