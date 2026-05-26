@@ -58,6 +58,35 @@ class RetiroService
         }
     }
 
+    public function checkUltimoRetiroBeneficiario($cedula)
+    {
+        $beneficiario = beneficiario::where('cedula', $cedula)->first();
+
+        if (!$beneficiario) {
+            return null;
+        }
+
+        $ultimoRetiro = retiro::where('beneficiario_id', $beneficiario->id)
+            ->latest('created_at')
+            ->first();
+
+        if (!$ultimoRetiro) {
+            return null;
+        }
+
+        $fechaRetiro = \Carbon\Carbon::parse($ultimoRetiro->created_at);
+        $fechaLimite = $fechaRetiro->copy()->addMonth();
+
+        if (now()->lt($fechaLimite)) {
+            return [
+                'fecha_retiro' => $fechaRetiro->format('d/m/Y'),
+                'fecha_limite' => $fechaLimite->format('d/m/Y'),
+            ];
+        }
+
+        return null;
+    }
+
     public function obtenerRetirosConTotal($fecha_inicio = null, $fecha_fin = null)
 {
     $query = retiro::with([
@@ -108,14 +137,6 @@ class RetiroService
             'nombre_entrega' => $destino['entrega']['nombre_entrega'] ?? null,
             'cedula_entrega' => $destino['entrega']['cedula_entrega'] ?? null,
         ];
-
-        // Soporte para reserva programada
-        if (isset($destino['is_reserva'])) {
-            $data['is_reserva'] = (bool)$destino['is_reserva'];
-        }
-        if (!empty($destino['scheduled_at'])) {
-            $data['scheduled_at'] = $destino['scheduled_at'];
-        }
 
         // Detecta el tipo de destino para asignar el ID correcto
         switch ($destino['destino']) {
