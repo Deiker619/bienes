@@ -6,8 +6,7 @@
                     <h4 class="card-title">Retiros del stock</h4>
                     <div class="overflow-auto">
                         <div class="form-group">
-                          
-                            
+                            <input type="text" class="form-control" placeholder="Buscar por nombre o fecha (dd/mm/aaaa)..." wire:model.live.debounce.300ms="search">
                         </div>
                         <table class="table">
                             <thead>
@@ -62,6 +61,9 @@
                                                 </span>
                                                 <span class="dropdown-menu"
                                                     aria-labelledby="dropdownMenuButton{{ $retiro->id }}">
+                                                    <a class="dropdown-item"
+                                                        wire:click="exportarExcelPersona({{ $retiro->id }})"
+                                                        style="cursor: pointer">Exportar en Excel</a>
                                                     <a class="dropdown-item"
                                                         wire:click='exportRetiroWithNote({{ $retiro->id }})'
                                                         style="cursor: pointer">Exportar con nota de entrega</a>
