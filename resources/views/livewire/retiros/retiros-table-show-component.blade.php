@@ -4,10 +4,21 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Retiros del stock</h4>
-                    <div class="overflow-auto">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Buscar por nombre o fecha (dd/mm/aaaa)..." wire:model.live.debounce.300ms="search">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                        <div class="flex-grow-1 mr-2" style="max-width: 400px; min-width: 250px;">
+                            <input type="text" class="form-control" placeholder="Buscar por nombre, cédula o fecha (dd/mm/aaaa)..." wire:model.live.debounce.300ms="search">
                         </div>
+                        <div>
+                            <button type="button" 
+                                    wire:click="exportarExcelBusqueda" 
+                                    class="btn btn-success font-weight-bold shadow-sm d-flex align-items-center"
+                                    style="background-color: #28a745; border-color: #28a745; color: white; padding: 10px 20px; font-size: 14px;"
+                                    {{ $isExcelEnabled ? '' : 'disabled' }}>
+                                <i class="mdi mdi-file-excel mr-1"></i> Exportar en Excel
+                            </button>
+                        </div>
+                    </div>
+                    <div class="overflow-auto">
                         <table class="table">
                             <thead>
                                 <tr>
@@ -44,8 +55,20 @@
                                         </td>
 
                                         <td>
-                                            {{ $retiro->coordinacion?->name_coordinacion ??
-                                                ($retiro->beneficiario?->nombre ?? ($retiro->jornada?->descripcion ?? $retiro->ente?->descripcion)) }}
+                                            @if ($retiro->beneficiario)
+                                                {{ $retiro->beneficiario->nombre }}
+                                                @if ($retiro->beneficiario->cedula)
+                                                    <br><small class="text-muted">C.I: {{ $retiro->beneficiario->cedula }}</small>
+                                                @endif
+                                            @elseif ($retiro->coordinacion)
+                                                {{ $retiro->coordinacion->name_coordinacion }}
+                                            @elseif ($retiro->jornada)
+                                                {{ $retiro->jornada->descripcion }}
+                                            @elseif ($retiro->ente)
+                                                {{ $retiro->ente->descripcion }}
+                                            @else
+                                                —
+                                            @endif
                                         </td>
                                         <td>
                                             <label class="badge badge-info">{{ $name }}</label>
@@ -61,9 +84,6 @@
                                                 </span>
                                                 <span class="dropdown-menu"
                                                     aria-labelledby="dropdownMenuButton{{ $retiro->id }}">
-                                                    <a class="dropdown-item"
-                                                        wire:click="exportarExcelPersona({{ $retiro->id }})"
-                                                        style="cursor: pointer">Exportar en Excel</a>
                                                     <a class="dropdown-item"
                                                         wire:click='exportRetiroWithNote({{ $retiro->id }})'
                                                         style="cursor: pointer">Exportar con nota de entrega</a>

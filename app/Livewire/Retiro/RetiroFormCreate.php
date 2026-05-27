@@ -70,6 +70,29 @@ class RetiroFormCreate extends Component
     public function updated($propertyName)
     { //Funcion para que se actualice en vivo las reglas de validacion cada vez que se corrija un input
         $this->validateOnly($propertyName);
+
+        if ($propertyName === 'formBeneficiario.beneficiario_cedula') {
+            $cedula = $this->formBeneficiario['beneficiario_cedula'];
+            if (!empty($cedula)) {
+                $beneficiario = \App\Models\beneficiario::where('cedula', $cedula)->first();
+                if ($beneficiario) {
+                    $this->formBeneficiario['beneficiario_nombre'] = $beneficiario->nombre;
+                    $this->resetValidation('formBeneficiario.beneficiario_nombre');
+
+                    // Buscar el último retiro del beneficiario para sugerir el mismo artificio
+                    $ultimoRetiro = \App\Models\retiro::where('beneficiario_id', $beneficiario->id)
+                        ->latest('id')
+                        ->first();
+                    if ($ultimoRetiro) {
+                        $ultimoArtificio = $ultimoRetiro->retiro_artificios()->latest('id')->first();
+                        if ($ultimoArtificio) {
+                            $this->artificiosRetiro[0]['artificio_retiro'] = $ultimoArtificio->artificio_id;
+                            $this->artificiosDisponibles($ultimoArtificio->artificio_id, 0);
+                        }
+                    }
+                }
+            }
+        }
     }
     public function boot(RetiroService $retirosService)
     {

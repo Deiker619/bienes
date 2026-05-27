@@ -38,14 +38,15 @@ class RetirosTableShowComponent extends Component
                     $query->select('id', 'artificio_id', 'retiro_id', 'cantidad', 'created_at')
                           ->with(['artificio:id,name']);
                 },
-                'beneficiario:id,nombre',
+                'beneficiario:id,nombre,cedula',
                 'jornada:id,descripcion',
                 'coordinacion:id,name_coordinacion',
             ])
             ->when($this->search, function ($query) {
                 $query->where(function ($q) {
                     $q->whereHas('beneficiario', function ($q) {
-                        $q->where('nombre', 'like', '%' . $this->search . '%');
+                        $q->where('nombre', 'like', '%' . $this->search . '%')
+                          ->orWhere('cedula', 'like', '%' . $this->search . '%');
                     })
                     ->orWhereRaw("DATE_FORMAT(created_at, '%d/%m/%Y') LIKE ?", ['%' . $this->search . '%'])
                     ->orWhere('id', $this->search)
@@ -60,9 +61,15 @@ class RetirosTableShowComponent extends Component
             ->latest()
             ->paginate(10);
 
+        $beneficiarioBusqueda = null;
+        if (!empty($this->search)) {
+            $beneficiarioBusqueda = \App\Models\beneficiario::where('cedula', trim($this->search))->first();
+        }
+        $isExcelEnabled = !empty($beneficiarioBusqueda);
+
         return view(
             'livewire.retiros.retiros-table-show-component',
-            compact('retiros')
+            compact('retiros', 'isExcelEnabled')
         );
     }
 
@@ -98,6 +105,23 @@ class RetirosTableShowComponent extends Component
         return (new RetirosPersonaExport(
             $retiro->beneficiario_id,
             $retiro->beneficiario->nombre
+        ))->download($nombreArchivo);
+    }
+
+    public function exportarExcelBusqueda()
+    {
+        $beneficiario = \App\Models\beneficiario::where('cedula', trim($this->search))->first();
+
+        if (!$beneficiario) {
+            $this->dispatch('error', 'No se encontró ningún beneficiario con esa cédula.');
+            return;
+        }
+
+        $nombreArchivo = 'retiros_' . preg_replace('/[^a-zA-Z0-9_]/', '_', $beneficiario->nombre) . '.xlsx';
+
+        return (new RetirosPersonaExport(
+            $beneficiario->id,
+            $beneficiario->nombre
         ))->download($nombreArchivo);
     }
 }
