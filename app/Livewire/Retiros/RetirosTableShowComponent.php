@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Retiros;
 
-use App\Exports\RetirosPersonaExport;
 use App\Models\retiro;
 use Livewire\Component;
 use App\Services\RetiroService;
@@ -61,15 +60,9 @@ class RetirosTableShowComponent extends Component
             ->latest()
             ->paginate(10);
 
-        $beneficiarioBusqueda = null;
-        if (!empty($this->search)) {
-            $beneficiarioBusqueda = \App\Models\beneficiario::where('cedula', trim($this->search))->first();
-        }
-        $isExcelEnabled = !empty($beneficiarioBusqueda);
-
         return view(
             'livewire.retiros.retiros-table-show-component',
-            compact('retiros', 'isExcelEnabled')
+            compact('retiros')
         );
     }
 
@@ -89,39 +82,5 @@ class RetirosTableShowComponent extends Component
     public function exportRetiroWithNote($id)
     {
         $this->retiro_service->exportRetiroWithNote($id);
-    }
-
-    public function exportarExcelPersona($retiroId)
-    {
-        $retiro = retiro::with('beneficiario')->findOrFail($retiroId);
-
-        if (!$retiro->beneficiario) {
-            $this->dispatch('error', 'Esta opción solo está disponible para retiros de beneficiarios.');
-            return;
-        }
-
-        $nombreArchivo = 'retiros_' . preg_replace('/[^a-zA-Z0-9_]/', '_', $retiro->beneficiario->nombre) . '.xlsx';
-
-        return (new RetirosPersonaExport(
-            $retiro->beneficiario_id,
-            $retiro->beneficiario->nombre
-        ))->download($nombreArchivo);
-    }
-
-    public function exportarExcelBusqueda()
-    {
-        $beneficiario = \App\Models\beneficiario::where('cedula', trim($this->search))->first();
-
-        if (!$beneficiario) {
-            $this->dispatch('error', 'No se encontró ningún beneficiario con esa cédula.');
-            return;
-        }
-
-        $nombreArchivo = 'retiros_' . preg_replace('/[^a-zA-Z0-9_]/', '_', $beneficiario->nombre) . '.xlsx';
-
-        return (new RetirosPersonaExport(
-            $beneficiario->id,
-            $beneficiario->nombre
-        ))->download($nombreArchivo);
     }
 }

@@ -99,6 +99,13 @@
                         <span class="menu-title">Retirar de stock</span>
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('reportes') }}">
+                        <i class="mdi mdi-file-chart menu-icon"></i>
+                        <span class="menu-title">Reportes</span>
+                    </a>
+                </li>
                 @can('dashboard.usuario')
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('usuario') }}">

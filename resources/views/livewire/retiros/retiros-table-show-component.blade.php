@@ -8,15 +8,6 @@
                         <div class="flex-grow-1 mr-2" style="max-width: 400px; min-width: 250px;">
                             <input type="text" class="form-control" placeholder="Buscar por nombre, cédula o fecha (dd/mm/aaaa)..." wire:model.live.debounce.300ms="search">
                         </div>
-                        <div>
-                            <button type="button" 
-                                    wire:click="exportarExcelBusqueda" 
-                                    class="btn btn-success font-weight-bold shadow-sm d-flex align-items-center"
-                                    style="background-color: #28a745; border-color: #28a745; color: white; padding: 10px 20px; font-size: 14px;"
-                                    {{ $isExcelEnabled ? '' : 'disabled' }}>
-                                <i class="mdi mdi-file-excel mr-1"></i> Exportar en Excel
-                            </button>
-                        </div>
                     </div>
                     <div class="overflow-auto">
                         <table class="table">

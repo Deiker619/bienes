@@ -91,18 +91,19 @@
                             @if ($destino == 'beneficiario_retiro')
                                 <div class="form-group col-12 " wire:target="artificiosDisponibles"
                                     wire:loading.attr="disabled" wire:loading.class="d-none">
-                                    <label disabled>Nombre y apellido del beneficiario </label>
-                                    <input type="text" wire:model.blur="formBeneficiario.beneficiario_nombre"
-                                        class="form-control" placeholder="ej: Luis Pereira">
-                                    <x-input-error for="formBeneficiario.beneficiario_nombre"
-                                        style="color:red"></x-input-error>
-                                </div>
-                                <div class="form-group col-12 " wire:target="artificiosDisponibles"
-                                    wire:loading.attr="disabled" wire:loading.class="d-none">
                                     <label disabled>Cédula de beneficiario </label>
                                     <input type="text" wire:model.blur="formBeneficiario.beneficiario_cedula"
                                         class="form-control" placeholder="Sin puntos ni letas">
                                     <x-input-error for="formBeneficiario.beneficiario_cedula"
+                                        style="color:red"></x-input-error>
+                                </div>
+
+                                <div class="form-group col-12 " wire:target="artificiosDisponibles"
+                                    wire:loading.attr="disabled" wire:loading.class="d-none">
+                                    <label disabled>Nombre y apellido del beneficiario </label>
+                                    <input type="text" wire:model.blur="formBeneficiario.beneficiario_nombre"
+                                        class="form-control" placeholder="ej: Luis Pereira">
+                                    <x-input-error for="formBeneficiario.beneficiario_nombre"
                                         style="color:red"></x-input-error>
                                 </div>
                             @endif
@@ -211,15 +212,15 @@
                             <div class="col-12 row">
                                 <div class="form-group col-6">
                                     <label for="campo1">¿Quién entrega?</label>
-                                    <input type="text" class="form-control" id="campo1" wire:model.defer="formEntrega.nombre_entrega"
-                                        placeholder="Ej: Pablo López">
+                                    <input type="text" class="form-control" id="campo1"
+                                        wire:model.defer="formEntrega.nombre_entrega" placeholder="Ej: Pablo López">
                                     <x-input-error for="retiro_cantidad" style="color:red"></x-input-error>
                                 </div>
 
                                 <div class="form-group col-6">
                                     <label for="campo2">Cédula</label>
-                                    <input type="text" class="form-control" id="campo2" wire:model.defer="formEntrega.cedula_entrega"
-                                        placeholder="Ej: 46541254">
+                                    <input type="text" class="form-control" id="campo2"
+                                        wire:model.defer="formEntrega.cedula_entrega" placeholder="Ej: 46541254">
                                     <x-input-error for="retiro_cantidad" style="color:red"></x-input-error>
                                 </div>
                             </div>
