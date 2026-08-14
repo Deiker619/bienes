@@ -10,13 +10,13 @@ use Livewire\WithPagination;
 class ArtificiosShow extends Component
 {
     use WithPagination;
-    public $open_edit, $name, $id;
+    public $open_edit, $name, $id, $tipo_restriccion;
     protected $listeners = ['artificioAdded' => 'artificioAdded'];
 
     #[On('artificioAdded')]
     public function render()
     {
-        $artificios = artificio::select('id', 'name', 'created_at', 'updated_at')->orderBy('name', 'asc')->paginate(10);
+        $artificios = artificio::select('id', 'name', 'tipo_restriccion', 'created_at', 'updated_at')->orderBy('name', 'asc')->paginate(10);
         return view('livewire.artificios.artificios-show', compact('artificios'));
     }
 
@@ -29,6 +29,7 @@ class ArtificiosShow extends Component
         $registro = artificio::findOrfail($id);
 
         $this->name = $registro->name;
+        $this->tipo_restriccion = $registro->tipo_restriccion;
         $this->id = $registro->id;
     }
 

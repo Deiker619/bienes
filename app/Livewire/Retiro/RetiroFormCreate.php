@@ -152,14 +152,17 @@ class RetiroFormCreate extends Component
         $this->validate();
 
         if ($this->destino === 'beneficiario_retiro') {
-            $restriccion = $this->retiroService->checkUltimoRetiroBeneficiario(
-                $this->formBeneficiario['beneficiario_cedula']
-            );
-
-            if ($restriccion) {
-                $msg = "Esta persona le fue entregada una ayuda el día {$restriccion['fecha_retiro']}, no puede solicitar una nueva sino hasta el {$restriccion['fecha_limite']}.";
-                $this->dispatch('error', $msg);
-                return;
+            $beneficiario = \App\Models\beneficiario::where('cedula', $this->formBeneficiario['beneficiario_cedula'])->first();
+            if ($beneficiario) {
+                foreach ($this->artificiosRetiro as $artificioData) {
+                    if (empty($artificioData['artificio_retiro'])) continue;
+                    $restriccion = $this->retiroService->checkRestriccionPorArtificio($beneficiario->id, $artificioData['artificio_retiro']);
+                    
+                    if ($restriccion && $restriccion['restringido']) {
+                        $this->dispatch('error', $restriccion['mensaje']);
+                        return;
+                    }
+                }
             }
         }
 

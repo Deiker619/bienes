@@ -25,6 +25,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Nombre del artificio</th>
+                                    <th>Restricción</th>
                                     <th>Agregado</th>
                                     <th>Modificado</th>
                                     <th>Status en stock</th>
@@ -40,6 +41,15 @@
                                             {{ $artificio->id }}
                                         </td>
                                         <td> {{ $artificio->name }}</td>
+                                        <td>
+                                            @if($artificio->tipo_restriccion == 'monthly')
+                                                <div class="badge badge-warning">Mensual</div>
+                                            @elseif($artificio->tipo_restriccion == 'once')
+                                                <div class="badge badge-info">Una vez</div>
+                                            @else
+                                                <div class="badge badge-secondary">Ninguna</div>
+                                            @endif
+                                        </td>
                                         <td>
                                             {{ $artificio->created_at }}
                                         </td>
@@ -118,6 +128,15 @@
                                                 id="exampleInputUsername1" placeholder="Ej: muletas">
                                             <x-input-error for="name" style="color:red"></x-input-error>
                                         </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tipoRestriccionEdit">Restricción de entrega</label>
+                                        <select class="form-control" wire:model="tipo_restriccion" id="tipoRestriccionEdit">
+                                            <option value="none">Sin restricción</option>
+                                            <option value="monthly">Mensual (1 por mes)</option>
+                                            <option value="once">Una sola vez</option>
+                                        </select>
+                                        <x-input-error for="tipo_restriccion" style="color:red"></x-input-error>
                                     </div>
 
                                 </form>

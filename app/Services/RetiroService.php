@@ -58,30 +58,42 @@ class RetiroService
         }
     }
 
-    public function checkUltimoRetiroBeneficiario($cedula)
+    public function checkRestriccionPorArtificio($beneficiarioId, $artificioId)
     {
-        $beneficiario = beneficiario::where('cedula', $cedula)->first();
-
-        if (!$beneficiario) {
+        $artificio = artificio::find($artificioId);
+        
+        if (!$artificio || $artificio->tipo_restriccion === 'none') {
             return null;
         }
 
-        $ultimoRetiro = retiro::where('beneficiario_id', $beneficiario->id)
+        $ultimoRetiroArtificio = Retiro_artificio::where('artificio_id', $artificioId)
+            ->whereHas('retiro', function ($query) use ($beneficiarioId) {
+                $query->where('beneficiario_id', $beneficiarioId);
+            })
             ->latest('created_at')
             ->first();
 
-        if (!$ultimoRetiro) {
+        if (!$ultimoRetiroArtificio) {
             return null;
         }
 
-        $fechaRetiro = \Carbon\Carbon::parse($ultimoRetiro->created_at);
-        $fechaLimite = $fechaRetiro->copy()->addMonth();
-
-        if (now()->lt($fechaLimite)) {
+        if ($artificio->tipo_restriccion === 'once') {
             return [
-                'fecha_retiro' => $fechaRetiro->format('d/m/Y'),
-                'fecha_limite' => $fechaLimite->format('d/m/Y'),
+                'restringido' => true,
+                'mensaje' => "El artificio ({$artificio->name}) solo se puede entregar una vez. Ya fue entregado el " . $ultimoRetiroArtificio->created_at->format('d/m/Y') . ".",
             ];
+        }
+
+        if ($artificio->tipo_restriccion === 'monthly') {
+            $fechaRetiro = \Carbon\Carbon::parse($ultimoRetiroArtificio->created_at);
+            $fechaLimite = $fechaRetiro->copy()->addMonth();
+
+            if (now()->lt($fechaLimite)) {
+                return [
+                    'restringido' => true,
+                    'mensaje' => "El artificio ({$artificio->name}) tiene entrega mensual. Última entrega: {$fechaRetiro->format('d/m/Y')}. Próxima disponible: {$fechaLimite->format('d/m/Y')}.",
+                ];
+            }
         }
 
         return null;

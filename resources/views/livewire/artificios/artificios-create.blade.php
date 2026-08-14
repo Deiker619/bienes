@@ -31,6 +31,16 @@
                                                 <x-input-error for="name" style="color:red"></x-input-error>
                                         </div>
                                     </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="tipoRestriccion">Restricción de entrega</label>
+                                        <select class="form-control" wire:model="tipo_restriccion" id="tipoRestriccion">
+                                            <option value="none">Sin restricción</option>
+                                            <option value="monthly">Mensual (1 por mes)</option>
+                                            <option value="once">Una sola vez</option>
+                                        </select>
+                                        <x-input-error for="tipo_restriccion" style="color:red"></x-input-error>
+                                    </div>
 
 
 

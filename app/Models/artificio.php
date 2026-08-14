@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class artificio extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'artificio'];
+    protected $fillable = ['name', 'artificio', 'tipo_restriccion'];
 
     public function stocks()
     {
