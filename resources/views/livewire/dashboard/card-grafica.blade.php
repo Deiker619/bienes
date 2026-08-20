@@ -1,3 +1,5 @@
+<!--Grafica del dashboard-->
+
 <div>
     <div class="card">
         <div class="card-body">
