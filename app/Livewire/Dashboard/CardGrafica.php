@@ -9,20 +9,11 @@ use Carbon\Carbon;
 
 class CardGrafica extends Component
 {
-    public $vista = 'mes';
-    public $fechaInicio;
-    public $fechaFin;
     public $mesFiltro;
 
     public function mount()
     {
-        $this->fechaInicio = now()->startOfWeek()->toDateString();
-        $this->fechaFin = now()->endOfWeek()->toDateString();
         $this->mesFiltro = $this->mesFiltro ?: '';
-    }
-
-    public function buscar()
-    {
     }
 
     public function render()
@@ -48,13 +39,9 @@ class CardGrafica extends Component
 
         $total_artificio = stock::sum('cantidad_artificio');
 
-        $subtitulo = match ($this->vista) {
-            'semana' => 'Retiros por semana',
-            'artificio_semana' => 'Artificios más retirados por semana',
-            default => $this->mesFiltroValido()
-                ? 'Artificios más retirados en ' . Carbon::createFromFormat('Y-m', $this->mesFiltro)->translatedFormat('F Y')
-                : 'Graficas mensuales',
-        };
+        $subtitulo = $this->mesFiltroValido()
+            ? 'Artificios más retirados en ' . Carbon::createFromFormat('Y-m', $this->mesFiltro)->translatedFormat('F Y')
+            : 'Graficas mensuales';
 
         return view('livewire.dashboard.card-grafica', compact('actual', 'ayer', 'antesAyer', 'total_artificio', 'subtitulo'));
     }

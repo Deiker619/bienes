@@ -19,39 +19,8 @@
 
                 <div class="col-sm-5">
                     <div class="form-group mb-1">
-                        <select wire:model.live="vista" class="form-control form-control-sm">
-                            <option value="mes">Retiros del mes</option>
-                            <option value="semana">Retiros por semana</option>
-                            <option value="artificio_semana">Artificios por semana</option>
-                        </select>
+                        <input type="month" class="form-control form-control-sm" wire:model.live.debounce.400ms="mesFiltro">
                     </div>
-
-                    @if($vista === 'mes')
-                        <div class="form-row align-items-center">
-                            <div class="col pr-1">
-                                <input type="month" class="form-control form-control-sm" wire:model.live="mesFiltro">
-                            </div>
-                            <div class="col-auto pl-1">
-                                <button type="button" wire:click="buscar" class="btn btn-sm btn-primary px-2" title="Buscar" aria-label="Buscar" wire:loading.attr="disabled" wire:target="buscar">
-                                    <i class="mdi mdi-magnify"></i>
-                                </button>
-                            </div>
-                        </div>
-                    @elseif(in_array($vista, ['semana', 'artificio_semana']))
-                        <div class="form-row align-items-center">
-                            <div class="col pr-1">
-                                <input type="date" class="form-control form-control-sm" wire:model.live="fechaInicio">
-                            </div>
-                            <div class="col px-1">
-                                <input type="date" class="form-control form-control-sm" wire:model.live="fechaFin">
-                            </div>
-                            <div class="col-auto pl-1">
-                                <button type="button" wire:click="buscar" class="btn btn-sm btn-primary px-2" title="Buscar" aria-label="Buscar" wire:loading.attr="disabled" wire:target="buscar">
-                                    <i class="mdi mdi-magnify"></i>
-                                </button>
-                            </div>
-                        </div>
-                    @endif
                 </div>
             </div>
             <div class="row">
@@ -102,11 +71,8 @@
                 <div class="col-sm-12">
                     <div class="flot-chart-wrapper">
                         @livewire('dashboard.grafica-retiro', [
-                            'vista' => $vista,
-                            'fechaInicio' => $fechaInicio,
-                            'fechaFin' => $fechaFin,
                             'mesFiltro' => $mesFiltro,
-                        ], key($vista.'|'.$fechaInicio.'|'.$fechaFin.'|'.$mesFiltro))
+                        ], key('grafica-'.$mesFiltro))
                     </div>
                 </div>
             </div>
