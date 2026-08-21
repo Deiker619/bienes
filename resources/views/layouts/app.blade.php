@@ -312,6 +312,7 @@
         <!-- page-body-wrapper ends -->
     </div>
     <!-- container-scroller -->
+    <script src="{{ asset('assets/vendors/chart.js/Chart.min.js') }}"></script>
     @livewireScripts
     <!-- plugins:js -->
     <script src="../assets/vendors/js/vendor.bundle.base.js"></script>

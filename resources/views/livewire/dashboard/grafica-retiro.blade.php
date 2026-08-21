@@ -1,45 +1,40 @@
 <div>
-    <div id="flot-chart" class="row">
-        <canvas id="grafica" class=""></canvas>
-        
-    </div>
-
-    <x-slot name="js">
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-        <script>
-            console.log(@json($data));
-            var retirosData = @json($data['retiros']);
-
-            // Prepara las etiquetas y los datos para Chart.js
-            var labels = retirosData.map(data => data.month);//Forma 1 de mapear
-
-            var data = retirosData.map(function(dato) { //Forma 2 de mapear
-                return dato.total_retirada; 
-            });
-
-            
-            const ctx = document.getElementById('grafica').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Cantidad de artificios retirados',
-                        data: data,
-                        borderWidth: 1
-                    }],
-                    
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true
+    <div id="flot-chart" class="row"
+        x-data="{
+            datos: @js($chart),
+            grafico: null,
+            pintar() {
+                if (this.grafico || typeof Chart === 'undefined' || !this.$refs.canvas) { return; }
+                const ctx = this.$refs.canvas.getContext('2d');
+                this.grafico = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: this.datos.labels,
+                        datasets: [{
+                            label: this.datos.titulo,
+                            data: this.datos.data,
+                            borderWidth: 1
+                        }],
+                    },
+                    options: {
+                        responsive: true,
+                        animation: {
+                            duration: 700,
+                            easing: 'easeOutQuart'
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
                         }
                     }
-                }
-            });
-        </script>
-    </x-slot>
+                });
+            },
+            destroy() {
+                if (this.grafico) { this.grafico.destroy(); }
+            }
+        }"
+        x-init="pintar()">
+        <canvas id="grafica" class="" x-ref="canvas"></canvas>
+    </div>
 </div>
