@@ -19,6 +19,7 @@ class GraficaRetiro extends Component
     public function render()
     {
         $chart = $this->chartRetirosMes();
+        $chart['vacio'] = count($chart['data']) === 0;
 
         return view('livewire.dashboard.grafica-retiro', compact('chart'));
     }

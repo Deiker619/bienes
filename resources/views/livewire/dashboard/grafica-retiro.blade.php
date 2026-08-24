@@ -1,5 +1,18 @@
 <div>
-    <div id="flot-chart" class="row"
+    <style>
+        .grafica-vacio {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            background: rgba(255, 255, 255, 0.75);
+            border-radius: 4px;
+        }
+    </style>
+    <div id="flot-chart" class="row position-relative"
         x-data="{
             datos: @js($chart),
             grafico: null,
@@ -41,5 +54,8 @@
         }"
         x-init="pintar()">
         <canvas id="grafica" class="" x-ref="canvas"></canvas>
+        @if($chart['vacio'])
+        <p class="grafica-vacio mb-0 text-muted">Este mes no hubo retiros de artificios</p>
+        @endif
     </div>
 </div>
