@@ -82,7 +82,7 @@
             @if ($retiro->coordinacion)
                 {{ $retiro->coordinacion->name_coordinacion }} <br>
             @endif
-            <th colspan="3">FMJGH - {{ env('APP_GERENCIA') }}</th>
+            <th colspan="3">FMJGH - {{ config('custom.gerencia') }}</th>
             <th colspan="1">Fecha: {{ $retiro->created_at }}</th>
         </tr>
         <tr>
@@ -116,9 +116,9 @@
                 <br>
                 <br>
                 <div style="text-align: center">
-                    <p style="padding: 0; margin: 0">{{ env('APP_GERENTE') }}</p>
+                    <p style="padding: 0; margin: 0">{{ config('custom.gerente') }}</p>
 
-                    <p style="padding: 0; margin: 0">{{ env('APP_CARGO') }}</p>
+                    <p style="padding: 0; margin: 0">{{ config('custom.cargo') }}</p>
 
                     <p style="padding: 0; margin: 0">Fundación Misión José Gregorio Hernandez</p>
 
