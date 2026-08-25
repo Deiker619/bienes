@@ -122,8 +122,8 @@
 
                     <p style="padding: 0; margin: 0">Fundación Misión José Gregorio Hernandez</p>
 
-                    <p style="padding: 0; margin: 0">Según Providencia Administrativa N°003-16 fecha de 05 de enero del
-                        2016</p>
+                    <p style="padding: 0; margin: 0">Según Providencia Administrativa N°003-16 fecha de 01 de marzo de
+                        2026</p>
                 </div>
             </th>
             <th colspan="2">
