@@ -122,8 +122,7 @@
 
                     <p style="padding: 0; margin: 0">Fundación Misión José Gregorio Hernandez</p>
 
-                    <p style="padding: 0; margin: 0">Según Providencia Administrativa N°003-26 fecha de 01 de marzo de
-                        2026</p>
+                    <p style="padding: 0; margin: 0">Según Gaceta Oficial de la República Bolivariana de Venezuela N° 43.314, de fecha 10 de febrero de 2026</p>
                 </div>
             </th>
             <th colspan="2">
