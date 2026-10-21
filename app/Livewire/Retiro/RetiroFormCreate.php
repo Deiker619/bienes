@@ -198,6 +198,13 @@ class RetiroFormCreate extends Component
     {
         $this->destino = $retiro;
         $this->resetValidation(); // Limpia errores antiguos
+
+        // Pre-llenar campos de entrega cuando el destino es beneficiario
+        if ($retiro === 'beneficiario_retiro') {
+            $this->observacion = 'Se consignan en calidad de Donación';
+            $this->formEntrega['nombre_entrega'] = 'Crisbely Tineo';
+            $this->formEntrega['cedula_entrega'] = '32.486.503';
+        }
     }
 
     public function rules()
