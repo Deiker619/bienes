@@ -183,10 +183,8 @@ class RetiroFormCreate extends Component
                 return  $this->dispatch('artificioAdded', 'Retiro exitoso del stock');
             };
         } catch (\Throwable $th) {
-            //throw $th;
-            $this->dispatch('error', $th);
+            return $this->dispatch('error', $th->getMessage());
         }
-
 
         return $this->dispatch('error', $data);
     }
