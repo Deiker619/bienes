@@ -96,4 +96,58 @@ class PDFController extends Controller
         $pdf->stream();
         return $pdf->download(date('d-m-Y') . '.pdf');
     }
+
+    public function exportHistorialStock()
+    {
+        $historial = \App\Models\StockHistorial::with([
+            'artificio:id,name',
+        ])->latest()->get();
+
+        $data = [
+            'title' => 'Historial de Stock Completo',
+            'date' => date('d/m/Y'),
+            'historial' => $historial,
+            'subtitulo' => 'Reporte general de adiciones al stock'
+        ];
+
+        $pdf = Pdf::loadView('livewire.stock.pdf.export-historial', $data);
+        return $pdf->stream('historial_stock_completo_' . date('d-m-Y') . '.pdf');
+    }
+
+    public function exportHistorialStockItem($id)
+    {
+        $item = \App\Models\StockHistorial::with([
+            'artificio:id,name',
+        ])->findOrFail($id);
+
+        $data = [
+            'title' => 'Historial de Stock - Item #' . $item->id,
+            'date' => date('d/m/Y'),
+            'historial' => collect([$item]),
+            'subtitulo' => 'Detalle de artificio: ' . ($item->artificio?->name ?? 'N/A') . ' (Fecha: ' . ($item->created_at ? $item->created_at->format('d/m/Y') : '') . ')'
+        ];
+
+        $pdf = Pdf::loadView('livewire.stock.pdf.export-historial', $data);
+        return $pdf->stream('historial_stock_item_' . $item->id . '.pdf');
+    }
+
+    public function exportHistorialStockDate($date)
+    {
+        $historial = \App\Models\StockHistorial::with([
+            'artificio:id,name',
+        ])
+        ->whereDate('created_at', $date)
+        ->latest()
+        ->get();
+
+        $data = [
+            'title' => 'Historial de Stock - ' . $date,
+            'date' => date('d/m/Y'),
+            'historial' => $historial,
+            'subtitulo' => 'Fecha: ' . \Carbon\Carbon::parse($date)->format('d/m/Y')
+        ];
+
+        $pdf = Pdf::loadView('livewire.stock.pdf.export-historial', $data);
+        return $pdf->stream('historial_stock_' . $date . '.pdf');
+    }
 }

@@ -9,6 +9,10 @@
             @can('Stock.store')
                 @livewire('stock.strock-create')
             @endcan
+            <a href="{{ route('stock_historial') }}" class="btn btn-sm bg-white btn-icon-text border ml-3 text-dark">
+                <i class="mdi mdi-history btn-icon-prepend"></i>
+                Historial del stock
+            </a>
             @livewire('stock.pdf.export')
             @can('Artificios.store')
                 @livewire('artificios.artificios-create')

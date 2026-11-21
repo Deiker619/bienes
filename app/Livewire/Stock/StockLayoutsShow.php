@@ -4,6 +4,7 @@ namespace App\Livewire\Stock;
 
 use App\Models\Artificio;
 use App\Models\stock;
+use App\Models\StockHistorial;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
@@ -61,9 +62,51 @@ class StockLayoutsShow extends Component
     {
         
         $registro = stock::find($this->id);
+        $cantidadAnterior = $registro->cantidad_artificio;
+        $cantidadNueva = $this->cantidad_artificio;
+        $diferencia = $cantidadNueva - $cantidadAnterior;
+
         $registro->fill($this->all());
         $registro->save();
 
+        /* Si aumentó la cantidad, registrar la adición en el historial */
+        if ($diferencia > 0) {
+            $historialHoy = StockHistorial::where('artificio_id', $registro->artificio_id)
+                ->whereDate('created_at', now()->toDateString())
+                ->first();
+
+            if ($historialHoy) {
+                $historialHoy->cantidad = $historialHoy->cantidad + $diferencia;
+                $historialHoy->save();
+            } else {
+                StockHistorial::create([
+                    'artificio_id' => $registro->artificio_id,
+                    'cantidad' => $diferencia,
+                ]);
+            }
+        } elseif ($diferencia < 0) {
+            /* Si se descontó la cantidad al editar, descontar también del historial */
+            $historial = StockHistorial::where('artificio_id', $registro->artificio_id)
+                ->whereDate('created_at', now()->toDateString())
+                ->first();
+
+            // Si no hay registro de hoy, buscar el más reciente de ese artificio
+            if (!$historial) {
+                $historial = StockHistorial::where('artificio_id', $registro->artificio_id)
+                    ->latest()
+                    ->first();
+            }
+
+            if ($historial) {
+                $nuevaCantidad = $historial->cantidad + $diferencia; // diferencia es un número negativo
+                if ($nuevaCantidad > 0) {
+                    $historial->cantidad = $nuevaCantidad;
+                    $historial->save();
+                } else {
+                    $historial->delete();
+                }
+            }
+        }
 
         $this->open_edit = false;
         $this->dispatch('artificioAdded', 'Se modificó este stock');

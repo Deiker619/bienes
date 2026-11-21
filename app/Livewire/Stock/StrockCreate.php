@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\Attributes\Layout;
 use App\Models\stock;
 use App\Models\Artificio;
+use App\Models\StockHistorial;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
 
@@ -52,6 +53,22 @@ class StrockCreate extends Component
             
             $this->dispatch('artificioAdded', 'Se agregó correctamente');
         }
+
+        /* Registra o actualiza la adición en el historial del día */
+        $historialHoy = StockHistorial::where('artificio_id', $this->id)
+            ->whereDate('created_at', now()->toDateString())
+            ->first();
+
+        if ($historialHoy) {
+            $historialHoy->cantidad = $historialHoy->cantidad + $this->cantidad;
+            $historialHoy->save();
+        } else {
+            StockHistorial::create([
+                'artificio_id' => $this->id,
+                'cantidad' => $this->cantidad,
+            ]);
+        }
+
         /* Resetea las variables */
         $this->reset(['id', 'cantidad']);
         /* Cierra el modal */

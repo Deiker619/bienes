@@ -21,6 +21,10 @@ Route::middleware([
         return view('livewire.stock.stock-show');
     })->name('stock_show');
 
+    Route::get('/dashboard/historial-stock', function () {
+        return view('livewire.stock.stock-historial-show');
+    })->name('stock_historial');
+
     Route::get('/dashboard/retiro-stock', function () {
         return view('livewire.retiro.retiro-show');
     })->name('retiro_stock');
@@ -54,4 +58,7 @@ Route::middleware([
 
     /* EXPORTAR STOCK */
     Route::get('/dashboard/exportStock', [App\Http\Controllers\PDFController::class, 'exportStock'])->name('exportStock');
+    Route::get('/dashboard/exportHistorialStock', [App\Http\Controllers\PDFController::class, 'exportHistorialStock'])->name('exportHistorialStock');
+    Route::get('/dashboard/exportHistorialStockItem/{id}', [App\Http\Controllers\PDFController::class, 'exportHistorialStockItem'])->name('exportHistorialStockItem');
+    Route::get('/dashboard/exportHistorialStockDate/{date}', [App\Http\Controllers\PDFController::class, 'exportHistorialStockDate'])->name('exportHistorialStockDate');
 });
