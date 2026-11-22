@@ -1,46 +1,66 @@
 <div>
-    <div id="flot-chart" class="row ">
-        <canvas id="grafica" class="h-50 w-100"></canvas>
-        
+    <div id="flot-chart" class="row" style="position: relative; height: 320px; width: 100%;">
+        <canvas id="grafica"></canvas>
     </div>
 
     <x-slot name="js">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <script>
-            console.log(@json($data));
-            var retirosData = @json($data['retiros']);
+            (function() {
+                var retirosData = @json($data['retiros']);
 
-            // Prepara las etiquetas y los datos para Chart.js
-            var labels = retirosData.map(data => data.month);//Forma 1 de mapear
+                var labels = retirosData.map(function(item) {
+                    return item.month;
+                });
 
-            var data = retirosData.map(function(dato) { //Forma 2 de mapear
-                return dato.total_retirada; 
-            });
+                var data = retirosData.map(function(item) {
+                    return item.total_retirada;
+                });
 
-            
-            const ctx = document.getElementById('grafica').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Cantidad de artificios retirados',
-                        data: data,
-                        borderWidth: 1
-                    }],
-                    
-                },
-                options: {
-                    responsive: false,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
+                function renderChart() {
+                    var canvas = document.getElementById('grafica');
+                    if (!canvas) return;
+
+                    var ctx = canvas.getContext('2d');
+                    if (window.myDashboardChart) {
+                        window.myDashboardChart.destroy();
                     }
+
+                    window.myDashboardChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Cantidad de artificios retirados',
+                                data: data,
+                                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1,
+                                borderRadius: 4
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        precision: 0
+                                    }
+                                }
+                            }
+                        }
+                    });
                 }
-            });
+
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', renderChart);
+                } else {
+                    renderChart();
+                }
+            })();
         </script>
     </x-slot>
 </div>
